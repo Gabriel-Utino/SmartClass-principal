@@ -971,7 +971,17 @@ app.delete('/turma_disciplinas/:id_turma/:id_disciplina', (req, res) => {
 // Rota para verificar se o email está cadastrado no banco de dados
 app.post('/verificarEmail', (req, res) => {
   const { email } = req.body;
-  const sql = 'SELECT * FROM users WHERE email = ?';
+  let sql;
+
+  if (email.endsWith('@uscsonline.com.br')) {
+      sql = 'SELECT id_aluno AS id FROM Aluno WHERE email_aluno = ?';
+  } else if (email.endsWith('@outlook.com')) {
+      sql = 'SELECT id_prof AS id FROM Professor WHERE email_consti_prof = ?';
+  } else {
+      res.status(404).json({ message: 'Email não encontrado' });
+      return;
+  }
+
   connection.query(sql, [email], (err, results) => {
       if (err) {
           console.error('Erro ao consultar email no banco de dados:', err);
@@ -979,33 +989,39 @@ app.post('/verificarEmail', (req, res) => {
           return;
       }
 
-      console.log('Resultados da consulta:', results); // Exibe os resultados da consulta
-
-      // Verificar se o email foi encontrado no banco de dados
       if (results.length > 0) {
-          // Email encontrado
           res.json({ message: 'Email cadastrado' });
       } else {
-          // Email não encontrado
           res.status(404).json({ message: 'Email não encontrado' });
       }
   });
 });
 
-// Rota para enviar o email de redefinição de senha
 app.post('/enviarEmailRedefinicao', (req, res) => {
   const { email } = req.body;
 
   const transporter = nodemailer.createTransport({
-      service: 'Gmail', // Provedor de email (exemplo: Gmail)
+      service: 'Gmail',
       auth: {
-          user: 'teste.pim.uscs@gmail.com', // Seu email
-          pass: 'ozpykegrfsynjaxs' // Sua senha do email
+          user: 'teste.pim.uscs@gmail.com',
+          pass: 'ozpykegrfsynjaxs'
       }
   });
 
-  // Consultar o ID do usuário pelo email
-  const sqlGetUserId = 'SELECT id FROM users WHERE email = ?';
+  let sqlGetUserId;
+  let tokenTable;
+
+  if (email.endsWith('@uscsonline.com.br')) {
+      sqlGetUserId = 'SELECT id_aluno AS id FROM Aluno WHERE email_aluno = ?';
+      tokenTable = 'password_reset_tokens_aluno';
+  } else if (email.endsWith('@outlook.com')) {
+      sqlGetUserId = 'SELECT id_prof AS id FROM Professor WHERE email_consti_prof = ?';
+      tokenTable = 'password_reset_tokens_professor';
+  } else {
+      res.status(404).json({ message: 'Usuário não encontrado com o email fornecido' });
+      return;
+  }
+
   connection.query(sqlGetUserId, [email], (err, results) => {
       if (err) {
           console.error('Erro ao consultar ID do usuário no banco de dados:', err);
@@ -1014,22 +1030,16 @@ app.post('/enviarEmailRedefinicao', (req, res) => {
       }
 
       if (results.length === 0) {
-          // Usuário com o email fornecido não encontrado
           res.status(404).json({ message: 'Usuário não encontrado com o email fornecido' });
           return;
       }
 
       const userId = results[0].id;
-
-      // Gerar token único
-      const token = crypto.randomBytes(20).toString('hex'); // Token hexadecimal de 40 caracteres
-
-      // Definir data de expiração para 30 minutos a partir de agora
+      const token = crypto.randomBytes(20).toString('hex');
       const expiresAt = new Date();
       expiresAt.setMinutes(expiresAt.getMinutes() + 30);
 
-      // Inserir o token no banco de dados
-      const sqlInsertToken = 'INSERT INTO password_reset_tokens (user_id, token, expires_at) VALUES (?, ?, ?)';
+      const sqlInsertToken = `INSERT INTO ${tokenTable} (user_id, token, expires_at) VALUES (?, ?, ?)`;
       connection.query(sqlInsertToken, [userId, token, expiresAt], (err, insertResult) => {
           if (err) {
               console.error('Erro ao inserir token no banco de dados:', err);
@@ -1037,20 +1047,17 @@ app.post('/enviarEmailRedefinicao', (req, res) => {
               return;
           }
 
-          // URL da página HTML para redefinir a senha com o token
-          const resetPasswordURL = `http://127.0.0.1:5500/reset-password/reset-password.html?token=${token}`;
-
+          const resetPasswordURL = `http://127.0.0.1:5500/pages/reset-password/reset-password.html?token=${token}`;
           const mailOptions = {
               from: 'teste.pim.uscs@gmail.com',
               to: email,
               subject: 'Redefinição de Senha',
               html: `
-              <p>Você solicitou a redefinição de senha. Clique no link abaixo para redefinir sua senha:</p>
-              <p><a href="${resetPasswordURL}">Redefinir Senha</a></p>
-          `
+                  <p>Você solicitou a redefinição de senha. Clique no link abaixo para redefinir sua senha:</p>
+                  <p><a href="${resetPasswordURL}">Redefinir Senha</a></p>
+              `
           };
 
-          // Enviar o email de redefinição de senha
           transporter.sendMail(mailOptions, function(error, info) {
               if (error) {
                   console.error('Erro ao enviar o email de redefinição:', error);
@@ -1064,48 +1071,76 @@ app.post('/enviarEmailRedefinicao', (req, res) => {
   });
 });
 
-// Rota para redefinir a senha
 app.post('/redefinirSenha', (req, res) => {
   const { token, newPassword } = req.body;
 
-  // Consultar o token no banco de dados
-  const sqlSelectToken = 'SELECT * FROM password_reset_tokens WHERE token = ? AND expires_at > NOW()';
-  connection.query(sqlSelectToken, [token], (err, results) => {
-      if (err) {
-          console.error('Erro ao consultar token no banco de dados:', err);
-          res.status(500).json({ message: 'Erro interno do servidor' });
-          return;
-      }
+  const sqlSelectTokenAluno = 'SELECT * FROM password_reset_tokens_aluno WHERE token = ? AND expires_at > NOW()';
+  const sqlSelectTokenProfessor = 'SELECT * FROM password_reset_tokens_professor WHERE token = ? AND expires_at > NOW()';
 
-      if (results.length === 0) {
-          // Token inválido ou expirado
-          res.status(400).json({ message: 'Token inválido ou expirado' });
-          return;
-      }
-
-      const tokenInfo = results[0];
-      const userId = tokenInfo.user_id;
-
-      // Atualizar a senha do usuário
-      const sqlUpdatePassword = 'UPDATE users SET password = ? WHERE id = ?';
-      connection.query(sqlUpdatePassword, [newPassword, userId], (err, updateResult) => {
-          if (err) {
-              console.error('Erro ao atualizar a senha no banco de dados:', err);
-              res.status(500).json({ message: 'Erro interno do servidor' });
-              return;
-          }
-
-          // Remover o token do banco de dados após usar
-          const sqlDeleteToken = 'DELETE FROM password_reset_tokens WHERE id = ?';
-          connection.query(sqlDeleteToken, [tokenInfo.id], (err, deleteResult) => {
-              if (err) {
-                  console.error('Erro ao excluir o token do banco de dados:', err);
-              }
-          });
-
-          res.status(200).json({ message: 'Senha redefinida com sucesso' });
+  const checkToken = (sql) => {
+    return new Promise((resolve, reject) => {
+      connection.query(sql, [token], (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        if (results.length === 0) {
+          return resolve(null);
+        }
+        resolve(results[0]);
       });
-  });
+    });
+  };
+
+  const updatePassword = (table, userIdColumn, userId) => {
+    return new Promise((resolve, reject) => {
+      const sqlUpdatePassword = `UPDATE ${table} SET senha = ? WHERE ${userIdColumn} = ?`;
+      connection.query(sqlUpdatePassword, [newPassword, userId], (err, updateResult) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve();
+      });
+    });
+  };
+
+  const deleteToken = (table, tokenId) => {
+    return new Promise((resolve, reject) => {
+      const sqlDeleteToken = `DELETE FROM password_reset_tokens_${table} WHERE id = ?`;
+      connection.query(sqlDeleteToken, [tokenId], (err, deleteResult) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve();
+      });
+    });
+  };
+
+  const processPasswordReset = async () => {
+    try {
+      let tokenInfo = await checkToken(sqlSelectTokenAluno);
+      if (tokenInfo) {
+        await updatePassword('Aluno', 'id_aluno', tokenInfo.user_id);
+        await deleteToken('aluno', tokenInfo.id);
+        res.status(200).json({ message: 'Senha redefinida com sucesso' });
+        return;
+      }
+
+      tokenInfo = await checkToken(sqlSelectTokenProfessor);
+      if (tokenInfo) {
+        await updatePassword('Professor', 'id_prof', tokenInfo.user_id);
+        await deleteToken('professor', tokenInfo.id);
+        res.status(200).json({ message: 'Senha redefinida com sucesso' });
+        return;
+      }
+
+      res.status(400).json({ message: 'Token inválido ou expirado' });
+    } catch (err) {
+      console.error('Erro no processo de redefinição de senha:', err);
+      res.status(500).json({ message: 'Erro interno do servidor' });
+    }
+  };
+
+  processPasswordReset();
 });
 
 /////////////////////////LOGIN//////////////////////////////////
