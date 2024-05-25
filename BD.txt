@@ -120,7 +120,21 @@ CREATE TABLE Turma_Disciplina (
     FOREIGN KEY (id_disciplina) REFERENCES Disciplina(id_disciplina)
 );
 
+CREATE TABLE password_reset_tokens_aluno (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    expires_at DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Aluno(id_aluno)
+);
 
+CREATE TABLE password_reset_tokens_professor (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    expires_at DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Professor(id_prof)
+);
 
 
 
@@ -244,19 +258,3 @@ INSERT INTO Notas_faltas (id_disciplina, id_aluno, N1, AI, AP, faltas, academic_
  (1, 2, 12, 1, 12, 2, 2023, '2023-02-05', 2),
  (1, 3, 13, 1, 13, 2, 2024, '2024-02-05', 1),
  (1, 5, 15, 1, 15, 0, 2024, '2024-02-05', 2);
-
-CREATE TABLE password_reset_tokens_aluno (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    token VARCHAR(255) NOT NULL,
-    expires_at DATETIME NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES Aluno(id_aluno)
-);
-
-CREATE TABLE password_reset_tokens_professor (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    token VARCHAR(255) NOT NULL,
-    expires_at DATETIME NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES Professor(id_prof)
-);
