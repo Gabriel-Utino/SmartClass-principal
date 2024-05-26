@@ -108,7 +108,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
           const photoImg = document.createElement('img')
           photoImg.src = item.foto ? `../../upload/${item.foto}` : '../../upload/semfoto.png'
           photoImg.alt = 'Sem Foto'
-          photoImg.classList.add('img-alunoMini');
+          photoImg.classList.add('img-alunoMini')
           photoCell.appendChild(photoImg)
           row.appendChild(photoCell)
 
@@ -129,7 +129,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
 
         document.getElementById('applyFaltasButton').style.display = 'block'
       } else {
-        resultContainer.textContent = '該当するデータが見つかりませんでした'
+        resultContainer.textContent = '該当するデータがNão foi possível localizar'
         document.getElementById('applyFaltasButton').style.display = 'none'
       }
     })
