@@ -1280,7 +1280,7 @@ app.post('/enviarEmailRedefinicao', (req, res) => {
       return
     }
 
-    const userId = results[0].id
+    const userId = results[0].id   
     const token = crypto.randomBytes(20).toString('hex')
     const expiresAt = new Date()
     expiresAt.setMinutes(expiresAt.getMinutes() + 30)
