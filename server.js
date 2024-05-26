@@ -538,40 +538,50 @@ app.delete('/aluno_resps/:id_aluno/:id_resp', (req, res) => {
 
 
 // Notasのサーバー管理に関わる部分
-// Notasテーブルのデータ取得
-connection.query('SELECT * FROM notas_faltas;', (err, results) => {
+// NotasTableのデータ取得
+connection.query('SELECT * FROM Notas_faltas;', (err, results) => {
   if (err) {
-    console.error('Notasテーブルでエラー発生: ' + err)
+    console.error('Ocorreu erro na tabela Notas: ' + err)
   } else {
     notas = results
   }
 })
 // リスト化
-app.get('/notas', (req, res) => {
+app.get('/notas_faltas', (req, res) => {
   res.json(notas)
 })
 // 取得
-app.get('/notas/:id_notas', (req, res) => {
-  const notasID = parseInt(req.params.id_notas)
-  const nota = notas.find((nota) => nota.id_notas === notasID)
+app.get('/notas_faltas/:id_notas_faltas', (req, res) => {
+  const notasID = parseInt(req.params.id_notas_faltas)
+  const nota = notas.find(nota => nota.id_notas_faltas === notasID)
   if (nota) {
     res.json(nota)
   } else {
-    res.status(404).json({ message: '見つかりません' })
+    res.status(404).json({ message: 'Não foi possível localizar' })
   }
 })
 // 追加
-app.post('/notas', (req, res) => {
+app.post('/notas_faltas', (req, res) => {
   const newNota = req.body
   connection.query(
-    'INSERT INTO Notas (id_aluno, id_disciplina, n1, AI, AP, faltas, periodo_letivo) VALUES (?, ?, ?, ?, ?, ?, ?)',
-    [newNota.id_aluno, newNota.id_disciplina, newNota.n1, newNota.AI, newNota.AP, newNota.faltas, newNota.periodo_letivo],
+    'INSERT INTO Notas_faltas (id_disciplina, id_aluno, n1, AI, AP, faltas, academic_year, data_matricula, semestre) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [
+      newNota.id_disciplina,
+      newNota.id_aluno,
+      newNota.n1,
+      newNota.AI,
+      newNota.AP,
+      newNota.faltas,
+      newNota.academic_year,
+      newNota.data_matricula,
+      newNota.semestre
+    ],
     (err, result) => {
       if (err) {
         console.error('Error adding data to MySQL: ' + err)
-        res.status(500).json({ message: 'Notasを追加できませんでした' })
+        res.status(500).json({ message: 'Não foi possível adicionar notas' })
       } else {
-        newNota.id_notas = result.insertId
+        newNota.id_notas_faltas = result.insertId
         notas.push(newNota)
         res.status(201).json(newNota)
       }
@@ -579,18 +589,29 @@ app.post('/notas', (req, res) => {
   )
 })
 // 更新
-app.put("/notas/:id_notas", (req, res) => {
-  const id_notas = parseInt(req.params.id_notas)
+app.put('/notas_faltas/:id_notas_faltas', (req, res) => {
+  const id_notas_faltas = parseInt(req.params.id_notas_faltas)
   const updatedNota = req.body
-  const index = notas.findIndex((nota) => nota.id_notas === id_notas)
+  const index = notas.findIndex(nota => nota.id_notas_faltas === id_notas_faltas)
   if (index !== -1) {
     connection.query(
-      "UPDATE Notas SET id_aluno=?, id_disciplina=?, n1=?, AI=?, AP=?, faltas=?, periodo_letivo=? WHERE id_notas=?",
-      [updatedNota.id_aluno, updatedNota.id_disciplina, updatedNota.n1, updatedNota.AI, updatedNota.AP, updatedNota.faltas, updatedNota.periodo_letivo, id_notas],
-      (err) => {
+      'UPDATE Notas_faltas SET id_disciplina=?, id_aluno=?, n1=?, AI=?, AP=?, faltas=?, academic_year=?, data_matricula=?, semestre=? WHERE id_notas_faltas=?',
+      [
+        updatedNota.id_disciplina,
+        updatedNota.id_aluno,
+        updatedNota.n1,
+        updatedNota.AI,
+        updatedNota.AP,
+        updatedNota.faltas,
+        updatedNota.academic_year,
+        updatedNota.data_matricula,
+        updatedNota.semestre,
+        id_notas_faltas
+      ],
+      err => {
         if (err) {
-          console.error("Error updating data in MySQL: " + err)
-          res.status(500).json({ message: "Notasを更新できませんでした" })
+          console.error('Error updating data in MySQL: ' + err)
+          res.status(500).json({ message: 'Falha ao atualizar Notas' })
         } else {
           notas[index] = { ...notas[index], ...updatedNota }
           res.json(notas[index])
@@ -598,26 +619,39 @@ app.put("/notas/:id_notas", (req, res) => {
       }
     )
   } else {
-    res.status(404).json({ message: "Notasが見つかりません" })
+    res.status(404).json({ message: 'Notas não encontradas' })
   }
 })
 // 削除
-app.delete('/notas/:id_notas', (req, res) => {
-  const id_notas = parseInt(req.params.id_notas)
-  const index = notas.findIndex(nota => nota.id_notas === id_notas)
+app.delete('/notas_faltas/:id_notas_faltas', (req, res) => {
+  const id_notas_faltas = parseInt(req.params.id_notas)
+  const index = notas.findIndex(nota => nota.id_notas_faltas === id_notas_faltas)
   if (index !== -1) {
-    connection.query('DELETE FROM Notas WHERE id_notas=?', [id_notas], err => {
+    connection.query('DELETE FROM Notas_faltas WHERE id_notas_faltas=?', [id_notas_faltas], err => {
       if (err) {
-        console.error('Notasテーブル - MySQLからのデータ削除エラー: ' + err)
-        res.status(500).json({ message: '削除できませんでした' })
+        console.error('Tabela Notas - Erro ao excluir dados do MySQL: ' + err)
+        res.status(500).json({ message: 'Não foi possível excluir' })
       } else {
         const removedNota = notas.splice(index, 1)
         res.json(removedNota[0])
       }
     })
   } else {
-    res.status(404).json({ message: '見つかりませんでした' })
+    res.status(404).json({ message: 'Não foi possível localizar' })
   }
+})
+// 生徒IDに関連する成績や欠席情報を取得するエンドポイントを追加
+app.get('/alunos/:id_aluno/notas_faltas', (req, res) => {
+  const id_aluno = parseInt(req.params.id_aluno)
+  // 生徒IDに関連する成績や欠席情報を取得するクエリを実行
+  connection.query('SELECT * FROM Notas_faltas WHERE id_aluno = ?', [id_aluno], (err, results) => {
+    if (err) {
+      console.error('Ocorreu erro na tabela Notas: ' + err)
+      res.status(500).json({ message: 'Ocorreu um erro' })
+    } else {
+      res.json(results)
+    }
+  })
 })
 
 
@@ -840,6 +874,190 @@ app.delete('/disciplina_alunos/:id_aluno/:id_disciplina', (req, res) => {
 
 
 
+
+
+
+// prof_disciplinaのサーバー管理に関わる部分
+// prof_disciplinaTableのデータ取得
+connection.query('SELECT * FROM prof_disciplina;', (err, results) => {
+  if (err) {
+    console.error('Ocorreu um erro na tabela prof_disciplina: ' + err)
+  } else {
+    profDisciplinas = results
+  }
+})
+// リスト化
+app.get('/prof_disciplinas', (req, res) => {
+  res.json(profDisciplinas)
+})
+// 取得
+app.get('/prof_disciplinas/:id_prof_disc', (req, res) => {
+  const id_prof_discID = parseInt(req.params.id_prof_disc)
+  const profDisciplina = profDisciplinas.find(profDisciplina => profDisciplina.id_prof_disc === id_prof_discID)
+  if (profDisciplina) {
+    res.json(profDisciplina)
+  } else {
+    res.status(404).json({ message: 'Não encontrado' })
+  }
+})
+// 追加
+app.post('/prof_disciplinas', (req, res) => {
+  const newProfDisciplina = req.body
+  connection.query(
+    'INSERT INTO prof_disciplina (id_prof, id_disciplina) VALUES (?, ?)',
+    [newProfDisciplina.id_prof, newProfDisciplina.id_disciplina],
+    (err, result) => {
+      if (err) {
+        console.error('Ocorreu um erro ao adicionar dados ao MySQL: ' + err)
+        res.status(500).json({ message: 'Não foi possível adicionar prof_disciplina' })
+      } else {
+        newProfDisciplina.id_prof_disc = result.insertId
+        profDisciplinas.push(newProfDisciplina)
+        res.status(201).json(newProfDisciplina)
+      }
+    }
+  )
+})
+// 削除
+app.delete('/prof_disciplinas/:id_prof_disc', (req, res) => {
+  const id_prof_discID = parseInt(req.params.id_prof_disc)
+  const index = profDisciplinas.findIndex(profDisciplina => profDisciplina.id_prof_disc === id_prof_discID)
+  if (index !== -1) {
+    connection.query('DELETE FROM prof_disciplina WHERE id_prof_disc=?', [id_prof_discID], err => {
+      if (err) {
+        console.error('tabela prof_disciplina – Erro ao excluir dados do MySQL: ' + err)
+        res.status(500).json({ message: 'Não foi possível excluir' })
+      } else {
+        const removedProfDisciplina = profDisciplinas.splice(index, 1)
+        res.json(removedProfDisciplina[0])
+      }
+    })
+  } else {
+    res.status(404).json({ message: 'Não foi possível localizar' })
+  }
+})
+
+// orgDisciTurmaで使用
+// 選択されたTurmaのDisciplinaを取得
+app.get('/turmas/:id_turma/disciplinas', (req, res) => {
+  const id_turma = parseInt(req.params.id_turma)
+  connection.query(
+    'SELECT d.id_disciplina, d.disciplina FROM Disciplina d INNER JOIN Turma_Disciplina td ON d.id_disciplina = td.id_disciplina WHERE td.id_turma = ?',
+    [id_turma],
+    (err, results) => {
+      if (err) {
+        console.error('Error fetching Disciplinas:', err)
+        res.status(500).json({ message: 'Falha ao obter Disciplinas' })
+      } else {
+        res.json(results)
+      }
+    }
+  )
+})
+// 選択されたTurmaのAlunoと複数のDisciplinaの間にNotas_faltasエントリを作成
+app.post('/assign-disciplinas', (req, res) => {
+  const { id_turma, id_disciplinas, academic_year, semestre } = req.body
+
+  // Turmaに所属する全てのAlunoを取得
+  connection.query('SELECT id_aluno FROM Aluno WHERE id_turma = ?', [id_turma], (err, alunos) => {
+    if (err) {
+      console.error('Error fetching Alunos:', err)
+      res.status(500).json({ message: 'Falha ao obter Aluno' })
+      return
+    }
+
+    // Notas_faltas criar
+    const data_matricula = new Date().toISOString().slice(0, 10)
+
+    id_disciplinas.forEach(id_disciplina => {
+      alunos.forEach(aluno => {
+        connection.query(
+          'INSERT INTO Notas_faltas (id_disciplina, id_aluno, academic_year, data_matricula, semestre) VALUES (?, ?, ?, ?, ?)',
+          [id_disciplina, aluno.id_aluno, academic_year, data_matricula, semestre],
+          err => {
+            if (err) {
+              console.error('Error creating Notas_faltas entry:', err)
+            }
+          }
+        )
+      })
+    })
+
+    res.json({ message: 'Aplicado' })
+  })
+})
+
+//para adaptar apricar faltas
+//Pegue toda Turma
+app.get('/turmasFaltas', (req, res) => {
+  connection.query('SELECT * FROM Turma;', (err, results) => {
+    if (err) {
+      console.error('Ocorreu erro na tabela Turma: ' + err)
+      res.status(500).json({ message: 'Não foi possível obter Turma' })
+    } else {
+      res.json(results)
+    }
+  })
+})
+// Obtenha Disciplinas relacionadas à Turma especificada
+app.get('/turma_disciplinas/:id_turma/disciplinas', (req, res) => {
+  const id_turma = parseInt(req.params.id_turma)
+  connection.query(
+    `SELECT d.id_disciplina, d.disciplina 
+     FROM Turma_Disciplina td 
+     JOIN Disciplina d ON td.id_disciplina = d.id_disciplina 
+     WHERE td.id_turma = ?`,
+    [id_turma],
+    (err, results) => {
+      if (err) {
+        console.error('Ocorreu erro na tabela Turma_Disciplina: ' + err)
+        res.status(500).json({ message: 'Não foi possível obter Disciplina' })
+      } else {
+        res.json(results)
+      }
+    }
+  )
+})
+// notas_faltas Tabela de pesquisa
+app.get('/notas_faltasApri', (req, res) => {
+  const { turmaId, disciplinaId, year, semestre } = req.query
+  connection.query(
+    `SELECT nf.id_notas_faltas, nf.faltas, nf.N1, nf.AI, nf.AP, nf.id_aluno, a.nome_aluno, a.foto
+     FROM Notas_faltas nf
+     JOIN Aluno a ON nf.id_aluno = a.id_aluno
+     WHERE nf.id_disciplina = ? AND a.id_turma = ? AND nf.academic_year = ? AND nf.semestre = ?`,
+    [disciplinaId, turmaId, year, semestre],
+    (err, results) => {
+      if (err) {
+        console.error('Error fetching notas_faltas:', err)
+        res.status(500).json({ message: 'Erro na pesquisa' })
+      } else {
+        res.json(results)
+      }
+    }
+  )
+})
+// faltas atualizar
+app.put('/notas_faltasApri/faltas', (req, res) => {
+  const { ids } = req.body
+  const placeholders = ids.map(() => '?').join(',')
+  connection.query(
+    `UPDATE Notas_faltas SET faltas = faltas + 1 WHERE id_notas_faltas IN (${placeholders})`,
+    ids,
+    (err, results) => {
+      if (err) {
+        console.error('Error updating faltas:', err)
+        console.log('Conteúdo do erro:' + err)
+        res.status(500).json({ success: false, message: 'Não foi possível atualizar' })
+      } else {
+        res.json({ success: true, message: 'Faltas foi apricada' })
+      }
+    }
+  )
+})
+
+
+
 // evento_professorのサーバー管理に関わる部分
 // evento_professorテーブルのデータ取得
 connection.query('SELECT * FROM evento_professor;', (err, results) => {
@@ -965,6 +1183,17 @@ app.delete('/turma_disciplinas/:id_turma/:id_disciplina', (req, res) => {
     res.status(404).json({ message: '見つかりませんでした' })
   }
 })
+
+
+
+
+
+
+
+
+
+
+
 
 ///////////////////////////ENVIO DE EMAIL///////////////////////
 
