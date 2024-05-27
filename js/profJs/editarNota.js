@@ -40,7 +40,6 @@ function fetchAlunoInfo(alunoId) {
     .then(response => response.json())
     .then(data => {
       document.getElementById('nomeAluno').value = data.nome_aluno;
-      console.log(data)
     })
     .catch(error => console.error('Error fetching Aluno:', error));
 }
