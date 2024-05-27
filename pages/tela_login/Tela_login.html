@@ -79,7 +79,9 @@
                     contentType: 'application/json',
                     success: function(response) {
                         if (response.success) {
-                            if (email.endsWith('@outlook.com')) {
+                            if (email.endsWith('admin@outlook.com')) {
+                                window.location.href = '../adminPages/homeAdmin.html';
+                            } else if (email.endsWith('@outlook.com')) {
                                 window.location.href = '../prof/homeProf.html';
                             } else if (email.endsWith('@uscsonline.com.br')) {
                                 window.location.href = '../alunos/home.html';
