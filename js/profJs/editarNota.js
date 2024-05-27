@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const disciplinaId = urlParams.get('disciplinaId');
   const idNotasFaltas = urlParams.get('idNotasFaltas');
 
-  fetchAlunoInfo(idNotasFaltas);
+  fetchAlunoInfo(alunoId);
   fetchNotaInfo(idNotasFaltas);
 
   const editNotaForm = document.getElementById('editNotaForm');
@@ -40,6 +40,7 @@ function fetchAlunoInfo(alunoId) {
     .then(response => response.json())
     .then(data => {
       document.getElementById('nomeAluno').value = data.nome_aluno;
+      console.log(data)
     })
     .catch(error => console.error('Error fetching Aluno:', error));
 }
