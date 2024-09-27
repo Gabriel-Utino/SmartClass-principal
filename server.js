@@ -1404,7 +1404,76 @@ app.post('/redefinirSenha', (req, res) => {
   processPasswordReset()
 })
 
+
+
+
 /////////////////////////LOGIN//////////////////////////////////
+// トークンのシークレットキー
+const JWT_SECRET = 'your_jwt_secret';
+// ログイン API
+app.post('/login', (req, res) => {
+  const { email, senha } = req.body;
+
+  if (!email || !senha) {
+      return res.status(400).json({ message: 'Emailとパスワードを入力してください。' });
+  }
+
+  // データベースからユーザーを検索
+  db.query('SELECT * FROM Aluno WHERE email_aluno = ?', [email], (err, results) => {
+      if (err) {
+          return res.status(500).json({ message: 'データベースエラー' });
+      }
+
+      if (results.length === 0) {
+          return res.status(400).json({ message: 'ユーザーが存在しません。' });
+      }
+
+      const user = results[0];
+
+      // パスワードの比較
+      bcrypt.compare(senha, user.senha, (err, isMatch) => {
+          if (err) {
+              return res.status(500).json({ message: 'パスワード比較エラー' });
+          }
+
+          if (!isMatch) {
+              return res.status(400).json({ message: 'パスワードが間違っています。' });
+          }
+
+          // JWTトークンの発行
+          const token = jwt.sign({ id: user.id_aluno }, JWT_SECRET, { expiresIn: '1h' });
+
+          return res.json({
+              message: 'ログイン成功',
+              token
+          });
+      });
+  });
+});
+// 認証ミドルウェア
+const authenticateToken = (req, res, next) => {
+  const token = req.headers['authorization'];
+
+  if (!token) {
+      return res.status(401).json({ message: 'トークンが必要です。' });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+      if (err) {
+          return res.status(403).json({ message: '無効なトークンです。' });
+      }
+
+      req.user = user;
+      next();
+  });
+};
+// 認証されたルート例
+app.get('/protected', authenticateToken, (req, res) => {
+  res.json({ message: '保護されたルートにアクセスしました。' });
+});
+
+
+
 
 // Rota para autenticação de login
 app.post('/api/teste', (req, res) => {
