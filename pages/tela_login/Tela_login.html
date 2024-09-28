@@ -79,10 +79,12 @@
                     contentType: 'application/json',
                     success: function(response) {
                         if (response.success) {
-                            if (email.endsWith('@uscsonline.com.br')) {
-                                window.location.href = 'https://www.youtube.com';
+                            if (email.endsWith('admin@outlook.com')) {
+                                window.location.href = '../adminPages/homeAdmin.html';
                             } else if (email.endsWith('@outlook.com')) {
-                                window.location.href = 'https://www.google.com/maps';
+                                window.location.href = '../prof/homeProf.html';
+                            } else if (email.endsWith('@uscsonline.com.br')) {
+                                window.location.href = '../alunos/home.html';
                             }
                         } else {
                             $('#error-message').text('Credenciais inválidas. Verifique seu email e senha.').show();

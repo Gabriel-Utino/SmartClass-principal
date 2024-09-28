@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #profileInfo {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>プロフィール</h2>
+        <button id="getProfile" class="btn btn-primary mb-3">プロフィールを取得</button>
+        <button id="logout-button" class="btn btn-secondary mb-3 ml-2">ログアウト</button>
+        <div id="profileInfo" class="border p-3">
+            <!-- プロフィール情報が表示されます -->
+        </div>
+    </div>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        document.getElementById('getProfile').addEventListener('click', async () => {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                alert('ログインが必要です。');
+                window.location.href = 'login.html'; // ログインページにリダイレクト
+                return;
+            }
+
+            try {
+                const response = await fetch('http://あなたのサーバー/profile', { // サーバーのURLを正しく設定
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                });
+
+                if (response.ok) {
+                    const profile = await response.json();
+                    document.getElementById('profileInfo').innerHTML = `
+                        <p><strong>ID:</strong> ${profile.id_usuario}</p>
+                        <p><strong>名前:</strong> ${profile.nome_usuario}</p>
+                        <p><strong>Email:</strong> ${profile.email_usuario}</p>
+                        <p><strong>CPF:</strong> ${profile.cpf_usuario}</p>
+                        <p><strong>Endereco:</strong> ${profile.endereco_usuario || 'N/A'}</p>
+                        <p><strong>Telefone:</strong> ${profile.telefone_usuario || 'N/A'}</p>
+                        <p><strong>Nascimento:</strong> ${profile.nascimento_usuario || 'N/A'}</p>
+                        <p><strong>Perfil ID:</strong> ${profile.id_perfil}</p>
+                    `;
+                } else if (response.status === 401) {
+                    alert('認証が必要です。再ログインしてください。');
+                    window.location.href = 'login.html';
+                } else {
+                    const errorText = await response.text();
+                    alert(errorText || 'プロフィールの取得に失敗しました。');
+                }
+            } catch (error) {
+                console.error('エラー:', error);
+                alert('サーバーとの通信に問題が発生しました。');
+            }
+        });
+
+        // ログアウトボタンの機能
+        document.getElementById('logout-button').addEventListener('click', () => {
+            localStorage.removeItem('token');
+            alert('ログアウトしました。');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

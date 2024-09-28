@@ -5,6 +5,9 @@ const bodyParser = require('body-parser')
 const crypto = require('crypto') // Importar módulo crypto para gerar token
 const nodemailer = require('nodemailer') // Importar nodemailer para envio de email
 
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 //
 const app = express()
 const port = 3000
@@ -15,8 +18,87 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'smartclass'
+  database: 'smartclass'//旧データベースsmartclass　New - smartclass2
 })
+
+
+
+const authenticateToken = require('./authenticateToken');
+// ユーザー登録エンドポイント
+app.post('/register', (req, res) => {
+  const { nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, nascimento_usuario, senha, id_perfil } = req.body;
+
+  // パスワードをハッシュ化
+  const salt = bcrypt.genSaltSync(10);
+  const hashedPassword = bcrypt.hashSync(senha, salt);
+
+  // データベースにユーザーを挿入
+  const query = 'INSERT INTO usuario (nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, nascimento_usuario, senha, id_perfil) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+  db.query(query, [nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, nascimento_usuario, hashedPassword, id_perfil], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('サーバーエラー');
+    }
+    res.status(201).send('ユーザーが登録されました');
+  });
+});// ユーザーログインエンドポイント
+app.post('/login', (req, res) => {
+  const { email_usuario, senha } = req.body;
+
+  // ユーザーをデータベースから取得
+  const query = 'SELECT * FROM usuario WHERE email_usuario = ?';
+  db.query(query, [email_usuario], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('サーバーエラー');
+    }
+
+    if (results.length === 0) {
+      return res.status(401).send('メールまたはパスワードが間違っています');
+    }
+
+    const user = results[0];
+
+    // パスワードの比較
+    const isPasswordValid = bcrypt.compareSync(senha, user.senha);
+    if (!isPasswordValid) {
+      return res.status(401).send('メールまたはパスワードが間違っています');
+    }
+
+    // JWTのペイロード
+    const payload = {
+      id: user.id_usuario,
+      email: user.email_usuario,
+      perfil: user.id_perfil
+    };
+
+    // JWTの生成
+    const token = jwt.sign(payload, 'あなたのシークレットキー', { expiresIn: '1h' });
+
+    res.json({ token });
+  });
+});
+// 例: ユーザー情報を取得する保護されたルート
+app.get('/profile', authenticateToken, (req, res) => {
+  const userId = req.user.id;
+
+  const query = 'SELECT * FROM usuario WHERE id_usuario = ?';
+  db.query(query, [userId], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('サーバーエラー');
+    }
+
+    if (results.length === 0) {
+      return res.status(404).send('ユーザーが見つかりません');
+    }
+
+    res.json(results[0]);
+  });
+});
+
+
+
 connection.connect(err => {
   if (err) {
     console.error('MySQL connection failed: ' + err.stack)

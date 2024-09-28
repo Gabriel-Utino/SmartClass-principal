@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/pages/tela_login/styles.css">
+    <style>
+        /* ローディングスピナーを初期的に非表示にする */
+        #loading-spinner {
+            display: none;
+            width: 50px;
+            margin-top: 20px;
+        }
+        /* エラーメッセージを初期的に非表示にする */
+        .hidden {
+            display: none;
+        }
+        #error-message-container {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div id="logo-container" class="text-center mb-4">
+            <img src="/icons/logo.jpg" alt="Logo" id="logo" class="img-fluid">
+        </div>
+        <div id="login-container" class="mx-auto" style="max-width: 400px;">
+            <div class="form-group">
+                <input type="email" id="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="form-group position-relative">
+                <input type="password" id="password" class="form-control" placeholder="Senha" required>
+                <button type="button" id="show-password-btn" class="btn btn-link position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);" onclick="togglePasswordVisibility()">
+                    <i id="eye-icon" class="far fa-eye"></i>
+                </button>
+            </div>
+            <p id="forgot-password" class="text-right"><a href="../Trocar_senha/trocar_senha.html">Esqueci minha senha</a></p>
+            <button id="login-button" class="btn btn-dark btn-block">Entrar</button>
+            <img id="loading-spinner" src="https://media.giphy.com/media/17mNCcKU1mJlrbXodo/giphy.gif" alt="Carregando...">
+            <div id="error-message-container">
+                <p id="error-message" class="text-danger hidden"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
