@@ -17,8 +17,8 @@ router.get('/register', ensureAuthenticated, authorizeRoles(5, 1), (req, res) =>
 router.post('/register', ensureAuthenticated, authorizeRoles(5, 1), authController.register);
 
 // pagina gabriel
-router.get('/gabriel', ensureAuthenticated, authorizeRoles(3), (req, res) => {
-    res.render('gabriel');  // 'gabriel.ejs' Renderizar a página do lado do servidor
+router.get('/calendario', ensureAuthenticated, authorizeRoles(3), (req, res) => {
+    res.render('calendario');  // 'gabriel.ejs' Renderizar a página do lado do servidor
 });
 
 // パスワードリセット関連のルート
