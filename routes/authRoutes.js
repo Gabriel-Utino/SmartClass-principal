@@ -16,10 +16,40 @@ router.get('/logout', authController.logout);
 router.get('/register', ensureAuthenticated, authorizeRoles(5, 1), (req, res) => res.render('register', { message: req.flash('error') }));
 router.post('/register', ensureAuthenticated, authorizeRoles(5, 1), authController.register);
 
-// pagina gabriel
-router.get('/calendario', ensureAuthenticated, authorizeRoles(3), (req, res) => {
-    res.render('calendario');  // 'gabriel.ejs' Renderizar a página do lado do servidor
+// paginas
+router.get('/calendario', (req, res) => {
+    res.render('calendario', { user: req.session.user }) // views/apricarFaltas.ejs
 });
+router.get('/apricarFaltas', ensureAuthenticated, authorizeRoles(2), (req, res) => {
+    res.render('apricarFaltas', { user: req.session.user }) // views/apricarFaltas.ejs
+})
+router.get('/apricarNotas', ensureAuthenticated, authorizeRoles(2), (req, res) => {
+    res.render('apricarNotas', { user: req.session.user }) // views/apricarNotas.ejs
+})
+router.get('/variFaltas', ensureAuthenticated, authorizeRoles(3), (req, res) => {
+    res.render('variFaltas', { user: req.session.user }) // views/variFaltas.ejs
+})
+router.get('/variNotas', ensureAuthenticated, authorizeRoles(3), (req, res) => {
+    res.render('variNotas', { user: req.session.user }) // views/variNotas.ejs
+})
+router.get('/turma', ensureAuthenticated, authorizeRoles(5, 1), (req, res) => {
+  res.render('turma', { user: req.session.user }) // views/turma.ejs
+})
+router.get('/disciplina', ensureAuthenticated, authorizeRoles(5, 1), (req, res) => {
+  res.render('disciplina', { user: req.session.user }) // views/disciplina.ejs
+})
+router.get('/aluno', ensureAuthenticated, authorizeRoles(5, 1), (req, res) => {
+  res.render('aluno', { user: req.session.user }) // views/aluno.ejs
+})
+router.get('/responsavel', ensureAuthenticated, authorizeRoles(5, 1), (req, res) => {
+  res.render('responsavel', { user: req.session.user }) // views/responsavel.ejs
+})
+router.get('/organizacao', ensureAuthenticated, authorizeRoles(5, 1), (req, res) => {
+  res.render('organizacao', { user: req.session.user }) // views/organizacao.ejs
+})
+router.get('/professor', ensureAuthenticated, authorizeRoles(5, 1), (req, res) => {
+  res.render('professor', { user: req.session.user }) // views/professor.ejs
+})
 
 // パスワードリセット関連のルート
 router.get('/forgot-password', authController.getForgotPassword);

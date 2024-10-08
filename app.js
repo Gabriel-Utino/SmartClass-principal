@@ -47,11 +47,11 @@ app.use('/', authRoutes)
 // ダッシュボードルート
 const isAuthenticated = require('./middleware/isAuthenticated')
 
-app.get('/dashboard', (req, res) => {
+app.get('/calendario', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/login') // ユーザーがログインしていない場合
   }
-  res.render('dashboard', { user: req.session.user }) // ダッシュボードを表示
+  res.render('calendario', { user: req.session.user }) // ダッシュボードを表示
 })
 
 app.get('/home', (req, res) => {
@@ -62,25 +62,73 @@ app.get('/home', (req, res) => {
 })
 
 app.get('/dadosCadastrais', (req, res) => {
-    if (!req.session.user) {
-      return res.redirect('/login') // ユーザーがログインしていない場合
-    }
-    res.render('dadosCadastrais', { user: req.session.user }) // ダッシュボードを表示
-  })
-  
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('dadosCadastrais', { user: req.session.user }) // ダッシュボードを表示
+})
+
 app.get('/veriNotas', (req, res) => {
-    if (!req.session.user) {
-      return res.redirect('/login') // ユーザーがログインしていない場合
-    }
-    res.render('veriNotas', { user: req.session.user }) // ダッシュボードを表示
-  })
-  
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('veriNotas', { user: req.session.user }) // ダッシュボードを表示
+})
 app.get('/veriFaltas', (req, res) => {
-    if (!req.session.user) {
-      return res.redirect('/login') // ユーザーがログインしていない場合
-    }
-    res.render('veriFaltas', { user: req.session.user }) // ダッシュボードを表示
-  })
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('veriFaltas', { user: req.session.user }) // ダッシュボードを表示
+})
+app.get('/arpicarNotas', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('arpicarNotas', { user: req.session.user }) // ダッシュボードを表示
+})
+app.get('/arpicarFaltas', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('arpicarFaltas', { user: req.session.user }) // ダッシュボードを表示
+})
+
+app.get('/turma', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('turma', { user: req.session.user }) // ダッシュボードを表示
+})
+app.get('/disciplina', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('disciplina', { user: req.session.user }) // ダッシュボードを表示
+})
+app.get('/aluno', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('aluno', { user: req.session.user }) // ダッシュボードを表示
+})
+app.get('/responsavel', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('responsavel', { user: req.session.user }) // ダッシュボードを表示
+})
+app.get('/organizacao', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('organizacao', { user: req.session.user }) // ダッシュボードを表示
+})
+app.get('/professor', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('professor', { user: req.session.user }) // ダッシュボードを表示
+})
 
 // 404エラーハンドリング
 app.use((req, res, next) => {
