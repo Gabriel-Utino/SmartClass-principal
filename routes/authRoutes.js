@@ -26,12 +26,15 @@ router.get('/apricarFaltas', ensureAuthenticated, authorizeRoles(2), (req, res) 
 router.get('/apricarNotas', ensureAuthenticated, authorizeRoles(2), (req, res) => {
     res.render('apricarNotas', { user: req.session.user }) // views/apricarNotas.ejs
 })
+
+
 router.get('/variFaltas', ensureAuthenticated, authorizeRoles(3), (req, res) => {
     res.render('variFaltas', { user: req.session.user }) // views/variFaltas.ejs
 })
 router.get('/variNotas', ensureAuthenticated, authorizeRoles(3), (req, res) => {
     res.render('variNotas', { user: req.session.user }) // views/variNotas.ejs
 })
+
 router.get('/turma', ensureAuthenticated, authorizeRoles(5, 1), (req, res) => {
   res.render('turma', { user: req.session.user }) // views/turma.ejs
 })
