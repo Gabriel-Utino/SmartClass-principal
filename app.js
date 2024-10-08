@@ -84,17 +84,17 @@ app.get('/veriFaltas', (req, res) => {
 
 // 404エラーハンドリング
 app.use((req, res, next) => {
-  res.status(404).render('404', { message: 'ページが見つかりません' })
+  res.status(404).render('404', { message: 'Página não encontrada' })
 })
 
 // エラーハンドリングミドルウェア
 app.use((err, req, res, next) => {
   console.error(err.stack)
-  res.status(500).send('サーバーエラーが発生しました')
+  res.status(500).send('Ocorreu um erro no servidor')
 })
 
 // サーバー起動
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
-  console.log(`サーバーがポート${PORT}で起動しました`)
+  console.log(`Servidor iniciado na porta ${PORT}.`)
 })

@@ -2,22 +2,22 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>ログイン</title>
+    <title>Login</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <h1>ログイン</h1>
+    <h1>Login</h1>
     <% if (message.length > 0) { %>
         <p><%= message %></p>
     <% } %>
     <form action="/login" method="POST">
-        <label for="email_usuario">メールアドレス:</label>
+        <label for="email_usuario">E-mail:</label>
         <input type="email" name="email_usuario" required>
-        <label for="senha">パスワード:</label>
+        <label for="senha">Password:</label>
         <input type="password" name="senha" required>
-        <button type="submit">ログイン</button>
+        <button type="submit">Login</button>
     </form>
     <p><a href="/register">アカウントを作成する</a></p>
-    <p><a href="/forgot-password">パスワードを忘れましたか？</a></p> <!-- 追加部分 -->
+    <p><a href="/forgot-password">Esqueceu sua senha?</a></p> <!-- 追加部分 -->
 </body>
 </html>

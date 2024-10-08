@@ -40,7 +40,7 @@
           </form> -->
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+              <a class="nav-link active" aria-current="page" href="home">Home</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -48,18 +48,25 @@
                 Notas e Faltas
               </a>
               <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="VeriNotas.html">Notas</a></li>
-                <li><a class="dropdown-item" href="VeriFaltas.html">Faltas</a></li>
+                
+                <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
+                <li><a class="dropdown-item" href="veriNotas">Notas</a></li>
+                <li><a class="dropdown-item" href="veriFaltas">Faltas</a></li>
+                <% } %>
+                <% if (user.id_perfil === 2) { %><!-- quando e Professor --> 
+                  <li><a class="dropdown-item" href="apricarNotas">Apricar Notas</a></li>
+                  <li><a class="dropdown-item" href="apricarFaltas">Apricar Faltas</a></li>
+                <% } %>
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="Calendario.html">Calendario</a>
+              <a class="nav-link" href="Calendario">Calendario</a>
             </li>
             <!-- <li class="nav-item">
               <a class="nav-link" href="#">Financeiro</a>
             </li> -->
             <li class="nav-item">
-              <a class="nav-link" href="dadosCadastrais.html">Dados Cadastrais</a>
+              <a class="nav-link" href="dadosCadastrais">Dados Cadastrais</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/logout">Logout</a>

@@ -52,26 +52,51 @@
           </form> -->
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+              <a class="nav-link active" aria-current="page" href="/home">Home</a>
             </li>
+            <% if (user.id_perfil === 3 || user.id_perfil === 2) { %> 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Notas e Faltas
               </a>
               <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="VeriNotas.html">Notas</a></li>
-                <li><a class="dropdown-item" href="VeriFaltas.html">Faltas</a></li>
+                
+                <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
+                <li><a class="dropdown-item" href="/veriNotas">Notas</a></li>
+                <li><a class="dropdown-item" href="/veriFaltas">Faltas</a></li>
+                <% } %>
+                <% if (user.id_perfil === 2) { %><!-- quando e Professor --> 
+                  <li><a class="dropdown-item" href="/apricarNotas">Apricar Notas</a></li>
+                  <li><a class="dropdown-item" href="/apricarFaltas">Apricar Faltas</a></li>
+                <% } %>
               </ul>
             </li>
+            <% } %>
+            <% if (user.id_perfil === 1 || user.id_perfil === 5) { %> 
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Cadastramentos
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="/turma">Turma</a></li>
+                <li><a class="dropdown-item" href="/disciplina">Disciplinas</a></li>
+                <li><a class="dropdown-item" href="/aluno">Alunos</a></li>
+                <li><a class="dropdown-item" href="/responsavel">Responsaveis</a></li>
+                <li><a class="dropdown-item" href="/organizacao">Organizacao</a></li>
+                <li><a class="dropdown-item" href="/professor">Professores</a></li>
+              </ul>
+            </li>
+            <% } %>
             <li class="nav-item">
-              <a class="nav-link" href="Calendario.html">Calendario</a>
+              <a class="nav-link" href="/calendario">Calendario</a>
             </li>
             <!-- <li class="nav-item">
               <a class="nav-link" href="#">Financeiro</a>
             </li> -->
             <li class="nav-item">
-              <a class="nav-link" href="dadosCadastrais.html">Dados Cadastrais</a>
+              <a class="nav-link" href="/dadosCadastrais">Dados Cadastrais</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/logout">Logout</a>
@@ -140,7 +165,7 @@
       </div>
       <div class="col-5 icon-container">
         <a href="Calendario.html">
-          <img src="../../icons/calendarB.png" alt="Calendar Icon">
+          <img src="/icons/calendarB.png" alt="Calendar Icon">
         </a>
         <p>Calendar</p>
       </div>
@@ -153,27 +178,27 @@
       <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
       <div class="col-5 icon-container">
         <a href="veriNotas">
-          <img src="../../icons/noteB.png" alt="Note Icon">
+          <img src="/icons/noteB.png" alt="Note Icon">
         </a>
         <p>Notas</p>
       </div>
       <div class="col-5 icon-container">
         <a href="veriFaltas">
-          <img src="../../icons/notaB.png" alt="Faltas Icon">
+          <img src="/icons/notaB.png" alt="Faltas Icon">
         </a>
         <p>Faltas</p>
       </div>
       <% } %>
       <% if (user.id_perfil === 2) { %><!-- quando e Professor --> 
         <div class="col-5 icon-container">
-          <a href="apricarNotas.html">
-            <img src="../../icons/noteB.png" alt="Note Icon">
+          <a href="apricarNotas">
+            <img src="/icons/noteB.png" alt="Note Icon">
           </a>
           <p>Aplicar Notas</p>
         </div>
         <div class="col-5 icon-container">
-          <a href="apricarFaltas.html">
-            <img src="../../icons/apricarFaltas.png" alt="Faltas Icon">
+          <a href="apricarFaltas">
+            <img src="/icons/apricarFaltas.png" alt="Faltas Icon">
           </a>
           <p>Aplicar Faltas</p>
         </div>
@@ -191,39 +216,39 @@
       <div class="container">
         <div class="row justify-content-center  rounded bg-body-secondary">
           <div class="col-5 icon-container">
-            <a href="turma.html">
-              <img src="../../icons/turmasB.png" alt="Calendar Icon">
+            <a href="turma">
+              <img src="/icons/turmasB.png" alt="Calendar Icon">
             </a>
             <p>Turma</p>
           </div>
           <div class="col-5 icon-container">
-            <a href="disciplina.html">
-              <img src="../../icons/disciplinas.png" alt="Note Icon">
+            <a href="disciplina">
+              <img src="/icons/disciplinas.png" alt="Note Icon">
             </a>
             <p>Disciplinas</p>
           </div>
           <div class="col-5 icon-container">
-            <a href="aluno.html">
-              <img src="../../icons/alunosB.png" alt="Icon">
+            <a href="aluno">
+              <img src="/icons/alunosB.png" alt="Icon">
               <i class="fas fa-user-edit"></i>
             </a>
             <p>Alunos</p>
           </div>
           <div class="col-5 icon-container">
-            <a href="responsavel.html">
-              <img src="../../icons/resp.png" alt="Faltas Icon">
+            <a href="responsavel">
+              <img src="/icons/resp.png" alt="Faltas Icon">
             </a>
             <p>Responsaveis</p>
           </div>
           <div class="col-5 icon-container">
-            <a href="organizaçao.html">
-              <img src="../../icons/organizacao.png" alt="Faltas Icon">
+            <a href="organizaçao">
+              <img src="/icons/organizacao.png" alt="Faltas Icon">
             </a>
             <p>Organização</p>
           </div>
           <div class="col-5 icon-container">
-            <a href="professor.html">
-              <img src="../../icons/prof.png" alt="Faltas Icon">
+            <a href="professor">
+              <img src="/icons/prof.png" alt="Faltas Icon">
             </a>
             <p>professores</p>
           </div>
