@@ -1,5 +1,6 @@
 // app.js
 const express = require('express')
+const cors = require('cors')
 const session = require('express-session')
 const flash = require('connect-flash')
 const path = require('path')
@@ -7,7 +8,10 @@ const dotenv = require('dotenv')
 const passport = require('./config/passport') // Passportの設定を読み込み
 
 const authRoutes = require('./routes/authRoutes')
-// 他のルートもインポート
+
+
+// importar cada Pagina com funcao
+const disciplinasRoutes = require('./routes/disciplinasRoutes');
 
 dotenv.config()
 
@@ -16,6 +20,11 @@ const app = express()
 // ミドルウェア設定
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(cors())
+
+
+// Cada pagina de funcao
+app.use('/disciplinas', disciplinasRoutes);
 
 app.use(
   session({
@@ -142,7 +151,7 @@ app.use((err, req, res, next) => {
 })
 
 // サーバー起動
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Servidor iniciado na porta ${PORT}.`)
 })
