@@ -257,5 +257,3 @@ INSERT INTO turma_disciplina (id_turma, id_disciplina) VALUES
 (4, 4),
 (5, 5);
 
-行き方が逆でTurmaからAluno、AlunoからAlunoDisci、そこからAlunoDisciからDisciを取ってくる
-そうしてFaltasのテーブルに必要な要素が揃うはず
