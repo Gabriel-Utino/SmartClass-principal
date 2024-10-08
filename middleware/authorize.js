@@ -27,7 +27,7 @@ module.exports = {
     if (req.session && req.session.user) {
       return next()
     }
-    req.flash('error', 'ログインが必要です')
+    req.flash('error', 'You need to be logged in to access this page')
     res.redirect('/login')
   },
 
@@ -36,7 +36,7 @@ module.exports = {
       if (req.session && req.session.user && allowedRoles.includes(req.session.user.id_perfil)) {
         return next()
       }
-      req.flash('error', 'このページにアクセスする権限がありません')
+      req.flash('error', 'You do not have the required permissions')
       res.redirect('/home')
     }
   }

@@ -16,6 +16,10 @@ router.get('/logout', authController.logout);
 router.get('/register', ensureAuthenticated, authorizeRoles(5, 1), (req, res) => res.render('register', { message: req.flash('error') }));
 router.post('/register', ensureAuthenticated, authorizeRoles(5, 1), authController.register);
 
+// pagina gabriel
+router.get('/calendario', ensureAuthenticated, authorizeRoles(3), (req, res) => {
+    res.render('calendario');  // 'gabriel.ejs' Renderizar a página do lado do servidor
+});
 
 // パスワードリセット関連のルート
 router.get('/forgot-password', authController.getForgotPassword);
