@@ -170,18 +170,20 @@
                     <%= user.nascimento_usuario %>
                   </td>
                 </tr>
+                <% if (user.id_perfil === 3) { %> 
                 <tr>
                   <th scope="row">RA</th>
-                  <td id="aluno-ra"></td>
+                  <td id="aluno-ra">
+                    <%= user.ra_aluno %>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Data de matricula</th>
-                  <td id="aluno-registration-date"></td>
+                  <td id="aluno-registration-date">
+                    <%= user.data_matricula %>
+                  </td>
                 </tr>
-                <tr>
-                  <th scope="row">Turma</th>
-                  <td id="aluno-turma"></td>
-                </tr>
+                <% } %>
               </tbody>
             </table>
             <!-- <button onclick="location.href='alterarCadastro.html'" type="submit" class="btn btn-primary">Alterar</button> -->
