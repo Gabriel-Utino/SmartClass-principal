@@ -37,6 +37,7 @@ exports.login = async (req, res) => {
       email_usuario: user.email_usuario,
       nascimento_usuario: user.nascimento_usuario,
       id_perfil: user.id_perfil,
+      id_aluno: user.id_aluno,
       ra_aluno: user.ra_aluno, // Alunoの情報を追加
       data_matricula: user.data_matricula,
       id_turma: user.id_turma

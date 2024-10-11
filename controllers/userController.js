@@ -5,7 +5,7 @@ exports.getUserProfile = async (req, res) => {
 
     try {
         const [rows] = await pool.query(`
-                SELECT u.*, a.ra_aluno, a.data_matricula, a.id_turma
+                SELECT u.*, a.ra_aluno, a.data_matricula, a.id_turma, a.id_aluno
                 FROM usuario u
                 LEFT JOIN aluno a ON u.id_usuario = a.id_usuario
                 WHERE u.id_usuario = ?;
