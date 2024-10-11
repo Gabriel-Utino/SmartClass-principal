@@ -5,7 +5,14 @@ const User = {};
 
 // ユーザーを email で探す
 User.findByEmail = async (email) => {
-  const [rows] = await pool.query('SELECT * FROM usuario WHERE email_usuario = ?', [email]);
+  const query = `
+    SELECT u.*, a.ra_aluno, a.data_matricula, a.id_turma
+    FROM usuario u
+    LEFT JOIN aluno a ON u.id_usuario = a.id_usuario
+    WHERE u.email_usuario = ?;
+  `;
+
+  const [rows] = await pool.query(query, [email]);
   return rows[0];
 };
 

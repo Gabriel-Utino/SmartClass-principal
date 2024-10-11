@@ -133,7 +133,7 @@ document.getElementById('updateDisciplinaForm').addEventListener('submit', funct
 
 // 削除ボタン
 function deleteDisciplina(id_disciplina) {
-  if (confirm('本当に削除しますか？')) {
+  if (confirm('Tem certeza de que deseja excluí-lo?')) {
     fetch(`${apiUrlDisciplina}/${id_disciplina}`, {
       method: 'DELETE'
     })

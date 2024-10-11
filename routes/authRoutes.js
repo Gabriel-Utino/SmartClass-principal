@@ -54,6 +54,18 @@ router.get('/professor', ensureAuthenticated, authorizeRoles(5, 1), (req, res) =
   res.render('professor', { user: req.session.user }) // views/professor.ejs
 })
 
+
+router.get('/template', (req, res) => {
+  res.render('template') // views/professor.ejs
+})
+
+router.get('/template', (req, res) => {
+  res.render('template') // views/professor.ejs
+})
+router.get('/mural', (req, res) => {
+  res.render('mural') // views/professor.ejs
+})
+
 // パスワードリセット関連のルート
 router.get('/forgot-password', authController.getForgotPassword);
 router.post('/forgot-password', authController.postForgotPassword);
