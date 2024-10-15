@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Turmas を取得しセレクトボックスを更新
 function fetchTurmas() {
-  fetch('http://localhost:3000/turmas')
+  fetch('http://localhost:5000/turmas')
     .then(response => response.json())
     .then(data => {
       const turmaSelect = document.getElementById('turmaSelect')
