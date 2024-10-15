@@ -48,15 +48,15 @@
                 Notas e Faltas
               </a>
               <ul class="dropdown-menu dropdown-menu-dark">
-                
-                <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
-                <li><a class="dropdown-item" href="veriNotas">Notas</a></li>
-                <li><a class="dropdown-item" href="veriFaltas">Faltas</a></li>
-                <% } %>
-                <% if (user.id_perfil === 2) { %><!-- quando e Professor --> 
-                  <li><a class="dropdown-item" href="apricarNotas">Apricar Notas</a></li>
-                  <li><a class="dropdown-item" href="apricarFaltas">Apricar Faltas</a></li>
-                <% } %>
+
+                <% if (user.id_perfil===3) { %><!-- quando e Aluno -->
+                  <li><a class="dropdown-item" href="veriNotas">Notas</a></li>
+                  <li><a class="dropdown-item" href="veriFaltas">Faltas</a></li>
+                  <% } %>
+                    <% if (user.id_perfil===2) { %><!-- quando e Professor -->
+                      <li><a class="dropdown-item" href="apricarNotas">Apricar Notas</a></li>
+                      <li><a class="dropdown-item" href="apricarFaltas">Apricar Faltas</a></li>
+                      <% } %>
               </ul>
             </li>
             <li class="nav-item">
@@ -121,15 +121,13 @@
   <!-- 以下、ベースのHTMLファイルのコンテンツを続ける -->
   <div class="container">
     <h1>Notas</h1>
-
     <div class="row align-items-end">
       <div class="col-md-3">
         <div class="form-group">
           <label for="selectAno">Ano:</label>
           <select id="selectAno" class="form-control">
-            <!-- 年の選択肢を追加 -->
             <option value="" selected>Selecione o ano</option>
-            <!-- 必要に応じて他の年も追加 -->
+            <!-- 年の選択肢を追加 -->
           </select>
         </div>
       </div>
@@ -147,7 +145,6 @@
         <button id="filterButton" class="btn btn-primary" style="margin-top: 32px;">Filtrar</button>
       </div>
     </div>
-
     <div class="containerTable" style="overflow-y: auto; max-height: 400px;">
       <table class="table">
         <thead>
@@ -192,6 +189,7 @@
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
+    <script>const user = <%- JSON.stringify(user) %>;</script>
   <script src="/js/aluno/veriNotas.js">
   </script>
 </body>

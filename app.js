@@ -12,6 +12,15 @@ const authRoutes = require('./routes/authRoutes')
 
 // importar cada Pagina com funcao
 const disciplinasRoutes = require('./routes/disciplinasRoutes');
+const userRoutes = require('./routes/userRoutes');
+const disciplinasRoutes = require('./routes/disciplinasRoutes');
+const notasFaltasRoutes = require('./routes/notasFaltasRoutes');
+
+// Cada pagina de funcao
+app.use('/disciplinas', disciplinasRoutes);
+app.use('/users', userRoutes);
+app.use('/disciplinas', disciplinasRoutes);
+app.use('/notas_faltas', notasFaltasRoutes);
 
 dotenv.config()
 
@@ -23,8 +32,6 @@ app.use(express.json())
 app.use(cors())
 
 
-// Cada pagina de funcao
-app.use('/disciplinas', disciplinasRoutes);
 
 app.use(
   session({
