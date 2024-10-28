@@ -1,0 +1,50 @@
+
+
+
+
+
+
+<div class="container">
+  <h1>Notas</h1>
+  <div class="row align-items-end">
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="selectAno">Ano:</label>
+        <select id="selectAno" class="form-control">
+          <option value="" selected>Selecione o ano</option>
+          <!-- 年の選択肢を追加 -->
+        </select>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="selectSemestre">Semestre:</label>
+        <select id="selectSemestre" class="form-control">
+          <option value="" selected>Selecione o semestre</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <button id="filterButton" class="btn btn-primary" style="margin-top: 32px;">Filtrar</button>
+    </div>
+  </div>
+  <div class="containerTable" style="overflow-y: auto; max-height: 400px;">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Disciplina</th>
+          <th>N1</th>
+          <th>AI</th>
+          <th>AP</th>
+          <th>Ano</th>
+          <th>Semestre</th>
+        </tr>
+      </thead>
+      <tbody id="notaList" class="overflow-auto">
+        <!-- データはここに挿入されます -->
+      </tbody>
+    </table>
+  </div>
+</div>
