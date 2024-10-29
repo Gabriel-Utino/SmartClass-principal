@@ -99,6 +99,11 @@ button:hover {
   margin-bottom: 10px; /* Espaçamento entre as caixas de texto */
 }
 
+#forgot-password {
+    text-decoration: underline;
+    margin-bottom: 20px; /* Espaçamento abaixo do texto 'Esqueci minha senha' */
+}
+
 #login-button {
   background-color: #000;
   color: #fff;
@@ -109,6 +114,43 @@ button:hover {
 #forgot-password {
   padding-bottom: 10px;
 }
+
+#login-button {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#loading-spinner {
+    display: none; /* Oculta o spinner por padrão */
+}
+
+#error-message-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px; /* Adiciona uma margem na parte inferior para compensar a altura da mensagem de erro */
+}
+
+#error-message {
+    color: red;
+    display: none; /* Oculta a mensagem de erro por padrão */
+}
+
+.error-visible #error-message {
+    display: block; /* Exibe a mensagem de erro quando a classe .error-visible é adicionada */
+}
+
+
+.password-container {
+    position: relative; /* Posicionamento relativo para o contêiner do campo de senha */
+}
+
+
+
+
+
 
 div a {
   color: #fff;
@@ -152,4 +194,23 @@ body {
 .input-group-prepend {
   margin-right: 10px;
   /* Espaçamento entre a imagem de alerta e o texto */
+}
+
+
+
+
+
+#password {
+  position: relative;
+}
+#show-password-btn {
+    position: absolute; /* Posicionamento absoluto sobre o campo de senha */
+    top: 50%; /* Alinha no centro verticalmente */
+    right: 10px; /* Alinha à direita */
+    transform: translateY(-50%); /* Ajusta verticalmente */
+    padding: 5px;
+    cursor: pointer;
+    background-color: transparent;
+    color: #fff;
+    border: none;
 }

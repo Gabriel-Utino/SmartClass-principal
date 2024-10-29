@@ -1,7 +1,19 @@
-const apiUrlNotasFaltas = 'http://localhost:3000/notas_faltas'
-const apiUrlDisciplina = 'http://localhost:3000/disciplinas'
-const apiUrlAluno = 'http://localhost:3000/alunos'
+// public/js/aluno/veriFaltas.js
+const apiUrlNotasFaltas = 'http://localhost:5000/notas_faltas'
+const apiUrlDisciplina = 'http://localhost:5000/disciplinas'
+const apiUrlAluno = 'http://localhost:5000/alunos'
 
+// userの情報をHTMLから取得
+function getUserFromPage() {
+  const userInfo = document.getElementById('user-info');
+  const id_aluno = userInfo.getAttribute('data-id-aluno');
+  const nome_usuario = userInfo.getAttribute('data-nome-usuario');
+
+  return {
+    id_aluno: parseInt(id_aluno, 10),
+    nome_usuario: nome_usuario
+  };
+}
 
 function populateAnoSelect(data_matricula) {
   const selectAno = document.getElementById('selectAno');
@@ -27,9 +39,11 @@ function displayNota(nota) {
       .then(disciplina => {
         const notaElement = document.createElement('tr')
         notaElement.innerHTML = `
-              <td>${disciplina.disciplina}</td>
+
+              <td>${disciplina.nome_disciplina}</td>
               <td>${nota.faltas !== null ? nota.faltas : 0}</td>
-              <td>${nota.academic_year}</td>
+              <td>${nota.ano_academico}</td>
+
               <td>${nota.semestre}</td>
           `
         notaList.appendChild(notaElement)
@@ -39,8 +53,17 @@ function displayNota(nota) {
 }
 
 function getNotasByAluno() {
+
+  // HTMLからuser情報を取得
+  const user = getUserFromPage();
   // ログインした生徒のIDを取得する処理が必要 loginUserID
-  const id_aluno = 1
+  const id_aluno = user.id_aluno // user から id_aluno を取得
+
+  if (!id_aluno) {
+    console.error('User ID is missing.');
+    return;
+  }
+
 
   fetch(`${apiUrlAluno}/${id_aluno}`)
     .then(response => response.json())
@@ -61,12 +84,21 @@ function getNotasByAluno() {
 function filterNotas() {
   const ano = document.getElementById('selectAno').value;
   const semestre = document.getElementById('selectSemestre').value;
-  const id_aluno = 1; // ログインした生徒のIDをここに設定
+
+  const id_aluno = getUserFromPage().id_aluno; // user情報をHTMLから取得
+
+  if (!ano || !semestre) {
+    console.error('Ano ou Semestre esta errado.');
+    return;
+  }
+
 
   fetch(`${apiUrlAluno}/${id_aluno}/notas_faltas`)
     .then(response => response.json())
     .then(data => {
-      const filteredNotas = data.filter(nota => nota.academic_year == ano && nota.semestre == semestre);
+
+      const filteredNotas = data.filter(nota => nota.ano_academico == ano && nota.semestre == semestre);
+
       displayNota(filteredNotas);
     })
     .catch(error => console.error('filter Erro:', error));
@@ -74,16 +106,6 @@ function filterNotas() {
 
 document.getElementById('filterButton').addEventListener('click', filterNotas);
 
-/* function populateAnoOptions() {
-  const selectAno = document.getElementById('selectAno');
-  const currentYear = new Date().getFullYear();
-  for (let i = currentYear - 5; i <= currentYear + 5; i++) {
-    const option = document.createElement('option');
-    option.value = i;
-    option.text = i;
-    selectAno.appendChild(option);
-  }
-} */
 
 
 
@@ -98,12 +120,4 @@ function formatDate(dateString) {
 
 getNotasByAluno()
 
-
-/* function getNotas() {
-  fetch(apiUrlNotasFaltas)
-    .then(response => response.json())
-    .then(data => displayNota(data))
-    .catch(error => console.error('Erro:', error));
-} 
-getNotas()*/
 

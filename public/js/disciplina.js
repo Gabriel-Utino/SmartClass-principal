@@ -52,6 +52,7 @@ document.getElementById('addDisciplinaForm').addEventListener('submit', function
     headers: {
       'Content-Type': 'application/json'
     },
+    credentials: 'include',
     body: JSON.stringify({
       nome_disciplina: disciplinaName,
       horario: disciplinaHorario

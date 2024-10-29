@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function fetchAlunoInfo(alunoId) {
-  fetch(`http://localhost:3000/alunos/${alunoId}`)
+  fetch(`${apiUrlAluno}/${alunoId}`)
     .then(response => response.json())
     .then(data => {
       document.getElementById('nomeAluno').value = data.nome_aluno;

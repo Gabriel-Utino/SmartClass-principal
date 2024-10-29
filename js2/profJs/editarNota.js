@@ -1,5 +1,5 @@
 const apiUrlNota = 'http://localhost:3000/notas_faltas';
-const apiUrlAluno = 'http://localhost:3000/alunos'
+const apiUrlAluno = 'http://localhost:3000/aluno'
 
 document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function fetchAlunoInfo(alunoId) {
-  fetch(`http://localhost:3000/alunos/${alunoId}`)
+  fetch(`http://localhost:3000/aluno/${alunoId}`)
     .then(response => response.json())
     .then(data => {
       document.getElementById('nomeAluno').value = data.nome_aluno;

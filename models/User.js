@@ -6,7 +6,7 @@ const User = {};
 // ユーザーを email で探す
 User.findByEmail = async (email) => {
   const query = `
-    SELECT u.*, a.ra_aluno, a.data_matricula, a.id_turma
+    SELECT u.*, a.ra_aluno, a.data_matricula, a.id_turma, a.id_aluno
     FROM usuario u
     LEFT JOIN aluno a ON u.id_usuario = a.id_usuario
     WHERE u.email_usuario = ?;

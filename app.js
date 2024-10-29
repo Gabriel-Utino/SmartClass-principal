@@ -1,5 +1,6 @@
 // app.js
 const express = require('express')
+const app = express()
 const cors = require('cors')
 const session = require('express-session')
 const flash = require('connect-flash')
@@ -8,29 +9,22 @@ const dotenv = require('dotenv')
 const passport = require('./config/passport') // Passportの設定を読み込み
 
 const authRoutes = require('./routes/authRoutes')
-
-
-// importar cada Pagina com funcao
-const disciplinasRoutes = require('./routes/disciplinasRoutes');
+const alunosRoutes = require('./routes/alunosRoutes');
+const turmaRoutes = require('./routes/turmaRoutes');
+const aplicarNotasRoutes = require('./routes/aplicarNotasRoutes');
 
 dotenv.config()
 
-const app = express()
 
 // ミドルウェア設定
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
-
-
-// Cada pagina de funcao
-app.use('/disciplinas', disciplinasRoutes);
-
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
       secure: process.env.NODE_ENV === 'production', // 本番環境ではtrue
       httpOnly: true,
@@ -38,10 +32,8 @@ app.use(
     }
   })
 )
-
 app.use(passport.initialize())
 app.use(passport.session())
-
 app.use(flash())
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
@@ -49,12 +41,47 @@ app.set('views', path.join(__dirname, 'views'))
 // スタティックファイルの配信設定
 app.use(express.static(path.join(__dirname, 'public')))
 
-// ルート設定
+
+// importar cada Pagina com funcao
+const disciplinasRoutes = require('./routes/disciplinasRoutes');
+const userRoutes = require('./routes/userRoutes');
+const notasFaltasRoutes = require('./routes/notasFaltasRoutes');
+
+// Cada pagina de funcao    ルート設定
 app.use('/', authRoutes)
-// 他のルートもマウント
+app.use('/disciplinas', disciplinasRoutes);
+app.use('/users', userRoutes);
+app.use('/notas_faltas', notasFaltasRoutes);
+app.use('/alunos', alunosRoutes);
+app.use('/turmas', turmaRoutes);
+app.use('/aplicarNotas', aplicarNotasRoutes);
+app.use('/turma_disciplinas', turmaRoutes); // プレフィックスが一致しているか確認
+
+
 
 // ダッシュボードルート
 const isAuthenticated = require('./middleware/isAuthenticated')
+
+app.post('/login', (req, res) => {
+  // 認証処理（例：データベースからユーザーを検索）
+  const userData = { 
+    id_usuario: user.id_usuario, 
+    nome_usuario: user.nome_usuario, 
+    cpf_usuario: user.cpf_usuario, 
+    endereco_usuario: user.endereco_usuario,
+    telefone_usuario: user.telefone_usuario,
+    email_usuario: user.email_usuario,
+    nascimento_usuario: user.nascimento_usuario,
+    id_perfil: user.id_perfil,
+    id_aluno: user.id_aluno,
+    ra_aluno: user.ra_aluno, // Alunoの情報を追加
+    data_matricula: user.data_matricula,
+    id_turma: user.id_turma
+   }; // 必要な情報を取得
+  req.session.user = userData; // ユーザー情報をセッションに保存
+
+  res.redirect('/veriNotas'); // リダイレクト
+});
 
 app.get('/calendario', (req, res) => {
   if (!req.session.user) {
