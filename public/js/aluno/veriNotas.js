@@ -1,4 +1,3 @@
-
 const apiUrlNotasFaltas = 'http://localhost:5000/notas_faltas'
 const apiUrlDisciplina = 'http://localhost:5000/disciplinas'
 const apiUrlAluno = 'http://localhost:5000/alunos'
@@ -14,6 +13,7 @@ function getUserFromPage() {
     nome_usuario: nome_usuario
   };
 }
+
 
 function populateAnoSelect(data_matricula) {
   const selectAno = document.getElementById('selectAno');
@@ -39,11 +39,13 @@ function displayNota(nota) {
       .then(disciplina => {
         const notaElement = document.createElement('tr')
         notaElement.innerHTML = `
+
               <td>${disciplina.nome_disciplina}</td>
               <td>${nota.N1 !== null ? nota.N1 : 0}</td>
               <td>${nota.AI !== null ? nota.AI : 0}</td>
               <td>${nota.AP !== null ? nota.AP : 0}</td>
               <td>${nota.ano_academico}</td>
+
               <td>${nota.semestre}</td>
           `
         notaList.appendChild(notaElement)
@@ -53,6 +55,7 @@ function displayNota(nota) {
 }
 
 function getNotasByAluno() {
+
   // HTMLからuser情報を取得
   const user = getUserFromPage();
   const id_aluno = user.id_aluno; // user から id_aluno を取得
@@ -61,6 +64,7 @@ function getNotasByAluno() {
     console.error('User ID is missing.');
     return;
   }
+
 
   fetch(`${apiUrlAluno}/${id_aluno}`)
     .then(response => response.json())
@@ -81,6 +85,7 @@ function getNotasByAluno() {
 function filterNotas() {
   const ano = document.getElementById('selectAno').value;
   const semestre = document.getElementById('selectSemestre').value;
+
   const id_aluno = getUserFromPage().id_aluno; // user情報をHTMLから取得
 
 
@@ -93,6 +98,7 @@ function filterNotas() {
     .then(response => response.json())
     .then(data => {
       const filteredNotas = data.filter(nota => nota.ano_academico == ano && nota.semestre == semestre);
+
       displayNota(filteredNotas);
     })
     .catch(error => console.error('filter Erro:', error));
@@ -115,11 +121,4 @@ function formatDate(dateString) {
 getNotasByAluno()
 
 
-/* function getNotas() {
-  fetch(apiUrlNotasFaltas)
-    .then(response => response.json())
-    .then(data => displayNota(data))
-    .catch(error => console.error('Erro:', error));
-} 
-getNotas()*/
 
