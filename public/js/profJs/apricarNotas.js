@@ -1,3 +1,4 @@
+// public/js/profjs
 // 初期化
 document.addEventListener('DOMContentLoaded', () => {
   fetchTurmas()
@@ -6,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Turmas を取得しセレクトボックスを更新
 function fetchTurmas() {
-  fetch('http://localhost:3000/turmas')
+  fetch('http://localhost:5000/turmas')
     .then(response => response.json())
     .then(data => {
       const turmaSelect = document.getElementById('turmaSelect')
@@ -25,7 +26,7 @@ function fetchTurmas() {
 function populateYearSelect() {
   const yearSelect = document.getElementById('yearSelect')
   const currentYear = new Date().getFullYear()
-  for (let year = currentYear - 2; year <= currentYear + 2; year++) {
+  for (let year = currentYear - 0; year <= currentYear + 2; year++) {
     const option = document.createElement('option')
     option.value = year
     option.textContent = year
@@ -41,7 +42,7 @@ document.getElementById('turmaSelect').addEventListener('change', event => {
 })
 
 function fetchDisciplinasByTurma(turmaId) {
-  fetch(`http://localhost:3000/turma_disciplinas/${turmaId}/disciplinas`)
+  fetch(`http://localhost:5000/turma_disciplinas/${turmaId}/disciplinas`)
     .then(response => response.json())
     .then(data => {
       const disciplinaSelect = document.getElementById('disciplinaSelect')
@@ -49,12 +50,12 @@ function fetchDisciplinasByTurma(turmaId) {
       data.forEach(disciplina => {
         const option = document.createElement('option')
         option.value = disciplina.id_disciplina
-        option.textContent = disciplina.disciplina
+        option.textContent = disciplina.nome_disciplina
         disciplinaSelect.appendChild(option)
       })
       disciplinaSelect.disabled = false
     })
-    .catch(error => console.error('Error fetching Disciplinas:', error))
+    .catch(error => console.error('エラー‐Error Disciplinas:', error))
 }
 
 // 検索ボタンのクリックイベント
@@ -74,7 +75,7 @@ document.getElementById('searchButton').addEventListener('click', () => {
 // notas_faltasを取得しリストを表示
 function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
   fetch(
-    `http://localhost:3000/notas_faltasApri?turmaId=${turmaId}&disciplinaId=${disciplinaId}&year=${year}&semestre=${semestre}`
+    `http://localhost:5000/notas_faltasApri?turmaId=${turmaId}&disciplinaId=${disciplinaId}&year=${year}&semestre=${semestre}`
   )
     .then(response => response.json())
     .then(data => {

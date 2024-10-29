@@ -1,5 +1,6 @@
 // app.js
 const express = require('express')
+const app = express()
 const cors = require('cors')
 const session = require('express-session')
 const flash = require('connect-flash')
@@ -9,8 +10,9 @@ const passport = require('./config/passport') // Passportの設定を読み込�
 
 const authRoutes = require('./routes/authRoutes')
 const alunosRoutes = require('./routes/alunosRoutes');
+const turmaRoutes = require('./routes/turmaRoutes');
+const aplicarNotasRoutes = require('./routes/aplicarNotasRoutes');
 
-const app = express()
 dotenv.config()
 
 
@@ -51,6 +53,9 @@ app.use('/disciplinas', disciplinasRoutes);
 app.use('/users', userRoutes);
 app.use('/notas_faltas', notasFaltasRoutes);
 app.use('/alunos', alunosRoutes);
+app.use('/turmas', turmaRoutes);
+app.use('/aplicarNotas', aplicarNotasRoutes);
+app.use('/turma_disciplinas', turmaRoutes); // プレフィックスが一致しているか確認
 
 
 
