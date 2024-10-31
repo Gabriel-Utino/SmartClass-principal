@@ -34,7 +34,7 @@ module.exports = {
   authorizeRoles: (...allowedRoles) => {
     return (req, res, next) => {
       if (req.session && req.session.user && allowedRoles.includes(req.session.user.id_perfil)) {
-        return next()
+        return next() // 指定された役割の場合、次に進む
       }
       req.flash('error', 'Você não tem as permissões necessárias')
       res.redirect('/home')

@@ -8,10 +8,14 @@ const path = require('path')
 const dotenv = require('dotenv')
 const passport = require('./config/passport') // Passportの設定を読み込み
 
+// ルートのインポート
 const authRoutes = require('./routes/authRoutes')
 const alunosRoutes = require('./routes/alunosRoutes');
 const turmaRoutes = require('./routes/turmaRoutes');
 const aplicarNotasRoutes = require('./routes/aplicarNotasRoutes');
+const notasFaltasRoutes = require('./routes/notasFaltasRoutes');
+const disciplinasRoutes = require('./routes/disciplinasRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 dotenv.config()
 
@@ -42,13 +46,12 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.static(path.join(__dirname, 'public')))
 
 
-// importar cada Pagina com funcao
-const disciplinasRoutes = require('./routes/disciplinasRoutes');
-const userRoutes = require('./routes/userRoutes');
-const notasFaltasRoutes = require('./routes/notasFaltasRoutes');
 
+app.use(notasFaltasRoutes);
 // Cada pagina de funcao    ルート設定
-app.use('/', authRoutes)
+app.use('/', authRoutes);
+app.use('/', notasFaltasRoutes); // apriNotasで使用
+app.use('/notas_faltasApri', notasFaltasRoutes);
 app.use('/disciplinas', disciplinasRoutes);
 app.use('/users', userRoutes);
 app.use('/notas_faltas', notasFaltasRoutes);
@@ -128,6 +131,12 @@ app.get('/arpicarFaltas', (req, res) => {
   }
   res.render('arpicarFaltas', { user: req.session.user }) // ダッシュボードを表示
 })
+app.get('/editarNotas', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('editarNotas', { user: req.session.user }) // ダッシュボードを表示
+})
 
 app.get('/turma', (req, res) => {
   if (!req.session.user) {
@@ -165,6 +174,13 @@ app.get('/professor', (req, res) => {
   }
   res.render('professor', { user: req.session.user }) // ダッシュボードを表示
 })
+
+
+
+
+app.set('view engine', 'ejs'); // EJSテンプレートエンジンを設定
+app.set('views', path.join(__dirname, 'views')); // ビューフォルダを指定
+
 
 // 404エラーハンドリング
 app.use((req, res, next) => {

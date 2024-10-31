@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Apricar faltas</title>
+  <title>Editar Notas</title>
   <!-- 追加：外部のスタイルシート -->
   <!-- <link rel="stylesheet" href="styles/professores.css" /> -->
   <!-- <link rel="stylesheet" href="styles/style.css" /> -->
@@ -40,8 +40,9 @@
           </form> -->
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="home">Home</a>
+              <a class="nav-link active" aria-current="page" href="/home">Home</a>
             </li>
+            <% if (user.id_perfil === 3 || user.id_perfil === 2) { %> 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -50,23 +51,40 @@
               <ul class="dropdown-menu dropdown-menu-dark">
                 
                 <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
-                <li><a class="dropdown-item" href="veriNotas">Notas</a></li>
-                <li><a class="dropdown-item" href="veriFaltas">Faltas</a></li>
+                <li><a class="dropdown-item" href="/veriNotas">Notas</a></li>
+                <li><a class="dropdown-item" href="/veriFaltas">Faltas</a></li>
                 <% } %>
                 <% if (user.id_perfil === 2) { %><!-- quando e Professor --> 
-                  <li><a class="dropdown-item" href="apricarNotas">Apricar Notas</a></li>
-                  <li><a class="dropdown-item" href="apricarFaltas">Apricar Faltas</a></li>
+                  <li><a class="dropdown-item" href="/apricarNotas">Apricar Notas</a></li>
+                  <li><a class="dropdown-item" href="/apricarFaltas">Apricar Faltas</a></li>
                 <% } %>
               </ul>
             </li>
+            <% } %>
+            <% if (user.id_perfil === 1 || user.id_perfil === 5) { %> 
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Cadastramentos
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="/turma">Turma</a></li>
+                <li><a class="dropdown-item" href="/disciplina">Disciplinas</a></li>
+                <li><a class="dropdown-item" href="/aluno">Alunos</a></li>
+                <li><a class="dropdown-item" href="/responsavel">Responsaveis</a></li>
+                <li><a class="dropdown-item" href="/organizacao">Organizacao</a></li>
+                <li><a class="dropdown-item" href="/professor">Professores</a></li>
+              </ul>
+            </li>
+            <% } %>
             <li class="nav-item">
-              <a class="nav-link" href="Calendario">Calendario</a>
+              <a class="nav-link" href="/calendario">Calendario</a>
             </li>
             <!-- <li class="nav-item">
               <a class="nav-link" href="#">Financeiro</a>
             </li> -->
             <li class="nav-item">
-              <a class="nav-link" href="dadosCadastrais">Dados Cadastrais</a>
+              <a class="nav-link" href="/dadosCadastrais">Dados Cadastrais</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/logout">Logout</a>
@@ -116,31 +134,44 @@
 
 
   <!-- 以下、ベースのHTMLファイルのコンテンツを続ける -->
-<div class="container mt-5">
-  <h1>Aplicar Faltas</h1>
-  <select id="turmaSelect" class="form-control mb-3">
-    <option value="" disabled selected>Escolha a Turma</option>
-  </select>
-  <select id="disciplinaSelect" class="form-control mb-3" disabled>
-    <option value="" disabled selected>Escolha a Disciplina</option>
-  </select>
-  <select id="yearSelect" class="form-control mb-3">
-    <option value="" disabled selected>Escolha o Ano</option>
-  </select>
-  <select id="semestreSelect" class="form-control mb-3">
-    <option value="" disabled selected>Escolha o semestre</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-  </select>
-
-  <!-- 欠席日入力欄 --><!-- 
-  <label for="dataFaltaInput">Data da Falta:</label>
-  <input type="date" id="dataFaltaInput" class="form-control mb-3" /> -->
-
-  <button id="searchButton" class="btn btn-primary mb-3">Procurar</button>
-  <div id="resultContainer"></div>
-  <button id="applyFaltasButton" class="btn btn-danger" style="display: none;">Aplicar Faltas</button>
-</div>
+  <div class="container mt-5">
+    <h1>Editar Nota</h1>
+    <form id="editNotaForm">
+      <div class="form-group">
+        <label for="nomeAluno">Nome do Aluno</label>
+        <input type="text" class="form-control" id="nomeAluno" disabled>
+      </div>
+      <div class="form-group">
+        <label for="faltasAluno">Faltas do Aluno</label>
+        <input type="text" class="form-control" id="faltasAluno" disabled>
+      </div>
+      <div class="form-group">
+        <label for="n1Input">N1</label>
+        <input type="number" class="form-control" id="n1Input">
+      </div>
+      <div class="form-group">
+        <label for="apInput">AP</label>
+        <input type="number" class="form-control" id="apInput">
+      </div>
+      <div class="form-group">
+        <label for="aiInput">AI</label>
+        <input type="number" class="form-control" id="aiInput">
+      </div>
+      <div class="form-group">
+        <label for="anoAluno">Ano</label>
+        <input type="number" class="form-control" id="anoAluno" disabled>
+      </div>
+      <div class="form-group">
+        <label for="matriculaAluno">Data de matricula</label>
+        <input type="text" class="form-control" id="matriculaAluno" disabled>
+      </div>
+      <div class="form-group">
+        <label for="semestreAluno">Semestre</label>
+        <input type="number" class="form-control" id="semestreAluno" disabled>
+      </div>
+      <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+  </div>
 
 
 
@@ -157,7 +188,7 @@
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
-  <script src="/js/profJs/apricarFaltas.js">
+  <script src="./js/profJs/editarNotas.js">
   </script>
 </body>
 

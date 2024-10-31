@@ -87,7 +87,6 @@ exports.getTurmaDisciplinas = async (req, res) => {
           WHERE td.id_turma = ?
       `, [turmaId]);
 
-      console.log('Disciplinas found:', disciplina); // データの確認
       res.json(disciplina);
   } catch (error) {
       console.error('Error retrieving disciplinas for turma:', error);

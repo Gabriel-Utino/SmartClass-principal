@@ -27,6 +27,25 @@ router.get('/apricarFaltas', ensureAuthenticated, authorizeRoles(2), (req, res) 
 router.get('/apricarNotas', ensureAuthenticated, authorizeRoles(2), (req, res) => {
     res.render('apricarNotas', { user: req.session.user }) // views/apricarNotas.ejs
 })
+router.get('/editarNotas', ensureAuthenticated, authorizeRoles(2), (req, res) => {
+    res.render('editarNotas', { user: req.session.user }); // views/editarNotas.ejsをレンダリング
+});
+
+
+
+router.get('/connectTurmaDisci', (req, res) => {
+  res.render('connectTurmaDisci');
+});
+
+router.get('/orgDisciTurma', (req, res) => {
+  res.render('orgDisciTurma');
+});
+
+router.get('/aluno_resp', (req, res) => {
+  res.render('aluno_resp');
+});
+
+
 
 
 router.get('/variFaltas', ensureAuthenticated, authorizeRoles(3), (req, res) => {

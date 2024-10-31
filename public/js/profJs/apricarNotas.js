@@ -101,7 +101,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
           // 写真セル
           const photoCell = document.createElement('td')
           const photoImg = document.createElement('img')
-          photoImg.src = item.foto ? `../../upload/${item.foto}` : '../../upload/semfoto.png'
+          photoImg.src = item.foto ? `../../upload/${item.foto}` : './icons/semfoto.png'
           photoImg.alt = 'Sem Foto'
           photoImg.classList.add('img-alunoMini')
           photoCell.appendChild(photoImg)
@@ -133,7 +133,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
           editButton.textContent = 'Editar'
           editButton.classList.add('btn', 'btn-primary')
           editButton.addEventListener('click', () => {
-            window.location.href = `editarNota.html?alunoId=${item.id_aluno}&disciplinaId=${disciplinaId}&idNotasFaltas=${item.id_notas_faltas}`
+            window.location.href = `/editarNotas?alunoId=${item.id_aluno}&disciplinaId=${disciplinaId}&idNotasFaltas=${item.id_notas_faltas}`
           })
           actionCell.appendChild(editButton)
           row.appendChild(actionCell)
@@ -143,7 +143,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
         table.appendChild(tbody)
         resultContainer.appendChild(table)
       } else {
-        resultContainer.textContent = '該当するデータが見つかりませんでした'
+        resultContainer.textContent = '該当するデータが見つかりませんでした/Nenhum dado correspondente foi encontrado'
       }
     })
     .catch(error => console.error('Error fetching notas_faltas:', error))

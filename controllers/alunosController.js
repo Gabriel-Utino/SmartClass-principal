@@ -35,7 +35,12 @@ const pool = require('../config/database');
 exports.getAlunoById = async (req, res) => {
   const { id_aluno } = req.params;
   try {
-    const [rows] = await pool.query('SELECT * FROM Aluno WHERE id_aluno = ?', [id_aluno]);
+    const [rows] = await pool.query(`
+      SELECT us.id_usuario, us.nome_usuario, us.cpf_usuario, 
+      us.endereco_usuario, us.telefone_usuario, us.email_usuario, 
+      al.id_aluno, al.ra_aluno, al.data_matricula, al.id_turma 
+      FROM usuario as us JOIN Aluno as al ON us.id_usuario = al.id_usuario 
+      WHERE id_aluno = ?;`, [id_aluno]);
     if (rows.length > 0) {
       res.json(rows[0]);
     } else {
