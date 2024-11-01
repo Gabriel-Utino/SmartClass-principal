@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const turmaController = require('../controllers/turmaController');
+const orgDisciTurmaController = require('../controllers/orgDisciTurmaController');
 
 // TurmaのCRUDエンドポイント
 router.get('/', turmaController.getAllTurmas);
@@ -13,6 +14,8 @@ router.delete('/:id_turma', turmaController.deleteTurma);
 // Turmaの特定のdisciplinasを取得するルート aplicarNotasで使用
 router.get('/:turmaId/disciplinas', turmaController.getTurmaDisciplinas);
 
+// Notas_faltasを作成 OrgDisciTurma
+router.post('/assign-disciplinas', orgDisciTurmaController.assignDisciplinas);
 
 
 module.exports = router;

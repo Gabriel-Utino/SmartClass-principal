@@ -33,72 +33,101 @@
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
             aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body">
-          <!-- <form class="d-flex mt-3" role="search">
+        <div class="offcanvas-body"><!-- 
+          <form class="d-flex mt-3" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-success" type="submit">Search</button>
           </form> -->
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="homeProf.html">Home</a>
+              <a class="nav-link active" aria-current="page" href="/home">Home</a>
             </li>
+            <% if (user.id_perfil === 3 || user.id_perfil === 2) { %> 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                Apricar Notas e Faltas
+                Notas e Faltas
               </a>
               <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="apricarNotas.html">Notas</a></li>
-                <li><a class="dropdown-item" href="apricarFaltas.html">Faltas</a></li>
+                
+                <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
+                <li><a class="dropdown-item" href="/veriNotas">Notas</a></li>
+                <li><a class="dropdown-item" href="/veriFaltas">Faltas</a></li>
+                <% } %>
+                <% if (user.id_perfil === 2) { %><!-- quando e Professor --> 
+                  <li><a class="dropdown-item" href="/apricarNotas">Apricar Notas</a></li>
+                  <li><a class="dropdown-item" href="/apricarFaltas">Apricar Faltas</a></li>
+                <% } %>
               </ul>
             </li>
+            <% } %>
+            <% if (user.id_perfil === 1 || user.id_perfil === 5) { %> 
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Cadastramentos
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="/turma">Turma</a></li>
+                <li><a class="dropdown-item" href="/disciplina">Disciplinas</a></li>
+                <li><a class="dropdown-item" href="/aluno">Alunos</a></li>
+                <li><a class="dropdown-item" href="/responsavel">Responsaveis</a></li>
+                <li><a class="dropdown-item" href="/organizacao">Organizacao</a></li>
+                <li><a class="dropdown-item" href="/professor">Professores</a></li>
+              </ul>
+            </li>
+            <% } %>
             <li class="nav-item">
-              <a class="nav-link" href="Calendario.html">Calendario</a>
+              <a class="nav-link" href="/calendario">Calendario</a>
             </li>
             <!-- <li class="nav-item">
               <a class="nav-link" href="#">Financeiro</a>
             </li> -->
             <li class="nav-item">
-              <a class="nav-link" href="dadosProf.html">Dados Cadastrais</a>
+              <a class="nav-link" href="/dadosCadastrais">Dados Cadastrais</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li><!-- 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Cadastro
               </a>
               <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="professor.html">Professores</a></li>
-                <li><a class="dropdown-item" href="turma.html">Turmas</a></li>
-                <li><a class="dropdown-item" href="disciplina.html">Disciplinas</a></li>
-                <li><a class="dropdown-item" href="responsavel.html">Responsaveis</a></li>
-                <li><a class="dropdown-item" href="aluno.html">Alunos</a></li><!-- 
-                <li><a class="dropdown-item" href="../pages/nota.html">Notas</a></li>
-                <li><a class="dropdown-item" href="../pages/evento.html">Eventos</a></li>
-                <li><a class="dropdown-item" href="../pages/aluno_turma.html">Alunos e Turmas</a></li>
-                <li><a class="dropdown-item" href="../pages/aluno_resp.html">Alunos e Responsaveis</a></li>
-                <li><a class="dropdown-item" href="../pages/evento_aluno.html">Eventos e Alunos</a></li>
-                <li><a class="dropdown-item" href="../pages/aluno_disci.html">Alunos e Disciplinas</a></li>
-                <li><a class="dropdown-item" href="../pages/evento_prof.html">Evento_Professor</a></li>
-                <li><a class="dropdown-item" href="../pages/turma_disci.html">turma_disciplina</a></li> -->
+                <li><a class="dropdown-item" href="../../pages/escola.html">Escola</a></li>
+                <li><a class="dropdown-item" href="../../pages/professor.html">Professores</a></li>
+                <li><a class="dropdown-item" href="../../pages/turma.html">Turmas</a></li>
+                <li><a class="dropdown-item" href="../../pages/disciplina.html">Disciplinas</a></li>
+                <li><a class="dropdown-item" href="../../pages/responsavel.html">Responsaveis</a></li>
+                <li><a class="dropdown-item" href="../../pages/aluno.html">Alunos</a></li>
+                <li><a class="dropdown-item" href="../../pages/nota.html">Notas</a></li>
+                <li><a class="dropdown-item" href="../../pages/evento.html">Eventos</a></li>
+                <li><a class="dropdown-item" href="../../pages/aluno_turma.html">Alunos e Turmas</a></li>
+                <li><a class="dropdown-item" href="../../pages/aluno_resp.html">Alunos e Responsaveis</a></li>
+                <li><a class="dropdown-item" href="../../pages/evento_aluno.html">Eventos e Alunos</a></li>
+                <li><a class="dropdown-item" href="../../pages/aluno_disci.html">Alunos e Disciplinas</a></li>
+                <li><a class="dropdown-item" href="../../pages/evento_prof.html">Evento_Professor</a></li>
+                <li><a class="dropdown-item" href="../../pages/turma_disci.html">turma_disciplina</a></li>
               </ul>
             </li>
 
-            <!-- <li class="nav-item dropdown">
+            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Apricar notas e faltas
               </a>
               <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="../pages/selectTurma_notas.html">Notas</a></li>
-                <li><a class="dropdown-item" href="../pages/selectTurma_faltas.html">Faltas</a></li>
+                <li><a class="dropdown-item" href="../../pages/selectTurma_notas.html">Notas</a></li>
+                <li><a class="dropdown-item" href="../../pages/selectTurma_faltas.html">Faltas</a></li>
               </ul>
             </li> -->
 
           </ul>
         </div>
       </div>
-      <a href="homeProf.html" class="mx-auto d-block">
-        <img src="../../icons/smartclass.png" alt="smartclassIcon" class="img-home">
+      <a href="/home" class="mx-auto d-block">
+        <img src="/icons/smartclass.png" alt="smartclassIcon" class="img-home">
       </a>
     </div>
   </nav>
@@ -115,8 +144,7 @@
           <tr>
             <th>ID</th>
             <th>Nome da Turma</th>
-            <th>Ano</th>
-            <th>Semestre</th>
+            <th>Começo do ano</th>
             <th>Option</th>
           </tr>
         </thead>
@@ -138,17 +166,8 @@
             <input type="text" class="form-control" id="turmaName" placeholder="Nome da Turma" required>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="turmaAno" placeholder="Ano" required>
+            <input type="text" class="form-control" id="turmaAno_letivo" placeholder="Começo do ano" required>
           </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="turmaSemestre" placeholder="Semestre" required>
-          </div>
-          
-          <!-- <div class="form-group">
-            <select class="form-control" id="turmaAno" required>
-              <option value="" disabled selected>Escolha a escola</option>
-            </select>
-          </div> -->
           <button type="submit" class="btn btn-primary">Adicionar</button>
         </form>
       </div>
@@ -164,10 +183,7 @@
             <input type="text" class="form-control" id="editTurmaName" placeholder="Nome da Turma" required>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="editTurmaAno" placeholder="Ano" required>
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="editTurmaSemestre" placeholder="Semestre" required>
+            <input type="text" class="form-control" id="editTurmaAno" placeholder="Começo do ano" required>
           </div>
           <!-- <div class="form-group">
             <select class="form-control" id="editTurmaAno" required>

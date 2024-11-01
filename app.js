@@ -16,6 +16,8 @@ const aplicarNotasRoutes = require('./routes/aplicarNotasRoutes');
 const notasFaltasRoutes = require('./routes/notasFaltasRoutes');
 const disciplinasRoutes = require('./routes/disciplinasRoutes');
 const userRoutes = require('./routes/userRoutes');
+const responsavelAlunoRoutes = require('./routes/responsavelAlunoRoutes');
+const responsavelRoutes = require('./routes/responsavelRoutes');
 
 dotenv.config()
 
@@ -59,6 +61,8 @@ app.use('/alunos', alunosRoutes);
 app.use('/turmas', turmaRoutes);
 app.use('/aplicarNotas', aplicarNotasRoutes);
 app.use('/turma_disciplinas', turmaRoutes); // プレフィックスが一致しているか確認
+app.use('/resps_aluno', responsavelAlunoRoutes);
+app.use('/responsaveis', responsavelRoutes);
 
 
 

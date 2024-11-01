@@ -77,6 +77,9 @@ const express = require('express');
 const router = express.Router();
 const alunoController = require('../controllers/alunosController');
 
+// すべての生徒のリストを取得
+router.get('/', alunoController.getAllAluno);
+
 // 特定の生徒の情報を取得する
 router.get('/:id_aluno', alunoController.getAlunoById);
 
