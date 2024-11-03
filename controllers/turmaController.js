@@ -1,5 +1,4 @@
 // controllers/turmaController.js
-const util = require('util');
 const db = require('../db'); // 既存のDB接続ファイルを使用
 
 // すべてのTurmaを取得
@@ -32,10 +31,9 @@ exports.getTurmaById = async (req, res) => {
 // Turmaを追加
 exports.addTurma = async (req, res) => {
   const { nome_turma, ano_letivo } = req.body;
-  const query = util.promisify(db.query).bind(db); // db.queryをPromiseに変換
 
   try {
-    const result = await query('INSERT INTO Turma (nome_turma, ano_letivo) VALUES (?, ?)', [nome_turma, ano_letivo]);
+    const result = await db.query('INSERT INTO Turma (nome_turma, ano_letivo) VALUES (?, ?)', [nome_turma, ano_letivo]);
     res.status(201).json({ id_turma: result.insertId, nome_turma, ano_letivo });
   } catch (err) {
     console.error('Turma追加エラー: ' + err);
@@ -61,10 +59,9 @@ exports.updateTurma = async (req, res) => {
 // Turmaを削除
 exports.deleteTurma = async (req, res) => {
   const id_turma = parseInt(req.params.id_turma);
-  const query = util.promisify(db.query).bind(db); // db.queryをPromiseに変換
 
   try {
-    await query('DELETE FROM Turma WHERE id_turma = ?', [id_turma]);
+    await db.query('DELETE FROM Turma WHERE id_turma = ?', [id_turma]);
     res.json({ message: 'Turmaが削除されました' });
   } catch (err) {
     console.error('Turma削除エラー: ' + err);
