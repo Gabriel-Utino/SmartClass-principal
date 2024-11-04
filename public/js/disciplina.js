@@ -3,7 +3,7 @@ const apiUrlDisciplina = 'http://localhost:5000/disciplinas'
 
 // リストを表示
 function displayDisciplina(disciplinas) {
-  console.log('Displaying disciplinas:', disciplinas); // ここで確認
+  console.log('Displaying disciplinas:', disciplinas) // ここで確認
   const disciplinaList = document.getElementById('disciplinaList')
   disciplinaList.innerHTML = ''
   disciplinas.forEach(disciplina => {
@@ -24,25 +24,27 @@ function displayDisciplina(disciplinas) {
 // 取得
 function getDisciplina() {
   fetch(apiUrlDisciplina)
-      .then(response => {
-          if (!response.ok) {
-              return response.json().then(err => { throw err });
-          }
-          return response.json();
-      })
-      .then(data => {
-          console.log('Disciplina fetched:', data); // ここで取得したデータを確認
-          displayDisciplina(data); // データを表示する
-      })
-      .catch(error => {
-          console.error('Erro:', error);
-          alert('Erro ao obter disciplinas' + error.message);
-      });
+    .then(response => {
+      if (!response.ok) {
+        return response.json().then(err => {
+          throw err
+        })
+      }
+      return response.json()
+    })
+    .then(data => {
+      console.log('Disciplina fetched:', data) // ここで取得したデータを確認
+      displayDisciplina(data) // データを表示する
+    })
+    .catch(error => {
+      console.error('Erro:', error)
+      alert('Erro ao obter disciplinas' + error.message)
+    })
 }
 
 // 追加
 document.getElementById('addDisciplinaForm').addEventListener('submit', function (event) {
-  console.log('Add button clicked'); 
+  console.log('Add button clicked')
   event.preventDefault()
   const disciplinaName = document.getElementById('disciplinaName').value
   const disciplinaHorario = document.getElementById('disciplinaHorario').value
@@ -59,14 +61,16 @@ document.getElementById('addDisciplinaForm').addEventListener('submit', function
     })
   })
     .then(response => {
-      console.log('Response:', response); // ここで確認
+      console.log('Response:', response) // ここで確認
       if (!response.ok) {
-        return response.json().then(err => { throw err })
+        return response.json().then(err => {
+          throw err
+        })
       }
       return response.json()
     })
     .then(data => {
-      console.log('Disciplina added:', data); // ここで確認
+      console.log('Disciplina added:', data) // ここで確認
       getDisciplina()
       document.getElementById('addDisciplinaForm').reset()
     })
@@ -78,11 +82,13 @@ document.getElementById('addDisciplinaForm').addEventListener('submit', function
 
 // 更新
 function updateDisciplina(id) {
-  console.log('Edit button clicked for ID:', id); // ここで確認
+  console.log('Edit button clicked for ID:', id) // ここで確認
   fetch(`${apiUrlDisciplina}/${id}`)
     .then(response => {
       if (!response.ok) {
-        return response.json().then(err => { throw err })
+        return response.json().then(err => {
+          throw err
+        })
       }
       return response.json()
     })
@@ -117,7 +123,9 @@ document.getElementById('updateDisciplinaForm').addEventListener('submit', funct
   })
     .then(response => {
       if (!response.ok) {
-        return response.json().then(err => { throw err })
+        return response.json().then(err => {
+          throw err
+        })
       }
       return response.json()
     })
@@ -140,7 +148,9 @@ function deleteDisciplina(id_disciplina) {
     })
       .then(response => {
         if (!response.ok) {
-          return response.json().then(err => { throw err })
+          return response.json().then(err => {
+            throw err
+          })
         }
         return response.json()
       })

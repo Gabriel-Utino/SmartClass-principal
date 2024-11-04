@@ -1,3 +1,4 @@
+// public/js/profjs/apricarFlatas.js
 // 初期化
 document.addEventListener('DOMContentLoaded', () => {
   fetchTurmas()
@@ -6,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Turmas を取得しセレクトボックスを更新
 function fetchTurmas() {
-  fetch('http://localhost:3000/turmas')
+  fetch('http://localhost:5000/turmas')
     .then(response => response.json())
     .then(data => {
       const turmaSelect = document.getElementById('turmaSelect')
@@ -25,7 +26,7 @@ function fetchTurmas() {
 function populateYearSelect() {
   const yearSelect = document.getElementById('yearSelect')
   const currentYear = new Date().getFullYear()
-  for (let year = currentYear - 2; year <= currentYear + 2; year++) {
+  for (let year = currentYear - 0; year <= currentYear + 2; year++) {
     const option = document.createElement('option')
     option.value = year
     option.textContent = year
@@ -41,7 +42,7 @@ document.getElementById('turmaSelect').addEventListener('change', event => {
 })
 
 function fetchDisciplinasByTurma(turmaId) {
-  fetch(`http://localhost:3000/turma_disciplinas/${turmaId}/disciplinas`)
+  fetch(`http://localhost:5000/turma_disciplinas/${turmaId}/disciplinas`)
     .then(response => response.json())
     .then(data => {
       const disciplinaSelect = document.getElementById('disciplinaSelect')
@@ -49,7 +50,7 @@ function fetchDisciplinasByTurma(turmaId) {
       data.forEach(disciplina => {
         const option = document.createElement('option')
         option.value = disciplina.id_disciplina
-        option.textContent = disciplina.disciplina
+        option.textContent = disciplina.nome_disciplina
         disciplinaSelect.appendChild(option)
       })
       disciplinaSelect.disabled = false
@@ -71,100 +72,132 @@ document.getElementById('searchButton').addEventListener('click', () => {
   }
 })
 
-// notas_faltasを取得しリストを表示
+// notas_faltasデータを取得し、ページに表示
 function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
   fetch(
-    `http://localhost:3000/notas_faltasApri?turmaId=${turmaId}&disciplinaId=${disciplinaId}&year=${year}&semestre=${semestre}`
+    `http://localhost:5000/notas_faltasApri?turmaId=${turmaId}&disciplinaId=${disciplinaId}&year=${year}&semestre=${semestre}`
   )
     .then(response => response.json())
     .then(data => {
-      const resultContainer = document.getElementById('resultContainer')
-      resultContainer.innerHTML = ''
+      const resultContainer = document.getElementById('resultContainer');
+      resultContainer.innerHTML = '';
+      
       if (data.length > 0) {
-        const table = document.createElement('table')
-        table.className = 'table'
-        const thead = document.createElement('thead')
-        const headerRow = document.createElement('tr')
-        ;['Selecionar', 'Foto do Aluno', 'Nome do Aluno', 'Faltas'].forEach(text => {
-          const th = document.createElement('th')
-          th.textContent = text
-          headerRow.appendChild(th)
-        })
-        thead.appendChild(headerRow)
-        table.appendChild(thead)
+        const table = document.createElement('table');
+        table.className = 'table';
 
-        const tbody = document.createElement('tbody')
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        ['Selecionar', 'Foto do Aluno', 'Nome do Aluno', 'Faltas'].forEach(text => {
+          const th = document.createElement('th');
+          th.textContent = text;
+          headerRow.appendChild(th);
+        });
+        
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
         data.forEach(item => {
-          const row = document.createElement('tr')
-          const selectCell = document.createElement('td')
-          const checkbox = document.createElement('input')
-          checkbox.type = 'checkbox'
-          checkbox.value = item.id_notas_faltas
-          selectCell.appendChild(checkbox)
-          row.appendChild(selectCell)
+          const row = document.createElement('tr');
 
-          // 写真セル
-          const photoCell = document.createElement('td')
-          const photoImg = document.createElement('img')
-          photoImg.src = item.foto ? `../../upload/${item.foto}` : '../../upload/semfoto.png'
-          photoImg.alt = 'Sem Foto'
+          const selectCell = document.createElement('td');
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.value = item.id_notas_faltas;
+          selectCell.appendChild(checkbox);
+          row.appendChild(selectCell);
+
+          const photoCell = document.createElement('td');
+          const photoImg = document.createElement('img');
+          photoImg.src = item.foto ? `../../upload/${item.foto}` : './icons/semfoto.png';
+          photoImg.alt = 'Sem Foto';
           photoImg.classList.add('img-alunoMini');
-          photoCell.appendChild(photoImg)
-          row.appendChild(photoCell)
+          photoCell.appendChild(photoImg);
+          row.appendChild(photoCell);
 
-          // 名前セル
-          const nameCell = document.createElement('td')
-          nameCell.textContent = item.nome_aluno
-          row.appendChild(nameCell)
+          const nameCell = document.createElement('td');
+          nameCell.textContent = item.nome_aluno;
+          row.appendChild(nameCell);
 
-          // Faltasセル
-          const faltasCell = document.createElement('td')
-          faltasCell.textContent = item.faltas
-          row.appendChild(faltasCell)
+          const faltasCell = document.createElement('td');
+          faltasCell.textContent = item.faltas;
+          row.appendChild(faltasCell);
 
-          tbody.appendChild(row)
-        })
-        table.appendChild(tbody)
-        resultContainer.appendChild(table)
-
-        document.getElementById('applyFaltasButton').style.display = 'block'
+          tbody.appendChild(row);
+        });
+        
+        table.appendChild(tbody);
+        resultContainer.appendChild(table);
+        document.getElementById('applyFaltasButton').style.display = 'block';
       } else {
-        resultContainer.textContent = 'Nenhum dado correspondente foi encontrado'
-        document.getElementById('applyFaltasButton').style.display = 'none'
+        resultContainer.textContent = 'Nenhum dado correspondente foi encontrado';
+        document.getElementById('applyFaltasButton').style.display = 'none';
       }
     })
-    .catch(error => console.error('Error fetching notas_faltas:', error))
+    .catch(error => console.error('Error fetching notas_faltas:', error));
 }
+
 
 // 「Aplicar Faltas」ボタンのクリックイベント
 document.getElementById('applyFaltasButton').addEventListener('click', () => {
   const selectedCheckboxes = document.querySelectorAll('#resultContainer input[type="checkbox"]:checked')
   const ids = Array.from(selectedCheckboxes).map(checkbox => checkbox.value)
+  /* const dataFalta = document.getElementById('dataFaltaInput').value */
 
-  if (ids.length > 0) {
-    applyFaltas(ids)
+  if (ids.length > 0 /* && dataFalta */) {
+    applyFaltas(ids/* , dataFalta */)
+    alert('Faltas aplicadas com sucesso'); // 変更が加えられたことを通知
+    // 「Procurar」ボタンを「Renovar」に変更
+    const searchButton = document.getElementById('searchButton');
+    searchButton.innerText = 'Renovar';
+    searchButton.classList.remove('btn-primary');
+    searchButton.classList.add('btn-success');
   } else {
-    alert('Está sem faltas')
+    alert('Está faltando dados')
   }
 })
 
-// faltasを更新
-function applyFaltas(ids) {
-  fetch('http://localhost:3000/notas_faltasApri/faltas', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ ids })
-  })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        alert('Faltas aplicadas')
-        document.getElementById('searchButton').click() // 検索を再実行して結果を更新
-      } else {
-        alert('Falha ao aplicar Faltas')
-      }
-    })
-    .catch(error => console.error('Error applying faltas:', error))
+// チェックされた学生のIDを収集する関数
+function getSelectedIds() {
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked'); // チェックされたチェックボックスを取得
+  const ids = Array.from(checkboxes).map(checkbox => checkbox.value); // value 属性に ID が格納されていると仮定して取得
+  console.log('Selected IDs:', ids); // デバッグ: 選択されたIDの配列を表示
+  return ids;
+}
+
+async function applyFaltas() {
+  try {
+    const selectedIds = getSelectedIds(); // 選択されたIDを取得
+    if (selectedIds.length === 0) {
+      console.log('No students selected'); // チェック: 選択されていない場合のメッセージ
+      return;
+    }
+
+    const response = await fetch('http://localhost:5000/notas_faltasApri/faltas', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ids: selectedIds }),
+    });
+
+    if (response.ok) {
+      console.log('Faltas applied successfully');
+      await fetchFaltasData(); // 最新のデータを取得して画面を更新
+    } else {
+      console.error('Failed to apply faltas');
+    }
+  } catch (error) {
+    console.error('Error applying faltas:', error);
+  }
+}
+
+// 画面にデータを再表示するための関数
+async function fetchFaltasData() {
+  try {
+    const response = await fetch('http://localhost:5000/notas_faltasApri');
+    const data = await response.json();
+    updateTable(data); // 取得したデータでテーブルを更新
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
 }

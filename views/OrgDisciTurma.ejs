@@ -5,17 +5,28 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calendário</title>
-
-  <!-- Links de CSS -->
+  <title>Organização</title>
+  <!-- 追加：外部のスタイルシート -->
+  <!-- <link rel="stylesheet" href="styles/professores.css" /> -->
+  <!-- <link rel="stylesheet" href="styles/style.css" /> -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../../css/bootstrap.css">
+  <!-- Bootstrap Datepicker CSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
     rel="stylesheet">
-  <link href="./css/calendario.css" rel="stylesheet">
-  <link href="./css/calendarioDarkMode.css" rel="stylesheet">
+  <style>
+    .icon-container {
+      text-align: center;
+      margin: 20px;
+    }
 
+    .icon-container img {
+      width: 100px;
+      height: 100px;
+      margin: 10px;
+    }
+  </style>
 </head>
 
 <body>
@@ -135,31 +146,47 @@
 
 
 
-
+  <!-- 以下、ベースのHTMLファイルのコンテンツを続ける -->
   <div class="container">
-    <div class="row">
-      <div class="col">
-        <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FSao_Paulo&bgcolor=%23A79B8E&showTitle=0&src=Z2FicmllbC51dGlub0B1c2Nzb25saW5lLmNvbS5icg&src=Y19jbGFzc3Jvb20wOWFlMjE4MkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20zYjJiYzliY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21kOWE5ZDhiMkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20zY2UxN2NhNEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=cHQtYnIuYnJhemlsaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20zNWI1MmU3ZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb201MGQ4ZDRmMkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21jYTU4NWVjM0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb201NGEzOWI1NUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039BE5&color=%23c26401&color=%230047a8&color=%23137333&color=%23202124&color=%230B8043&color=%23202124&color=%230047a8&color=%23007b83&color=%230047a8&color=%2333B679" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-      </div>
-    </div>
+    <h1>Selecione a turma</h1>
+    <label for="turmaSelect">Selecione a turma:</label>
+    <select id="turmaSelect">
+      <option value="">--Selecione--</option>
+    </select>
+  
+    <h2>As disciplina da turma selecionado</h2>
+    <label for="disciplinaSelect">Selecione a disciplina (todos):</label>
+    <select class="form-select" id="disciplinaSelect" multiple disabled>
+      <option value="">--Selecione a turma--</option>
+    </select>
+  
+    <h2>Escreva o ano e o semestre apricado</h2>
+    <label for="academicYear">Ano:</label>
+    <input type="number" id="academicYear" placeholder="exemplo: 2024" min="2000" max="2100">
+  
+    <label for="semestre">Semestre:</label>
+    <input type="number" id="semestre" placeholder="exemplo: 1 ou 2" min="1" max="2">
+  
+    <button id="assignDisciplinas" disabled>Aplicar</button>
+  
   </div>
 
 
 
 
-
-
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-  <script src="./scripts/calendarioDarkMode.js"></script>
-  <script src="/js/calendario.js"></script>
+  <!-- Bootstrap Datepicker JS -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
+  <script src="/js/profJs/orgDisciTurma.js">
+  </script>
 </body>
 
 </html>

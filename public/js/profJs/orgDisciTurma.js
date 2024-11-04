@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const semestreInput = document.getElementById('semestre')
   const assignDisciplinasButton = document.getElementById('assignDisciplinas')
 
-  const apiUrlTurma = 'http://localhost:3000/turmas'
-  const apiUrlAssign = 'http://localhost:3000/assign-disciplinas'
+  const apiUrlTurma = 'http://localhost:5000/turmas'
+  const apiUrlAssign = 'http://localhost:5000/assign-disciplinas'
 
   // サーバーからTurmaのデータを取得する
   fetch(apiUrlTurma)
@@ -36,8 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
           data.forEach(disciplina => {
             const option = document.createElement('option')
+            console.log(disciplina)
             option.value = disciplina.id_disciplina
-            option.textContent = disciplina.disciplina
+            option.textContent = disciplina.nome_disciplina
             disciplinaSelect.appendChild(option)
           })
           disciplinaSelect.disabled = false
@@ -65,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({
           id_turma: selectedTurmaId,
           id_disciplinas: selectedDisciplinas,
-          academic_year: academicYear,
+          ano_academico: academicYear,
           semestre: semestre
         })
       })
