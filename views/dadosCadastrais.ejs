@@ -167,7 +167,7 @@
                 <tr>
                   <th scope="row">Data de nacimento</th>
                   <td id="aluno-dob">
-                    <%= user.nascimento_usuario %>
+                    <%= new Date(user.nascimento_usuario).toLocaleDateString("pt-BR") %>
                   </td>
                 </tr>
                 <% if (user.id_perfil === 3) { %> 
@@ -180,7 +180,7 @@
                 <tr>
                   <th scope="row">Data de matricula</th>
                   <td id="aluno-registration-date">
-                    <%= user.data_matricula %>
+                    <%= new Date(user.data_matricula).toLocaleDateString("pt-BR") %>
                   </td>
                 </tr>
                 <% } %>
