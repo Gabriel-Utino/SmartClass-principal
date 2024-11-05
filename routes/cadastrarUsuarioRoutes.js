@@ -4,8 +4,18 @@ const router = express.Router();
 const cadastrarUsuarioController = require('../controllers/cadastrarUsuarioController');
 
 
-// 成績を取得するルート
-router.get('/', notasFaltasController.getAllUsuario);
+router.get('/', cadastrarUsuarioController.getAllUsuarios);
 
+
+router.get('/:id_usuario', cadastrarUsuarioController.getUsuarioById);
+
+
+router.post('/', cadastrarUsuarioController.createUsuario);
+
+
+router.put('/:id_usuario', cadastrarUsuarioController.updateUsuario);
+
+
+router.delete('/:id_usuario', cadastrarUsuarioController.deleteUsuario);
 
 module.exports = router;
