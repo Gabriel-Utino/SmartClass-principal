@@ -1,5 +1,4 @@
-// public/js/profjs
-// 初期化
+// public/js/profjs/apricarNotas.js
 document.addEventListener('DOMContentLoaded', () => {
   fetchTurmas()
   populateYearSelect()
