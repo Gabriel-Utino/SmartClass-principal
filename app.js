@@ -59,7 +59,7 @@ app.use('/turmas', turmaRoutes);
 app.use('/aplicarNotas', aplicarNotasRoutes);
 app.use('/turma_disciplinas', turmaRoutes); // プレフィックスが一致しているか確認
 // route do calendario
-app.use('/calendario', calendarioRoutes);
+app.use('/evento', calendarioRoutes);
 
 
 
