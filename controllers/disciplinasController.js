@@ -1,16 +1,4 @@
-/* const connection = require('../db'); // DB接続設定
-
-// 全ての科目を取得
-exports.getAllDisciplinas = (req, res) => {
-  connection.query('SELECT * FROM Disciplina;', (err, results) => {
-    if (err) {
-      console.error('Error fetching data from Disciplina: ' + err);
-      res.status(500).json({ message: 'Error fetching disciplinas' });
-    } else {
-      res.json(results);
-    }
-  });
-}; */
+// controllers/disciplinasController.js
 const connection = require('../config/database'); // Promiseベースの接続を取得
 
 // 全ての科目を取得
