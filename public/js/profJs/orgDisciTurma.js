@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const assignDisciplinasButton = document.getElementById('assignDisciplinas')
 
   const apiUrlTurma = 'http://localhost:5000/turmas'
-  const apiUrlAssign = 'http://localhost:5000/assign-disciplinas'
+  const apiUrlAssign = 'http://localhost:5000/turmas/assign-disciplinas'
 
   // サーバーからTurmaのデータを取得する
   fetch(apiUrlTurma)
@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
           data.forEach(disciplina => {
             const option = document.createElement('option')
-            console.log(disciplina)
             option.value = disciplina.id_disciplina
             option.textContent = disciplina.nome_disciplina
             disciplinaSelect.appendChild(option)
@@ -57,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const academicYear = academicYearInput.value
     const semestre = semestreInput.value
 
+    console.log("test :" + selectedDisciplinas)
     if (selectedTurmaId && selectedDisciplinas.length > 0 && academicYear && semestre) {
       fetch(apiUrlAssign, {
         method: 'POST',
