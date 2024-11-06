@@ -20,7 +20,7 @@
 <body>
 
   <!-- Código de barras de navegação -->
-  <nav class="navbar navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-dark bg-dark fixed-top" style="background-color: transparent">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
         aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
@@ -34,22 +34,76 @@
             aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-          <form class="d-flex mt-3" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-success" type="submit">Search</button>
-          </form>
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+              <a class="nav-link active" aria-current="page" href="/home">Home</a>
+            </li>
+            <% if (user.id_perfil === 2 || user.id_perfil === 3 || user.id_perfil === 4) { %> 
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Notas e Faltas
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <% if (user.id_perfil === 2) { %><!-- quando e Professor --> 
+                  <li><a class="dropdown-item" href="/apricarNotas">Apricar Notas</a></li>
+                  <li><a class="dropdown-item" href="/apricarFaltas">Apricar Faltas</a></li>
+                <% } %>
+                <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
+                <li><a class="dropdown-item" href="/veriNotas">Notas</a></li>
+                <li><a class="dropdown-item" href="/veriFaltas">Faltas</a></li>
+                <% } %>
+                <% if (user.id_perfil === 4) { %><!-- quando e Responsaveis --> 
+                  <li><a class="dropdown-item" href="/veriResponsavel">Verificar Notas e faltas</a></li>
+                <% } %>
+              </ul>
+            </li>
+            <% } %>
+            <% if (user.id_perfil === 1 || user.id_perfil === 5) { %> 
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Cadastramentos
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="/turma">Turma</a></li>
+                <li><a class="dropdown-item" href="/disciplina">Disciplinas</a></li>
+                <li><a class="dropdown-item" href="/aluno">Alunos</a></li>
+                <li><a class="dropdown-item" href="/responsavel">Responsaveis</a></li>
+                <li><a class="dropdown-item" href="/organizacao">Organizacao</a></li>
+                <li><a class="dropdown-item" href="/professor">Professores</a></li>
+              </ul>
+            </li>
+            <% } %>
+            <li class="nav-item">
+              <a class="nav-link" href="/calendario">Calendario</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="Calendario.html">Calendário</a>
+              <a class="nav-link" href="/dadosCadastrais">Dados Cadastrais</a>
             </li>
-            <!-- Adicionar os outros links aqui -->
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
           </ul>
         </div>
+        
+        <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
+          <div id="user-info" data-id-aluno="<%= user.id_aluno %>" data-nome-usuario="<%= user.nome_usuario %>"
+            class="d-flex align-items-end">
+            <p class="opacity-0">ID: <%= user.id_aluno %> Nome: <%= user.nome_usuario %></p>
+          </div>
+        <% } %>
+        <% if (user.id_perfil === 4) { %><!-- quando e Responsaveis --> 
+          <div id="user-info2" data-id-responsavel="<%= user.id_responsavel %>" data-nome-usuario-resp="<%= user.nome_usuario %>"
+            class="d-flex align-items-end">
+          <p class="opacity-0">ID: <%= user.id_responsavel %> Nome: <%= user.nome_usuario %></p>
+          </div>
+        <% } %>
+
       </div>
-      <img src="../icons/smartclass.png" width="50" height="50" class="mx-auto d-block" alt="smartclassIcon">
+      <a href="/home" class="mx-auto d-block">
+        <img src="/icons/smartclass.png" alt="smartclassIcon" class="img-home">
+      </a>
     </div>
   </nav>
 

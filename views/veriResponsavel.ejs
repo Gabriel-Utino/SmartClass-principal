@@ -5,28 +5,16 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home</title>
+  <title>Template</title>
   <!-- 追加：外部のスタイルシート -->
   <!-- <link rel="stylesheet" href="styles/professores.css" /> -->
   <!-- <link rel="stylesheet" href="styles/style.css" /> -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-  <link rel="stylesheet" href="../../css/bootstrap.css">
+  <link rel="stylesheet" href="/css/bootstrap.css">
   <!-- Bootstrap Datepicker CSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
     rel="stylesheet">
-  <style>
-    .icon-container {
-      text-align: center;
-      margin: 20px;
-    }
-
-    .icon-container img {
-      width: 100px;
-      height: 100px;
-      margin: 10px;
-    }
-  </style>
 </head>
 
 <body>
@@ -121,107 +109,38 @@
 
 
 
-
-
-
-  <!-- 以下、ベースのHTMLファイルのコンテンツを続ける -->
-  <div class="container">
-    <div class="row">
-      <h1 class="text-center">Bem-vindo  </h1>
+  <!-- O conteúdo do arquivo HTML -->
+  <div class="container my-5">
+    <h1 class="text-center mb-4">Ver Notas</h1>
+    <div class="d-flex justify-content-center mb-4">
+      <select id="selectAluno" class="form-select me-2" style="max-width: 300px;">
+        <option value="" selected>Selecione um aluno</option>
+      </select>
+      <button onclick="fetchNotasFaltas()" class="btn btn-primary" >Exibir notas</button>
+    </div>
+  
+    <br>
+    <div class="table-responsive" style="max-height: 400px;">
+      <table id="notasTable" class="table table-striped table-bordered">
+        <thead>
+          <tr class="table-primary text-center">
+            <th>Disciplina</th>
+            <th>N1</th>
+            <th>AP</th>
+            <th>AI</th>
+            <th>Faltas</th>
+            <th>Ano</th>
+            <th>Semestre</th>
+          </tr>
+        </thead>
+        <tbody class="overflow-auto"></tbody>
+      </table>
     </div>
   </div>
-  <div class="container">
-    <div class="row justify-content-center  rounded bg-body-secondary">
-      <div class="col-5 icon-container">
-        <a href="dadosCadastrais">
-          <img src="/icons/iconB.png" alt="Icon">
-        </a>
-        <p>Dados Cadastrais</p>
-      </div>
-      <div class="col-5 icon-container">
-        <a href="calendario">
-          <img src="/icons/calendarB.png" alt="Calendar Icon">
-        </a>
-        <p>Calendar</p>
-      </div>
-      <% if (user.id_perfil === 4) { %><!-- quando e Aluno --> 
-      <div class="col-5 icon-container">
-        <a href="veriResponsavel">
-          <img src="/icons/noteB.png" alt="Note Icon">
-        </a>
-        <p>Notas</p>
-      </div>
-      <% } %>
-      <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
-      <div class="col-5 icon-container">
-        <a href="veriNotas">
-          <img src="/icons/noteB.png" alt="Note Icon">
-        </a>
-        <p>Notas</p>
-      </div>
-      <div class="col-5 icon-container">
-        <a href="veriFaltas">
-          <img src="/icons/notaB.png" alt="Faltas Icon">
-        </a>
-        <p>Faltas</p>
-      </div>
-      <% } %>
-      <% if (user.id_perfil === 2) { %><!-- quando e Professor --> 
-        <div class="col-5 icon-container">
-          <a href="apricarNotas">
-            <img src="/icons/noteB.png" alt="Note Icon">
-          </a>
-          <p>Aplicar Notas</p>
-        </div>
-        <div class="col-5 icon-container">
-          <a href="apricarFaltas">
-            <img src="/icons/apricarFaltas.png" alt="Faltas Icon">
-          </a>
-          <p>Aplicar Faltas</p>
-        </div>
-      <% } %>
-      
-    </div>
-  </div>
-  <% if (user.id_perfil === 1 || user.id_perfil === 5 ) { %><!-- quando e Aluno --> 
-    <div class="permicaoProf">
-      <div class="container">
-        <div class="row">
-          <h1 class="text-center">Cadastramentos</h1>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row justify-content-center  rounded bg-body-secondary">
-          <div class="col-5 icon-container">
-            <a href="turma">
-              <img src="/icons/turmasB.png" alt="Calendar Icon">
-            </a>
-            <p>Turma</p>
-          </div>
-          <div class="col-5 icon-container">
-            <a href="disciplina">
-              <img src="/icons/disciplinas.png" alt="Note Icon">
-            </a>
-            <p>Disciplinas</p>
-          </div>
-          <div class="col-5 icon-container">
-            <a href="aluno">
-              <img src="/icons/alunosB.png" alt="Icon">
-              <i class="fas fa-user-edit"></i>
-            </a>
-            <p>Criar Usuario</p>
-          </div>
-          <div class="col-5 icon-container">
-            <a href="organizacao">
-              <img src="/icons/organizacao.png" alt="Faltas Icon">
-            </a>
-            <p>Organização</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  <% } %>
 
+
+
+  <!-- A partir daqui, tudo gira em torno de Javascript. -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
@@ -232,6 +151,8 @@
   <!-- Bootstrap Datepicker JS -->
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+    <script src="/js/veriResponsavel.js"></script> <!-- Escreva o link para Javascript aqui -->
 </body>
 
 </html>
