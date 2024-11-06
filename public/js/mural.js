@@ -54,8 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
   getpublicacao();
 });
 
-/* 
-document.getElementById('addPublicacaoForm').addEventListener('submit', function (event) {
+/* document.getElementById('addPublicacaoForm').addEventListener('submit', function (event) {
   event.preventDefault();
   const publicacaoNome = document.getElementById('publicacaoNome').value;
   const publicacaoDate = document.getElementById('publicacaoDate').value;
@@ -117,8 +116,8 @@ function updatepublicacao(id) {
     })
     .catch(error => console.error('Erro:', error));
 }
-/* 
-document.getElementById('updatePublicacaoForm').addEventListener('submit', function (event) {
+
+/* document.getElementById('updatePublicacaoForm').addEventListener('submit', function (event) {
   event.preventDefault();
   const publicacaoId = document.getElementById('editPublicacaoId').value;
   const publicacaoNome = document.getElementById('editPublicacaoNome').value;
