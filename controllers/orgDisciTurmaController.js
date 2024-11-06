@@ -27,7 +27,7 @@ exports.getTurmaDisciplinas = async (req, res) => {
     res.status(500).json({ message: 'Error retrieving disciplinas' });
   }
 };
-
+/* 
 // Notas_faltasエントリを作成
 exports.assignDisciplinas = (req, res) => {
   const { id_turma, id_disciplinas, ano_academico, semestre } = req.body;
@@ -55,4 +55,42 @@ exports.assignDisciplinas = (req, res) => {
 
     res.json({ message: 'Disciplinas assigned successfully' });
   });
+};
+
+ */
+exports.assignDisciplinas = async (req, res) => {
+  const { id_turma, id_disciplinas, ano_academico, semestre } = req.body;
+
+  try {
+    // AlunoのIDを取得する
+    const alunos = await db.query('SELECT id_aluno FROM Aluno WHERE id_turma = ?', [id_turma]);
+    
+    // Alunosが見つからない場合はエラーメッセージを返す
+    if (!alunos.length) {
+      return res.status(404).json({ message: 'No students found for the given turma.' });
+    }
+
+    // 各disciplineについて、学生ごとにNotas_faltasエントリを作成
+    for (const id_disciplina of id_disciplinas) {
+      for (const aluno of alunos) {
+        try {/* 
+          await db.query(
+            'INSERT INTO Notas_faltas (id_disciplina, id_aluno, ano_academico, semestre) VALUES (?, ?, ?, ?)',
+            [id_disciplina, aluno, ano_academico, semestre]
+          ); */
+          console.log(aluno)
+          console.log("alunos :" + aluno)
+        } catch (err) {
+          console.error('Error creating Notas_faltas entry:', err);
+        }
+      }
+    }
+
+    // 成功した場合のレスポンス
+    res.json({ message: 'Disciplinas assigned successfully' });
+
+  } catch (err) {
+    console.error('Error fetching Alunos or inserting Notas_faltas:', err);
+    res.status(500).json({ message: 'Failed to assign disciplinas' });
+  }
 };
