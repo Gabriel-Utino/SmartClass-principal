@@ -1,6 +1,8 @@
 const apiUrl = 'http://localhost:5000/publicacoes';
 
-function displaypublicacao(publicacao) {
+const user = { id_perfil: 3 }; // Substitua pelo perfil do usuário logado
+
+function displaypublicacao(publicacao, user) {
   const publicacaoList = document.getElementById('publicacaoList');
   publicacaoList.innerHTML = '';
   publicacao.forEach(publicacao => {
@@ -9,10 +11,17 @@ function displaypublicacao(publicacao) {
       <td>${publicacao.id_pub}</td>
       <td>${publicacao.comentario}</td>
       <td>${formatDate(publicacao.data_pub)}</td>
-      <td>
-        <button onclick="updatepublicacao(${publicacao.id_pub})">Editar</button>
-        <button onclick="deletepublicacao(${publicacao.id_pub})">Excluir</button>
-      </td>
+      
+        ${
+          // Apenas exibir os botões para perfis específicos
+          user.id_perfil === 1 || user.id_perfil === 2 || user.id_perfil === 5 
+            ? `<td>
+              <button onclick="updatepublicacao(${publicacao.id_pub})">Editar</button>
+              <button onclick="deletepublicacao(${publicacao.id_pub})">Excluir</button>
+             </td> `
+            : '' // Deixe vazio para não exibir nada para perfis sem permissão
+        }
+      
     `;
     publicacaoList.appendChild(publicacaoElement);
   });
@@ -20,10 +29,19 @@ function displaypublicacao(publicacao) {
 
 function getpublicacao() {
   fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => displaypublicacao(data))
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Erro na requisição: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => displaypublicacao(data, user)) // Passa o perfil do usuário
     .catch(error => console.error('Erro:', error));
 }
+document.addEventListener('DOMContentLoaded', () => {
+  getpublicacao();
+});
+
 
 document.getElementById('addPublicacaoForm').addEventListener('submit', function (event) {
   event.preventDefault();

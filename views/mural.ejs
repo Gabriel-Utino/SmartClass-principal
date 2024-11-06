@@ -153,7 +153,7 @@
           <button type="submit" class="btn btn-primary">Adicionar</button>
         </form>
       </div>
-      <% } %>
+      
 
       <div class="col-md-6">
         
@@ -173,7 +173,7 @@
         </form>
       </div>
     </div>
-
+    <% } %>
     <h1 class="mt-5">Mural do Aluno :</h1>
     <div class="containerTable" style="overflow-y: auto; max-height: 400px;">
       <table class="table">
@@ -182,8 +182,11 @@
             <th>ID</th>
             <th>Publicação</th>
             <th>Data</th>
+            <% if (user.id_perfil === 1 || user.id_perfil === 2 || user.id_perfil === 5) { %> 
             <th>Opções</th>
+            <% } %>
           </tr>
+          
         </thead>
         <tbody id="publicacaoList" class="overflow-auto">
         </tbody>
