@@ -1,6 +1,18 @@
 const apiUrl = 'http://localhost:5000/publicacoes';
 
-const user = { id_perfil: 3 }; // Substitua pelo perfil do usuário logado
+
+function getUserFromPage() {
+  const user = document.getElementById('user-info');
+  const id_perfil = user.getAttribute('data-id-perfil');
+  const id_responsavel = user.getAttribute('data-id');
+  const nome_usuario = user.getAttribute('data-nome-usuario');
+
+  return {
+    id_responsavel: parseInt(id_responsavel, 10),
+    id_perfil: parseInt(id_perfil, 10),
+    nome_usuario: nome_usuario
+  };
+}
 
 function displaypublicacao(publicacao, user) {
   const publicacaoList = document.getElementById('publicacaoList');
@@ -8,17 +20,17 @@ function displaypublicacao(publicacao, user) {
   publicacao.forEach(publicacao => {
     const publicacaoElement = document.createElement('tr');
     publicacaoElement.innerHTML = `
-      <td>${publicacao.id_pub}</td>
       <td>${publicacao.comentario}</td>
       <td>${formatDate(publicacao.data_pub)}</td>
-      
+      <td>${publicacao.nome_pubricador}</td>
         ${
+          
           // Apenas exibir os botões para perfis específicos
           user.id_perfil === 1 || user.id_perfil === 2 || user.id_perfil === 5 
             ? `<td>
-              <button onclick="updatepublicacao(${publicacao.id_pub})">Editar</button>
-              <button onclick="deletepublicacao(${publicacao.id_pub})">Excluir</button>
-             </td> `
+                <button onclick="updatepublicacao(${publicacao.id_pub})">Editar</button>
+                <button onclick="deletepublicacao(${publicacao.id_pub})">Excluir</button>
+              </td> `
             : '' // Deixe vazio para não exibir nada para perfis sem permissão
         }
       
@@ -35,14 +47,14 @@ function getpublicacao() {
       }
       return response.json();
     })
-    .then(data => displaypublicacao(data, user)) // Passa o perfil do usuário
+    .then(data => displaypublicacao(data, getUserFromPage())) // Passa o perfil do usuário
     .catch(error => console.error('Erro:', error));
 }
 document.addEventListener('DOMContentLoaded', () => {
   getpublicacao();
 });
 
-
+/* 
 document.getElementById('addPublicacaoForm').addEventListener('submit', function (event) {
   event.preventDefault();
   const publicacaoNome = document.getElementById('publicacaoNome').value;
@@ -64,7 +76,35 @@ document.getElementById('addPublicacaoForm').addEventListener('submit', function
       document.getElementById('addPublicacaoForm').reset();
     })
     .catch(error => console.error('Erro:', error));
-});
+}); */
+const addPublicacaoForm = document.getElementById('addPublicacaoForm');
+if (addPublicacaoForm) {
+  const user = getUserFromPage() 
+  addPublicacaoForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const publicacaoNome = document.getElementById('publicacaoNome').value;
+    const publicacaoDate = document.getElementById('publicacaoDate').value;
+    const nome_pubricador = user.nome_usuario;
+
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        comentario: publicacaoNome,
+        data_pub: publicacaoDate,
+        nome_pubricador: nome_pubricador
+      })
+    })
+      .then(response => response.json())
+      .then(() => {
+        getpublicacao();
+        addPublicacaoForm.reset();
+      })
+      .catch(error => console.error('Erro:', error));
+  });
+}
 
 function updatepublicacao(id) {
   fetch(`${apiUrl}/${id}`)
@@ -77,7 +117,7 @@ function updatepublicacao(id) {
     })
     .catch(error => console.error('Erro:', error));
 }
-
+/* 
 document.getElementById('updatePublicacaoForm').addEventListener('submit', function (event) {
   event.preventDefault();
   const publicacaoId = document.getElementById('editPublicacaoId').value;
@@ -100,7 +140,36 @@ document.getElementById('updatePublicacaoForm').addEventListener('submit', funct
       document.getElementById('updatePublicacaoForm').style.display = 'none';
     })
     .catch(error => console.error('Erro:', error));
-});
+}); */
+const updatePublicacaoForm = document.getElementById('updatePublicacaoForm');
+if (updatePublicacaoForm) {
+  const user = getUserFromPage()
+  updatePublicacaoForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const publicacaoId = document.getElementById('editPublicacaoId').value;
+    const publicacaoNome = document.getElementById('editPublicacaoNome').value;
+    const publicacaoDate = document.getElementById('editPublicacaoDate').value;
+    const nome_pubricador = user.nome_usuario;
+
+    fetch(`${apiUrl}/${publicacaoId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        comentario: publicacaoNome,
+        data_pub: publicacaoDate,
+        nome_pubricador: nome_pubricador
+      })
+    })
+      .then(response => response.json())
+      .then(() => {
+        getpublicacao();
+        document.getElementById('updatePublicacaoForm').style.display = 'none';
+      })
+      .catch(error => console.error('Erro:', error));
+  });
+}
 
 function deletepublicacao(id) {
   fetch(`${apiUrl}/${id}`, {

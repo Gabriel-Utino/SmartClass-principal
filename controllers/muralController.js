@@ -31,12 +31,12 @@ exports.getPublicacaoById = async (req, res) => {
 
 // Função para adicionar uma nova publicação
 exports.createPublicacao = async (req, res) => {
-  const { comentario, data_pub } = req.body;
+  const { comentario, data_pub, nome_pubricador } = req.body;
 
   try {
     const [result] = await connection.query(
-      'INSERT INTO publicacao (comentario, data_pub) VALUES (?, ?)',
-      [comentario, data_pub]
+      'INSERT INTO publicacao (comentario, data_pub, nome_pubricador) VALUES (?, ?, ?)',
+      [comentario, data_pub, nome_pubricador]
     );
 
     const newPublicacao = { id_pub: result.insertId, comentario, data_pub };
@@ -50,12 +50,12 @@ exports.createPublicacao = async (req, res) => {
 // Função para atualizar uma publicação existente
 exports.updatePublicacao = async (req, res) => {
   const id_pub = parseInt(req.params.id_pub);
-  const { comentario, data_pub } = req.body;
+  const { comentario, data_pub , nome_pubricador} = req.body;
 
   try {
     const [result] = await connection.query(
-      'UPDATE publicacao SET comentario = ?, data_pub = ? WHERE id_pub = ?',
-      [comentario, data_pub, id_pub]
+      'UPDATE publicacao SET comentario = ?, data_pub = ?, nome_pubricador = ? WHERE id_pub = ?',
+      [comentario, data_pub, nome_pubricador, id_pub]
     );
 
     if (result.affectedRows === 0) {
