@@ -82,8 +82,8 @@ router.get('/template', (req, res) => {
   res.render('template') // views/professor.ejs
 })
 
-router.get('/mural', (req, res) => {
-  res.render('mural') // views/professor.ejs
+router.get('/mural', ensureAuthenticated, (req, res) => {
+  res.render('mural', { user: req.session.user }) // views/mural.ejs
 })
 
 // パスワードリセット関連のルート
