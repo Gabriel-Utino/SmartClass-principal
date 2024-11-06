@@ -1,5 +1,7 @@
 // controllers/cadastrarUsuarioController.js
 const connection = require('../config/database'); 
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 // Função para obter todos os usuários
 exports.getAllUsuarios = async (req, res) => {
@@ -45,9 +47,11 @@ exports.createUsuario = async (req, res) => {
   } = req.body;
 
   try {
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(senha, saltRounds);
     const [result] = await connection.query(
       'INSERT INTO usuario (nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, nascimento_usuario, senha, id_perfil) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, nascimento_usuario, senha, id_perfil]
+      [nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, nascimento_usuario, hashedPassword, id_perfil]
     );
 
     const id_usuario = result.insertId;
