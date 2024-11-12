@@ -6,21 +6,21 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const path = require('path')
 const dotenv = require('dotenv')
-const passport = require('./config/passport') 
+const passport = require('../config/passport') 
 
 // ルートのインポート
-const authRoutes = require('./routes/authRoutes')
-const alunosRoutes = require('./routes/alunosRoutes');
-const turmaRoutes = require('./routes/turmaRoutes');
-const aplicarNotasRoutes = require('./routes/aplicarNotasRoutes');
-const notasFaltasRoutes = require('./routes/notasFaltasRoutes');
-const disciplinasRoutes = require('./routes/disciplinasRoutes');
-const userRoutes = require('./routes/userRoutes');
-const responsavelAlunoRoutes = require('./routes/responsavelAlunoRoutes');
-const responsavelRoutes = require('./routes/responsavelRoutes');
-const turmaDisciplinaRoutes = require('./routes/turmaDisciplinaRoutes');
-const cadastrarUsuarioRoutes = require('./routes/cadastrarUsuarioRoutes');
-const muralRoutes = require('./routes/muralRoutes');
+const authRoutes = require('../routes/authRoutes')
+const alunosRoutes = require('../routes/alunosRoutes');
+const turmaRoutes = require('../routes/turmaRoutes');
+const aplicarNotasRoutes = require('../routes/aplicarNotasRoutes');
+const notasFaltasRoutes = require('../routes/notasFaltasRoutes');
+const disciplinasRoutes = require('../routes/disciplinasRoutes');
+const userRoutes = require('../routes/userRoutes');
+const responsavelAlunoRoutes = require('../routes/responsavelAlunoRoutes');
+const responsavelRoutes = require('../routes/responsavelRoutes');
+const turmaDisciplinaRoutes = require('../routes/turmaDisciplinaRoutes');
+const cadastrarUsuarioRoutes = require('../routes/cadastrarUsuarioRoutes');
+const muralRoutes = require('../routes/muralRoutes');
 
 dotenv.config()
 
@@ -45,10 +45,10 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', path.join(__dirname, '../views')); // viewsディレクトリのパス修正
 
 // スタティックファイルの配信設定
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, '../public')));
 
 
 
@@ -72,7 +72,7 @@ app.use('/publicacoes', muralRoutes);
 
 
 // ダッシュボードルート
-const isAuthenticated = require('./middleware/isAuthenticated')
+const isAuthenticated = require('../middleware/isAuthenticated')
 
 app.post('/login', (req, res) => {
   // 認証処理（例：データベースからユーザーを検索）
@@ -193,9 +193,6 @@ app.get('/professor', (req, res) => {
 
 
 
-
-app.set('view engine', 'ejs'); // EJSテンプレートエンジンを設定
-app.set('views', path.join(__dirname, 'views')); // ビューフォルダを指定
 
 
 // 404エラーハンドリング

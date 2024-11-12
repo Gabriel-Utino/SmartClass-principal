@@ -5,7 +5,7 @@ exports.fetchNotasFaltas = (req, res) => {
   const { turmaId, disciplinaId, year, semestre } = req.query;
   const query = `
     SELECT A.id_aluno, A.nome_aluno, A.foto, NF.N1, NF.AP, NF.AI, NF.id_notas_faltas
-    FROM Aluno A
+    FROM aluno A
     JOIN NotasFaltas NF ON A.id_aluno = NF.id_aluno
     WHERE NF.id_turma = ? AND NF.id_disciplina = ? AND NF.ano = ? AND NF.semestre = ?
   `;

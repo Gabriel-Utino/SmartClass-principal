@@ -7,7 +7,7 @@ exports.getAllAluno = async (req, res) => {
       SELECT us.id_usuario, us.nome_usuario, us.cpf_usuario, 
       us.endereco_usuario, us.telefone_usuario, us.email_usuario, 
       al.id_aluno, al.ra_aluno, al.data_matricula, al.id_turma 
-      FROM usuario as us JOIN Aluno as al ON us.id_usuario = al.id_usuario 
+      FROM usuario as us JOIN aluno as al ON us.id_usuario = al.id_usuario 
       `)
     res.json(results)
   } catch (err) {
@@ -25,7 +25,7 @@ exports.getAlunoById = async (req, res) => {
       SELECT us.id_usuario, us.nome_usuario, us.cpf_usuario, 
       us.endereco_usuario, us.telefone_usuario, us.email_usuario, 
       al.id_aluno, al.ra_aluno, al.data_matricula, al.id_turma 
-      FROM usuario as us JOIN Aluno as al ON us.id_usuario = al.id_usuario 
+      FROM usuario as us JOIN aluno as al ON us.id_usuario = al.id_usuario 
       WHERE id_aluno = ?;`,
       [id_aluno]
     )

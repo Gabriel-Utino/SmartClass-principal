@@ -139,9 +139,9 @@ exports.getNotasFaltasDetails = async (req, res) => {
       `
         SELECT usuario.nome_usuario, usuario.foto, notas_faltas.N1, notas_faltas.AP, notas_faltas.AI
         FROM usuario
-        INNER JOIN Aluno ON Usuario.id_usuario = Aluno.id_usuario
-        INNER JOIN notas_faltas ON Aluno.id_aluno = notas_faltas.id_aluno
-        WHERE Aluno.id_turma = ? AND notas_faltas.id_disciplina  = ? 
+        INNER JOIN aluno ON Usuario.id_usuario = aluno.id_usuario
+        INNER JOIN notas_faltas ON aluno.id_aluno = notas_faltas.id_aluno
+        WHERE aluno.id_turma = ? AND notas_faltas.id_disciplina  = ? 
           AND notas_faltas.ano_academico = ? AND notas_faltas.semestre = ?
       `,
       [turmaId, disciplinaId, year, semestre]
