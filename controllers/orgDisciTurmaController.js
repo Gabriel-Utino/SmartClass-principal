@@ -63,7 +63,7 @@ exports.assignDisciplinas = async (req, res) => {
 
   try {
     // AlunoのIDを取得する
-    const alunos = await db.query('SELECT id_aluno FROM Aluno WHERE id_turma = ?', [id_turma]);
+    const alunos = await db.query('SELECT id_aluno FROM aluno WHERE id_turma = ?', [id_turma]);
     
     // Alunosが見つからない場合はエラーメッセージを返す
     if (!alunos.length) {
