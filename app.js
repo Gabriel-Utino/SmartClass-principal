@@ -19,6 +19,8 @@ const userRoutes = require('./routes/userRoutes');
 const responsavelAlunoRoutes = require('./routes/responsavelAlunoRoutes');
 const responsavelRoutes = require('./routes/responsavelRoutes');
 const turmaDisciplinaRoutes = require('./routes/turmaDisciplinaRoutes');
+const cadastrarUsuarioRoutes = require('./routes/cadastrarUsuarioRoutes');
+const muralRoutes = require('./routes/muralRoutes');
 
 dotenv.config()
 
@@ -65,7 +67,8 @@ app.use('/turma_disciplinas', turmaRoutes);
 app.use('/turma_disciplinas2', turmaDisciplinaRoutes); // プレフィックスが一致しているか確認
 app.use('/resps_aluno', responsavelAlunoRoutes);
 app.use('/responsaveis', responsavelRoutes);
-
+app.use('/usuarios', cadastrarUsuarioRoutes);
+app.use('/publicacoes', muralRoutes);
 
 
 // ダッシュボードルート
@@ -104,6 +107,13 @@ app.get('/home', (req, res) => {
     return res.redirect('/login') // ユーザーがログインしていない場合
   }
   res.render('home', { user: req.session.user }) // ダッシュボードを表示
+})
+
+app.get('/mural', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('mural', { user: req.session.user }) // ダッシュボードを表示
 })
 
 app.get('/dadosCadastrais', (req, res) => {

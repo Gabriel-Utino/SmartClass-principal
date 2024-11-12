@@ -31,6 +31,10 @@ router.get('/editarNotas', ensureAuthenticated, authorizeRoles(2), (req, res) =>
     res.render('editarNotas', { user: req.session.user }); // views/editarNotas.ejsをレンダリング
 });
 
+router.get('/cadastrarUsuario', ensureAuthenticated, authorizeRoles(1, 5), (req, res) => {
+  res.render('cadastrarUsuario', { user: req.session.user }); // views/editarNotas.ejsをレンダリング
+});
+
 
 
 router.get('/variFaltas', ensureAuthenticated, authorizeRoles(3), (req, res) => {
@@ -78,8 +82,8 @@ router.get('/template', (req, res) => {
   res.render('template') // views/professor.ejs
 })
 
-router.get('/mural', (req, res) => {
-  res.render('mural') // views/professor.ejs
+router.get('/mural', ensureAuthenticated, (req, res) => {
+  res.render('mural', { user: req.session.user }) // views/mural.ejs
 })
 
 // パスワードリセット関連のルート
