@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcrypt'); // bcryptのインポート
+const bcrypt = require('bcryptjs'); // bcryptのインポート
 
 // ユーザー認証のためのローカル戦略を設定
 passport.use(new LocalStrategy((username, password, done) => {
