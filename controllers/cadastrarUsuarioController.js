@@ -1,6 +1,6 @@
 // controllers/cadastrarUsuarioController.js
 const connection = require('../config/database'); 
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 // Função para obter todos os usuários
 exports.getAllUsuarios = async (req, res) => {
