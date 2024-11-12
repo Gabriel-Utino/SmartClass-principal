@@ -43,7 +43,6 @@ function displayNota(nota) {
               <td>${disciplina.nome_disciplina}</td>
               <td>${nota.faltas !== null ? nota.faltas : 0}</td>
               <td>${nota.ano_academico}</td>
-
               <td>${nota.semestre}</td>
           `
         notaList.appendChild(notaElement)

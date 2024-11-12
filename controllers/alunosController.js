@@ -1,30 +1,3 @@
-/* const pool = require('../database');
-
-exports.getAlunoById = async (req, res) => {
-  try {
-    const [rows] = await pool.query('SELECT * FROM alunos WHERE id = ?', [req.params.id]);
-    if (rows.length > 0) {
-      res.json(rows[0]);
-    } else {
-      res.status(404).send('Aluno not found');
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Server error');
-  }
-};
-
-exports.getNotasFaltasByAluno = async (req, res) => {
-  try {
-    const [rows] = await pool.query('SELECT * FROM notas_faltas WHERE id_aluno = ?', [req.params.id]);
-    res.json(rows);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Server error');
-  }
-};
- */
-
 // alunoController.js
 const pool = require('../config/database')
 

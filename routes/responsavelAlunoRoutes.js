@@ -15,4 +15,13 @@ router.post('/', responsavelAlunoController.addResponsavelAluno);
 // 指定されたResponsavel_Alunoを削除
 router.delete('/:id_resp_aluno', responsavelAlunoController.deleteResponsavelAluno);
 
+
+
+// 保護者の担当生徒を取得
+router.get('/:id_responsavel/alunos', responsavelAlunoController.getAlunosByResponsavel);
+
+// 生徒の成績・欠席情報を取得
+router.get('/:id_aluno/notas_faltas', responsavelAlunoController.getAlunoNotasFaltas);
+
+
 module.exports = router;

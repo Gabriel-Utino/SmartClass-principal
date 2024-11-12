@@ -40,7 +40,10 @@ exports.login = async (req, res) => {
       id_aluno: user.id_aluno,
       ra_aluno: user.ra_aluno, // Alunoの情報を追加
       data_matricula: user.data_matricula,
-      id_turma: user.id_turma
+      id_turma: user.id_turma,
+      id_responsavel: user.id_responsavel,
+      id_professor: user.id_professor,
+      foto: user.foto
     };
 
     console.log('Usuário logado/ユーザーがログインしました:', req.session.user); // デバッグ用ログ

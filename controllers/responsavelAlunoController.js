@@ -12,17 +12,6 @@ exports.getAllResponsavelAluno = async (req, res) => {
   }
 };
 
-// 特定のResponsavel_Alunoを取得
-/* exports.getResponsavelAlunoByIdResponsavel = (req, res) => {
-  const id_responsavel = parseInt(req.params.id_responsavel);
-  const alunoResp = alunoResps.find(alunoResp => alunoResp.id_responsavel === id_responsavel);
-  if (alunoResp) {
-    res.json(alunoResp);
-  } else {
-    res.status(404).json({ message: 'Responsavel_Aluno não encontrado' });
-  }
-}; */
-// IDで科目を取得
 exports.getResponsavelAlunoByIdResponsavel = async (req, res) => {
   const id_responsavel = parseInt(req.params.id_responsavel);
   try {
@@ -80,3 +69,54 @@ exports.deleteResponsavelAluno = async (req, res) => {
     res.status(404).json({ message: 'Responsavel_Aluno não encontrado' });
   } */
 };
+
+
+
+
+// 保護者が担当する生徒のリストを取得
+exports.getAlunosByResponsavel = async (req, res) => {
+  const { id_responsavel } = req.params;
+  
+  try {
+    const [rows] = await connection.query(
+      `SELECT al.id_aluno, al.ra_aluno, us.nome_usuario 
+       FROM responsavel_aluno AS ra 
+       JOIN aluno AS al ON ra.id_aluno = al.id_aluno 
+       JOIN usuario AS us ON us.id_usuario = al.id_usuario
+       WHERE ra.id_responsavel = ?`,
+      [id_responsavel]
+    );
+
+    if (rows.length > 0) {
+      res.json(rows);
+    } else {
+      res.status(404).json({ message: 'No students found for this responsavel' });
+    }
+  } catch (error) {
+    console.error('Error fetching students by responsavel:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+// 選択された生徒の成績・欠席情報を取得
+exports.getAlunoNotasFaltas = async (req, res) => {
+  const { id_aluno } = req.params;
+
+  try {
+    const [rows] = await connection.query(
+      `SELECT nf.id_disciplina, d.nome_disciplina, nf.N1 , nf.AP,  nf.AI, nf.faltas, nf.ano_academico, nf.semestre 
+      FROM notas_faltas nf
+      JOIN disciplina d ON nf.id_disciplina = d.id_disciplina 
+      WHERE nf.id_aluno = ?`,
+      [id_aluno]
+    );
+
+    if (rows.length > 0) {
+      res.json(rows);
+    } else {
+      res.status(404).json({ message: 'Notas and Faltas not found for this aluno' });
+    }
+  } catch (error) {
+    console.error('Error fetching notas and faltas:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}

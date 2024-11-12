@@ -87,10 +87,18 @@
           </ul>
         </div>
         
-        <div id="user-info" data-id-usuario="<%= user.id_usuario %>" data-id-perfil="<%= user.id_perfil %>" data-id-aluno="<%= user.id_aluno %>" data-id-prof="<%= user.id_prof %>" data-nome-usuario="<%= user.nome_usuario %>"
-          class="d-flex align-items-end">
-          <p class="opacity-0">IDPf: <%= user.id_perfil %> ID: <%= user.id_aluno %> ID: <%= user.id_responsavel %> Nome: <%= user.nome_usuario %></p>
-        </div>
+        <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
+          <div id="user-info" data-id-aluno="<%= user.id_aluno %>" data-nome-usuario="<%= user.nome_usuario %>"
+            class="d-flex align-items-end">
+            <p class="opacity-0">ID: <%= user.id_aluno %> Nome: <%= user.nome_usuario %></p>
+          </div>
+        <% } %>
+        <% if (user.id_perfil === 4) { %><!-- quando e Responsaveis --> 
+          <div id="user-info2" data-id-responsavel="<%= user.id_responsavel %>" data-nome-usuario-resp="<%= user.nome_usuario %>"
+            class="d-flex align-items-end">
+          <p class="opacity-0">ID: <%= user.id_responsavel %> Nome: <%= user.nome_usuario %></p>
+          </div>
+        <% } %>
 
       </div>
       <a href="/home" class="mx-auto d-block">

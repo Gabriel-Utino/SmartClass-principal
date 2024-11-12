@@ -26,72 +26,75 @@
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
             aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body"><!-- 
-          <form class="d-flex mt-3" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-success" type="submit">Search</button>
-          </form> -->
+        <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+              <a class="nav-link active" aria-current="page" href="/home">Home</a>
             </li>
+            <% if (user.id_perfil === 2 || user.id_perfil === 3 || user.id_perfil === 4) { %> 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Notas e Faltas
               </a>
               <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="VeriNotas.html">Notas</a></li>
-                <li><a class="dropdown-item" href="VeriFaltas.html">Faltas</a></li>
+                <% if (user.id_perfil === 2) { %><!-- quando e Professor --> 
+                  <li><a class="dropdown-item" href="/apricarNotas">Apricar Notas</a></li>
+                  <li><a class="dropdown-item" href="/apricarFaltas">Apricar Faltas</a></li>
+                <% } %>
+                <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
+                <li><a class="dropdown-item" href="/veriNotas">Notas</a></li>
+                <li><a class="dropdown-item" href="/veriFaltas">Faltas</a></li>
+                <% } %>
+                <% if (user.id_perfil === 4) { %><!-- quando e Responsaveis --> 
+                  <li><a class="dropdown-item" href="/veriResponsavel">Verificar Notas e faltas</a></li>
+                <% } %>
               </ul>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="Calendario.html">Calendario</a>
-            </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="#">Financeiro</a>
-            </li> -->
-            <li class="nav-item">
-              <a class="nav-link" href="dadosCadastrais.html">Dados Cadastrais</a>
-            </li><!-- 
+            <% } %>
+            <% if (user.id_perfil === 1 || user.id_perfil === 5) { %> 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                Cadastro
+                Cadastramentos
               </a>
               <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="../../pages/escola.html">Escola</a></li>
-                <li><a class="dropdown-item" href="../../pages/professor.html">Professores</a></li>
-                <li><a class="dropdown-item" href="../../pages/turma.html">Turmas</a></li>
-                <li><a class="dropdown-item" href="../../pages/disciplina.html">Disciplinas</a></li>
-                <li><a class="dropdown-item" href="../../pages/responsavel.html">Responsaveis</a></li>
-                <li><a class="dropdown-item" href="../../pages/aluno.html">Alunos</a></li>
-                <li><a class="dropdown-item" href="../../pages/nota.html">Notas</a></li>
-                <li><a class="dropdown-item" href="../../pages/evento.html">Eventos</a></li>
-                <li><a class="dropdown-item" href="../../pages/aluno_turma.html">Alunos e Turmas</a></li>
-                <li><a class="dropdown-item" href="../../pages/aluno_resp.html">Alunos e Responsaveis</a></li>
-                <li><a class="dropdown-item" href="../../pages/evento_aluno.html">Eventos e Alunos</a></li>
-                <li><a class="dropdown-item" href="../../pages/aluno_disci.html">Alunos e Disciplinas</a></li>
-                <li><a class="dropdown-item" href="../../pages/evento_prof.html">Evento_Professor</a></li>
-                <li><a class="dropdown-item" href="../../pages/turma_disci.html">turma_disciplina</a></li>
+                <li><a class="dropdown-item" href="/turma">Turma</a></li>
+                <li><a class="dropdown-item" href="/disciplina">Disciplinas</a></li>
+                <li><a class="dropdown-item" href="/aluno">Alunos</a></li>
+                <li><a class="dropdown-item" href="/responsavel">Responsaveis</a></li>
+                <li><a class="dropdown-item" href="/organizacao">Organizacao</a></li>
+                <li><a class="dropdown-item" href="/professor">Professores</a></li>
               </ul>
             </li>
-
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Apricar notas e faltas
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="../../pages/selectTurma_notas.html">Notas</a></li>
-                <li><a class="dropdown-item" href="../../pages/selectTurma_faltas.html">Faltas</a></li>
-              </ul>
-            </li> -->
-
+            <% } %>
+            <li class="nav-item">
+              <a class="nav-link" href="/calendario">Calendario</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dadosCadastrais">Dados Cadastrais</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
           </ul>
         </div>
+        
+        <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
+          <div id="user-info" data-id-aluno="<%= user.id_aluno %>" data-nome-usuario="<%= user.nome_usuario %>"
+            class="d-flex align-items-end">
+            <p class="opacity-0">ID: <%= user.id_aluno %> Nome: <%= user.nome_usuario %></p>
+          </div>
+        <% } %>
+        <% if (user.id_perfil === 4) { %><!-- quando e Responsaveis --> 
+          <div id="user-info2" data-id-responsavel="<%= user.id_responsavel %>" data-nome-usuario-resp="<%= user.nome_usuario %>"
+            class="d-flex align-items-end">
+          <p class="opacity-0">ID: <%= user.id_responsavel %> Nome: <%= user.nome_usuario %></p>
+          </div>
+        <% } %>
+
       </div>
-      <a href="home.html" class="mx-auto d-block">
+      <a href="/home" class="mx-auto d-block">
         <img src="/icons/smartclass.png" alt="smartclassIcon" class="img-home">
       </a>
     </div>
