@@ -94,6 +94,8 @@ router.get('/variFaltas', ensureAuthenticated, authorizeRoles(3), (req, res) => 
 // Responsaveis
 router.get('/veriResponsavel', ensureAuthenticated, authorizeRoles(4), (req, res) => {
   res.render('veriResponsavel', { user: req.session.user }) // views/veriResponsavel.ejs
+})
+
 router.get('/mural', ensureAuthenticated, (req, res) => {
   res.render('mural', { user: req.session.user }) // views/mural.ejs
 })

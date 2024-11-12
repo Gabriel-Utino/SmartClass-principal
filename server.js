@@ -1,4 +1,4 @@
-// app.js Test
+// app.js 
 const express = require('express')
 const app = express()
 const cors = require('cors')
@@ -6,7 +6,7 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const path = require('path')
 const dotenv = require('dotenv')
-const passport = require('./config/passport') // Passportの設定を読み込み
+const passport = require('./config/passport') 
 
 // ルートのインポート
 const authRoutes = require('./routes/authRoutes')
