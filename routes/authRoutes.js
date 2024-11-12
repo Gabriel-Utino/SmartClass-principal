@@ -19,6 +19,30 @@ router.get('/calendario', (req, res) => {
     res.render('calendario', { user: req.session.user }) // views/apricarFaltas.ejs
 });
 
+router.get('/apricarFaltas', ensureAuthenticated, authorizeRoles(2), (req, res) => {
+    res.render('apricarFaltas', { user: req.session.user }) // views/apricarFaltas.ejs
+})
+router.get('/apricarNotas', ensureAuthenticated, authorizeRoles(2), (req, res) => {
+    res.render('apricarNotas', { user: req.session.user }) // views/apricarNotas.ejs
+})
+router.get('/editarNotas', ensureAuthenticated, authorizeRoles(2), (req, res) => {
+    res.render('editarNotas', { user: req.session.user }); // views/editarNotas.ejsをレンダリング
+});
+
+router.get('/cadastrarUsuario', ensureAuthenticated, authorizeRoles(1, 5), (req, res) => {
+  res.render('cadastrarUsuario', { user: req.session.user }); // views/editarNotas.ejsをレンダリング
+});
+
+
+
+router.get('/variFaltas', ensureAuthenticated, authorizeRoles(3), (req, res) => {
+  res.render('variFaltas', { user: req.session.user }) // views/variFaltas.ejs
+})
+router.get('/variNotas', ensureAuthenticated, authorizeRoles(3), (req, res) => {
+  res.render('variNotas', { user: req.session.user }) // views/variNotas.ejs
+})
+
+
 // Admin
 router.get('/connectTurmaDisci', ensureAuthenticated, authorizeRoles(5, 1),  (req, res) => {
   res.render('connectTurmaDisci', { user: req.session.user });
@@ -70,6 +94,8 @@ router.get('/variFaltas', ensureAuthenticated, authorizeRoles(3), (req, res) => 
 // Responsaveis
 router.get('/veriResponsavel', ensureAuthenticated, authorizeRoles(4), (req, res) => {
   res.render('veriResponsavel', { user: req.session.user }) // views/veriResponsavel.ejs
+router.get('/mural', ensureAuthenticated, (req, res) => {
+  res.render('mural', { user: req.session.user }) // views/mural.ejs
 })
 
 

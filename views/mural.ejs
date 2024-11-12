@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Template</title>
+  <title>Mural</title>
   <!-- 追加：外部のスタイルシート -->
   <!-- <link rel="stylesheet" href="styles/professores.css" /> -->
   <!-- <link rel="stylesheet" href="styles/style.css" /> -->
@@ -109,25 +109,69 @@
 
 
 
-  <!-- O conteúdo do arquivo HTML -->
-   <div>mural</div>
-   
+  <div class="container mt-1 pt-1">
+    <div class="row">
+      
+      <% if (user.id_perfil === 1 || user.id_perfil === 2 || user.id_perfil === 5) { %> 
+      <div class="col-md-6">
+        <h2>Publicar no Mural :</h2>
+        <form id="addPublicacaoForm">
+          <div class="form-group">
+            <input type="text" class="form-control" id="publicacaoNome" placeholder="Texto" required>
+          </div>
+          <div class="form-group">
+            <input type="date" class="form-control" id="publicacaoDate" placeholder="Data" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Adicionar</button>
+        </form>
+      </div>
 
+      <div class="col-md-6">
+        
+        <form id="updatePublicacaoForm">
+            <h2>Editar Publicação</h2>
+          <div class="form-group">
+            <input type="text" class="form-control" id="editPublicacaoId" placeholder="ID da Publicação" required disabled>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="editPublicacaoNome" placeholder="Publicação" required>
+          </div>
+          <div class="form-group">
+            <input type="date" class="form-control" id="editPublicacaoDate" placeholder="Data" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Atualizar</button>
+          <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancelar</button>
+        </form>
+      </div>
+      <% } %>
+    </div>
+    
+    <h1 class="mt-5">Mural do Aluno :</h1>
+    <div class="containerTable" style="overflow-y: auto; max-height: 400px;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Publicação</th>
+            <th>Data</th>
+            <th>Publicador</th>
+            <% if (user.id_perfil === 1 || user.id_perfil === 2 || user.id_perfil === 5) { %> 
+            <th>Opções</th>
+            <% } %>
+          </tr>
+          
+        </thead>
+        <tbody id="publicacaoList" class="overflow-auto">
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-
-  <!-- A partir daqui, tudo gira em torno de Javascript. -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
-  <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <!-- Bootstrap Datepicker JS -->
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
-   <!--  <script src="/js/"></script> --> <!-- Escreva o link para Javascript aqui -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="../js/mural.js"></script>
 </body>
 
 </html>
