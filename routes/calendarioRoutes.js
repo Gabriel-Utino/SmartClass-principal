@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const calendarioController = require('../controllers/calendarioController'); // Verifique se o caminho está correto
+const calendarioController = require('../controllers/calendarioController');
 const { ensureAuthenticated, authorizeRoles } = require('../middleware/authorize');
 
-// Rota para criar um evento
-router.post('/', ensureAuthenticated, authorizeRoles('admin', 'professor'), calendarioController.createEvento);
+// Rota para listar todos os eventos (permite acesso ao administrador e professor)
+router.get('/listar', ensureAuthenticated, authorizeRoles(1, 2), calendarioController.getAllEventos);
 
-// Rota para listar todos os eventos
-router.get('/', ensureAuthenticated, calendarioController.getAllEventos);
+// Rota para criar um novo evento (permite acesso ao administrador e professor)
+router.post('/criar', ensureAuthenticated, authorizeRoles(1, 2), calendarioController.createEvento);
 
-// Rota para atualizar um evento
-router.put('/:id_evento', ensureAuthenticated, authorizeRoles('admin', 'professor'), calendarioController.updateEvento);
+// Rota para editar um evento existente (permite acesso ao administrador e professor)
+router.put('/editar/:id_evento', ensureAuthenticated, authorizeRoles(1, 2), calendarioController.updateEvento);
 
-// Rota para deletar um evento
-router.delete('/:id_evento', ensureAuthenticated, authorizeRoles('admin', 'professor'), calendarioController.deleteEvento);
+// Rota para excluir um evento (permite acesso ao administrador e professor)
+router.delete('/deletar/:id_evento', ensureAuthenticated, authorizeRoles(1, 2), calendarioController.deleteEvento);
 
 module.exports = router;
