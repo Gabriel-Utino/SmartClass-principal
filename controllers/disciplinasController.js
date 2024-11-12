@@ -1,4 +1,4 @@
-
+// controllers/disciplinasController.js
 const connection = require('../config/database'); // Promiseベースの接続を取得
 
 // 全ての科目を取得
