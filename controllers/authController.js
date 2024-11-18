@@ -1,6 +1,6 @@
 // controllers/authController.js
 require('dotenv').config();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const pool = require('../db');
 const crypto = require('crypto');
 const sgMail = require('@sendgrid/mail');
