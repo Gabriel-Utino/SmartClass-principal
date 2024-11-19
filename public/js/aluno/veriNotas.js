@@ -1,3 +1,4 @@
+
 const apiUrlNotasFaltas = 'http://localhost:5000/notas_faltas'
 const apiUrlDisciplina = 'http://localhost:5000/disciplinas'
 const apiUrlAluno = 'http://localhost:5000/alunos'

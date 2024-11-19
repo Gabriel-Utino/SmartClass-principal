@@ -1,5 +1,5 @@
 // js/turma.js
-const apiUrlTurma = 'https://smartclass-principal.onrender.com/turmas'
+const apiUrlTurma = 'http://localhost:5000/turmas';
 // リストを表示
 function displayTurma(turma) {
   const turmaList = document.getElementById('turmaList')
