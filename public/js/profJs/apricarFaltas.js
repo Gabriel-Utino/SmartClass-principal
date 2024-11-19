@@ -1,5 +1,5 @@
 // public/js/profjs/apricarFlatas.js
-const apiUrl = 'http://localhost:5000'
+const apiUrl = 'https://smartclass-principal.onrender.com'
 // 初期化
 document.addEventListener('DOMContentLoaded', () => {
   fetchTurmas()

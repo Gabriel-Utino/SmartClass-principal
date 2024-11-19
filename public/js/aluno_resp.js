@@ -1,6 +1,6 @@
-const apiUrlAlunoResp = 'http://localhost:5000/resps_aluno'
-const apiUrlAluno = 'http://localhost:5000/alunos'
-const apiUrlResp = 'http://localhost:5000/responsaveis'
+const apiUrlAlunoResp = 'https://smartclass-principal.onrender.com/resps_aluno'
+const apiUrlAluno = 'https://smartclass-principal.onrender.com/alunos'
+const apiUrlResp = 'https://smartclass-principal.onrender.com/responsaveis'
 
 // リストを表示
 function displayAlunoResp(alunoResp) {

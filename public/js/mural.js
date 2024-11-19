@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:5000/publicacoes';
+const apiUrl = 'https://smartclass-principal.onrender.com/publicacoes';
 
 
 function getUserFromPage() {

@@ -1,4 +1,4 @@
-const apiUrlResponsavel = 'http://localhost:3000/responsaveis'
+const apiUrlResponsavel = 'https://smartclass-principal.onrender.com/responsaveis'
 
 // リストを表示
 function displayResponsavel(responsavel) {

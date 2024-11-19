@@ -1,5 +1,5 @@
 // disciplina.js
-const apiUrlDisciplina = 'http://localhost:5000/disciplinas'
+const apiUrlDisciplina = 'https://smartclass-principal.onrender.com/disciplinas'
 
 // リストを表示
 function displayDisciplina(disciplinas) {

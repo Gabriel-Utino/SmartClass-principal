@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const semestreInput = document.getElementById('semestre')
   const assignDisciplinasButton = document.getElementById('assignDisciplinas')
 
-  const apiUrlTurma = 'http://localhost:5000/turmas'
-  const apiUrlAssign = 'http://localhost:5000/turmas/assign-disciplinas'
+  const apiUrlTurma = 'https://smartclass-principal.onrender.com/turmas'
+  const apiUrlAssign = 'https://smartclass-principal.onrender.com/turmas/assign-disciplinas'
 
   // サーバーからTurmaのデータを取得する
   fetch(apiUrlTurma)

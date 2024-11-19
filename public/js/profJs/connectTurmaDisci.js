@@ -1,6 +1,6 @@
-const apiUrl = 'http://localhost:5000/turma_disciplinas2'
-const apiUrlTurma = 'http://localhost:5000/turmas'
-const apiUrlDisciplina = 'http://localhost:5000/disciplinas'
+const apiUrl = 'https://smartclass-principal.onrender.com/turma_disciplinas2'
+const apiUrlTurma = 'https://smartclass-principal.onrender.com/turmas'
+const apiUrlDisciplina = 'https://smartclass-principal.onrender.com/disciplinas'
 
 function displayTurmaDisciplina(turmaDisciplina) {
   const turmaDisciplinaList = document.getElementById('turmaDisciplinaList')

@@ -1,7 +1,7 @@
 
-const apiUrlNotasFaltas = 'http://localhost:5000/notas_faltas'
-const apiUrlDisciplina = 'http://localhost:5000/disciplinas'
-const apiUrlAluno = 'http://localhost:5000/alunos'
+const apiUrlNotasFaltas = 'https://smartclass-principal.onrender.com/notas_faltas'
+const apiUrlDisciplina = 'https://smartclass-principal.onrender.com/disciplinas'
+const apiUrlAluno = 'https://smartclass-principal.onrender.com/alunos'
 
 // userの情報をHTMLから取得
 function getUserFromPage() {
