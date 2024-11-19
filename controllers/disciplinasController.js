@@ -46,7 +46,7 @@ exports.updateDisciplina = async (req, res) => {
   const id = req.params.id_disciplina;
   const { nome_disciplina, horario } = req.body;
   try {
-    await connection.query('UPDATE Disciplina SET nome_disciplina=?, horario=? WHERE id_disciplina=?', 
+    await connection.query('UPDATE disciplina SET nome_disciplina=?, horario=? WHERE id_disciplina=?', 
     [nome_disciplina, horario, id]);
     res.json({ message: 'Disciplina updated successfully' });
   } catch (err) {

@@ -1,5 +1,6 @@
 // js/turma.js
-const apiUrlTurma = 'http://localhost:5000/turmas';
+const apiUrlTurma = "/turmas";
+console.log(apiUrlTurma)
 // リストを表示
 function displayTurma(turma) {
   const turmaList = document.getElementById('turmaList')

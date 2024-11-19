@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Turmas を取得しセレクトボックスを更新
 function fetchTurmas() {
-  fetch(`${apiUrl}/turmas`)
+  fetch(`/turmas`)
     .then(response => response.json())
     .then(data => {
       const turmaSelect = document.getElementById('turmaSelect')
@@ -43,7 +43,7 @@ document.getElementById('turmaSelect').addEventListener('change', event => {
 })
 
 function fetchDisciplinasByTurma(turmaId) {
-  fetch(`${apiUrl}/turma_disciplinas/${turmaId}/disciplinas`)
+  fetch(`/turma_disciplinas/${turmaId}/disciplinas`)
     .then(response => response.json())
     .then(data => {
       const disciplinaSelect = document.getElementById('disciplinaSelect')
@@ -76,7 +76,7 @@ document.getElementById('searchButton').addEventListener('click', () => {
 // notas_faltasデータを取得し、ページに表示
 function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
   fetch(
-    `${apiUrl}/notas_faltasApri?turmaId=${turmaId}&disciplinaId=${disciplinaId}&year=${year}&semestre=${semestre}`
+    `/notas_faltasApri?turmaId=${turmaId}&disciplinaId=${disciplinaId}&year=${year}&semestre=${semestre}`
   )
     .then(response => response.json())
     .then(data => {
@@ -175,7 +175,7 @@ async function applyFaltas() {
       return;
     }
 
-    const response = await fetch(`${apiUrl}/notas_faltasApri/faltas`, {
+    const response = await fetch(`/notas_faltasApri/faltas`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ids: selectedIds }),
@@ -195,7 +195,7 @@ async function applyFaltas() {
 // 画面にデータを再表示するための関数
 async function fetchFaltasData() {
   try {
-    const response = await fetch(`${apiUrl}/notas_faltasApri`);
+    const response = await fetch(`/notas_faltasApri`);
     const data = await response.json();
     updateTable(data); // 取得したデータでテーブルを更新
   } catch (error) {

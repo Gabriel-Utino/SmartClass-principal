@@ -1,4 +1,4 @@
-const apiUrlProf = 'http://localhost:3000/professores'
+const apiUrlProf = '/professores'
 
 document.addEventListener('DOMContentLoaded', function () {
   const id_prof = 2 // 表示したい学生のID

@@ -1,4 +1,4 @@
-const apiUrlResponsavel = 'http://localhost:3000/responsaveis'
+const apiUrlResponsavel = '/responsaveis'
 
 // リストを表示
 function displayResponsavel(responsavel) {

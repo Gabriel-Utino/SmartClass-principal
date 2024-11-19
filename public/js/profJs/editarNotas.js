@@ -1,6 +1,6 @@
 // editarNotas.js
-const apiUrlNota = 'http://localhost:5000/notas';
-const apiUrlAluno = 'http://localhost:5000/alunos';
+const apiUrlNota = '/notas';
+const apiUrlAluno = '/alunos';
 
 document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -32,7 +32,7 @@ function fetchAlunoInfo(alunoId) {
 }
 
 function fetchNotaInfo(id_notas_faltas) {
-  fetch(`http://localhost:5000/notasByid_notas_faltas/${id_notas_faltas}`)
+  fetch(`/notasByid_notas_faltas/${id_notas_faltas}`)
     .then(response => response.json())
     .then(data => {
       if (data && data.length > 0) {

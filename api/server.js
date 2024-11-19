@@ -211,3 +211,5 @@ const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
   console.log(`Servidor iniciado na porta ${PORT}.`)
 })
+
+app.locals.apiUrl = process.env.API_URL;

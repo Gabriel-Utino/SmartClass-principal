@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:5000/publicacoes';
+const apiUrl = '/publicacoes';
 
 
 function getUserFromPage() {

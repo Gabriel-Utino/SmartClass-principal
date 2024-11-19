@@ -122,7 +122,7 @@ exports.postForgotPassword = (req, res, next) => {
       await User.saveResetToken(user.id_usuario, token, expiration);
 
       // リセットリンクをメールで送信
-      const resetURL = `http://localhost:5000/reset-password/${token}`;
+      const resetURL = `/reset-password/${token}`;
       const msg = {
         to: email_usuario,
         from: process.env.SENDGRID_SENDER, // SendGridで認証済みの送信元メールアドレス

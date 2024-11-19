@@ -1,5 +1,4 @@
 // public/js/profjs
-const apiUrl = 'http://localhost:5000'
 // 初期化
 document.addEventListener('DOMContentLoaded', () => {
   fetchTurmas()
@@ -8,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Turmas を取得しセレクトボックスを更新
 function fetchTurmas() {
-  fetch(`${apiUrl}/turmas`)
+  fetch(`/turmas`)
     .then(response => response.json())
     .then(data => {
       const turmaSelect = document.getElementById('turmaSelect')
@@ -43,7 +42,7 @@ document.getElementById('turmaSelect').addEventListener('change', event => {
 })
 
 function fetchDisciplinasByTurma(turmaId) {
-  fetch(`${apiUrl}/turma_disciplinas/${turmaId}/disciplinas`)
+  fetch(`/turma_disciplinas/${turmaId}/disciplinas`)
     .then(response => response.json())
     .then(data => {
       const disciplinaSelect = document.getElementById('disciplinaSelect')
@@ -76,7 +75,7 @@ document.getElementById('searchButton').addEventListener('click', () => {
 // notas_faltasを取得しリストを表示
 function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
   fetch(
-    `${apiUrl}/notas_faltasApri?turmaId=${turmaId}&disciplinaId=${disciplinaId}&year=${year}&semestre=${semestre}`
+    `/notas_faltasApri?turmaId=${turmaId}&disciplinaId=${disciplinaId}&year=${year}&semestre=${semestre}`
   )
     .then(response => response.json())
     .then(data => {

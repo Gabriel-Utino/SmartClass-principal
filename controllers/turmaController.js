@@ -33,7 +33,7 @@ exports.addTurma = async (req, res) => {
   const { nome_turma, ano_letivo } = req.body;
 
   try {
-    const result = await db.query('INSERT INTO Turma (nome_turma, ano_letivo) VALUES (?, ?)', [nome_turma, ano_letivo]);
+    const result = await db.query('INSERT INTO turma (nome_turma, ano_letivo) VALUES (?, ?)', [nome_turma, ano_letivo]);
     res.status(201).json({ id_turma: result.insertId, nome_turma, ano_letivo });
   } catch (err) {
     console.error('Turma追加エラー: ' + err);
@@ -47,7 +47,7 @@ exports.updateTurma = async (req, res) => {
   const { nome_turma, ano_letivo } = req.body;
   try {
     await db.query(
-    'UPDATE Turma SET nome_turma = ?, ano_letivo = ? WHERE id_turma = ?',
+    'UPDATE turma SET nome_turma = ?, ano_letivo = ? WHERE id_turma = ?',
     [nome_turma, ano_letivo, id_turma]);
     res.json({ message: 'Turma updated successfully' });
   } catch (err) {
@@ -61,7 +61,7 @@ exports.deleteTurma = async (req, res) => {
   const id_turma = parseInt(req.params.id_turma);
 
   try {
-    await db.query('DELETE FROM Turma WHERE id_turma = ?', [id_turma]);
+    await db.query('DELETE FROM turma WHERE id_turma = ?', [id_turma]);
     res.json({ message: 'Turmaが削除されました' });
   } catch (err) {
     console.error('Turma削除エラー: ' + err);

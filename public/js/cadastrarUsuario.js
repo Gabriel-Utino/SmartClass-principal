@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:5000/usuarios'
+const apiUrl = '/usuarios'
 
 document.getElementById('cadastroUsuarioForm').addEventListener('submit', function (event) {
     event.preventDefault();
@@ -16,7 +16,7 @@ document.getElementById('cadastroUsuarioForm').addEventListener('submit', functi
       data_matricula: document.getElementById('data_matricula').value
     };
   
-    fetch('http://localhost:5000/usuarios', {
+    fetch('/usuarios', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -35,7 +35,7 @@ document.getElementById('cadastroUsuarioForm').addEventListener('submit', functi
 
   // Função para buscar e exibir usuários cadastrados
   function carregarUsuarios() {
-    fetch('http://localhost:5000/usuarios')
+    fetch('/usuarios')
       .then(response => response.json())
       .then(usuarios => {
         const usuariosTableBody = document.getElementById('usuariosTableBody');
@@ -69,7 +69,7 @@ document.getElementById('cadastroUsuarioForm').addEventListener('submit', functi
 
 function deletarUsuario(id_usuario) {
   if (confirm('Tem certeza que deseja deletar este usuário?')) {
-    fetch(`http://localhost:5000/usuarios/${id_usuario}`, {
+    fetch(`/usuarios/${id_usuario}`, {
       method: 'DELETE'
     })
       .then(response => response.json())
@@ -82,7 +82,7 @@ function deletarUsuario(id_usuario) {
 }
 // Função para editar usuário
 function editarUsuario(id_usuario) {
-  fetch(`http://localhost:5000/usuarios/${id_usuario}`)
+  fetch(`/usuarios/${id_usuario}`)
     .then(response => response.json())
     .then(usuario => {
       // Preenche o formulário com os dados do usuário
@@ -107,7 +107,7 @@ function editarUsuario(id_usuario) {
           id_perfil: document.getElementById('editUsuarioID_Perfil').value
         };
 
-        fetch(`http://localhost:5000/usuarios/${id_usuario}`, {
+        fetch(`/usuarios/${id_usuario}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'

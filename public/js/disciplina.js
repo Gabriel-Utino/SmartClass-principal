@@ -1,5 +1,5 @@
 // disciplina.js
-const apiUrlDisciplina = 'http://localhost:5000/disciplinas'
+const apiUrlDisciplina = '/disciplinas'
 
 // リストを表示
 function displayDisciplina(disciplinas) {
