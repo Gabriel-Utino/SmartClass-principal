@@ -24,6 +24,30 @@ const muralRoutes = require('../routes/muralRoutes');
 
 dotenv.config()
 
+/* 
+// HTTPS対応
+const https = require('https');
+const fs = require('fs');
+
+const sslOptions = {
+  key: fs.readFileSync(process.env.SSL_KEY_PATH),
+  cert: fs.readFileSync(process.env.SSL_CERT_PATH)
+};
+
+// HTTPSサーバー起動
+https.createServer(sslOptions, app).listen(443, () => {
+  console.log('HTTPS サーバーがポート 443 で起動しました');
+});
+
+// HTTPリクエストをHTTPSにリダイレクト
+const http = require('http');
+http.createServer((req, res) => {
+  res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
+  res.end();
+}).listen(80, () => {
+  console.log('HTTP サーバーがポート 80 で起動し、HTTPS にリダイレクト中');
+}); */
+
 
 // ミドルウェア設定
 app.use(express.urlencoded({ extended: true }))
@@ -52,7 +76,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 
 
-app.use(notasFaltasRoutes);
 // Cada pagina de funcao    ルート設定
 app.use('/', authRoutes);
 app.use('/', notasFaltasRoutes); // apriNotasで使用
@@ -197,8 +220,20 @@ app.get('/professor', (req, res) => {
 
 // 404エラーハンドリング
 app.use((req, res, next) => {
-  res.status(404).render('404', { message: 'Página não encontrada' })
-})
+  res.status(404).render('404', { 
+    message: 'ページが見つかりません',
+    user: req.session.user || null 
+  }); // セッション情報がない場合に備えnullを渡す
+});
+
+// 500エラーハンドリング
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).render('500', { 
+    message: 'サーバーエラーが発生しました', 
+    user: req.session.user || null 
+  });
+});
 
 // エラーハンドリングミドルウェア
 app.use((err, req, res, next) => {
@@ -211,5 +246,3 @@ const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
   console.log(`Servidor iniciado na porta ${PORT}.`)
 })
-
-app.locals.apiUrl = process.env.API_URL;
