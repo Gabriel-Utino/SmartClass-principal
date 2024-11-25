@@ -24,30 +24,11 @@ const muralRoutes = require('../routes/muralRoutes');
 
 dotenv.config()
 
-/* 
-// HTTPS対応
-const https = require('https');
-const fs = require('fs');
 
-const sslOptions = {
-  key: fs.readFileSync(process.env.SSL_KEY_PATH),
-  cert: fs.readFileSync(process.env.SSL_CERT_PATH)
-};
 
-// HTTPSサーバー起動
-https.createServer(sslOptions, app).listen(443, () => {
-  console.log('HTTPS サーバーがポート 443 で起動しました');
+http.createServer(app).listen(80, () => {
+  console.log('HTTP サーバーがポート 80 で起動しました');
 });
-
-// HTTPリクエストをHTTPSにリダイレクト
-const http = require('http');
-http.createServer((req, res) => {
-  res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
-  res.end();
-}).listen(80, () => {
-  console.log('HTTP サーバーがポート 80 で起動し、HTTPS にリダイレクト中');
-}); */
-
 
 // ミドルウェア設定
 app.use(express.urlencoded({ extended: true }))
