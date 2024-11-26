@@ -79,20 +79,72 @@ exports.createUsuario = async (req, res) => {
 
 // Função para atualizar um usuário existente
 exports.updateUsuario = async (req, res) => {
-  const id_usuario = req.params.id;
-  const { nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, id_perfil } = req.body;
+  const id_usuario = parseInt(req.params.id_usuario, 10); // Converte o ID para número
+
+  // Verifica se o ID é válido
+  if (isNaN(id_usuario) || id_usuario <= 0) {
+    return res.status(400).json({ message: 'ID do usuário inválido' });
+  }
+
+  const {
+    nome_usuario,
+    cpf_usuario,
+    endereco_usuario,
+    telefone_usuario,
+    email_usuario,
+    nascimento_usuario,
+    senha,
+    id_perfil,
+  } = req.body;
 
   try {
-    await connection.query(
-      'UPDATE usuario SET nome_usuario = ?, cpf_usuario = ?, endereco_usuario = ?, telefone_usuario = ?, email_usuario = ?, id_perfil = ? WHERE id_usuario = ?',
-      [nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, id_perfil, id_usuario]
+    const [result] = await connection.query(
+      `UPDATE usuario 
+       SET 
+         nome_usuario = ?, 
+         cpf_usuario = ?, 
+         endereco_usuario = ?, 
+         telefone_usuario = ?, 
+         email_usuario = ?, 
+         nascimento_usuario = ?, 
+         senha = ?, 
+         id_perfil = ? 
+       WHERE id_usuario = ?`,
+      [
+        nome_usuario,
+        cpf_usuario,
+        endereco_usuario,
+        telefone_usuario,
+        email_usuario,
+        nascimento_usuario,
+        senha,
+        id_perfil,
+        id_usuario,
+      ]
     );
-    res.status(200).json({ message: 'Usuário atualizado com sucesso!' });
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
+    }
+
+    res.json({
+      id_usuario,
+      nome_usuario,
+      cpf_usuario,
+      endereco_usuario,
+      telefone_usuario,
+      email_usuario,
+      nascimento_usuario,
+      senha,
+      id_perfil,
+      message: 'Usuário atualizado com sucesso!',
+    });
   } catch (err) {
     console.error('Erro ao atualizar usuário no MySQL:', err);
     res.status(500).json({ message: 'Erro ao atualizar o usuário' });
   }
 };
+
 
 exports.deleteUsuario = async (req, res) => {
   const id = req.params.id_usuario;
