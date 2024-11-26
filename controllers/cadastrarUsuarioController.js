@@ -91,8 +91,6 @@ exports.updateUsuario = async (req, res) => {
     endereco_usuario,
     telefone_usuario,
     email_usuario,
-    nascimento_usuario,
-    senha,
     id_perfil,
   } = req.body;
 
@@ -105,8 +103,6 @@ exports.updateUsuario = async (req, res) => {
          endereco_usuario = ?, 
          telefone_usuario = ?, 
          email_usuario = ?, 
-         nascimento_usuario = ?, 
-         senha = ?, 
          id_perfil = ? 
        WHERE id_usuario = ?`,
       [
@@ -115,8 +111,6 @@ exports.updateUsuario = async (req, res) => {
         endereco_usuario,
         telefone_usuario,
         email_usuario,
-        nascimento_usuario,
-        senha,
         id_perfil,
         id_usuario,
       ]
@@ -133,8 +127,6 @@ exports.updateUsuario = async (req, res) => {
       endereco_usuario,
       telefone_usuario,
       email_usuario,
-      nascimento_usuario,
-      senha,
       id_perfil,
       message: 'Usuário atualizado com sucesso!',
     });

@@ -26,10 +26,10 @@ dotenv.config()
 
 
 
-http.createServer(app).listen(80, () => {
+/*http.createServer(app).listen(80, () => {
   console.log('HTTP サーバーがポート 80 で起動しました');
 });
-
+*/
 // ミドルウェア設定
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
