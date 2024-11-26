@@ -44,7 +44,7 @@ exports.getAlunoById = async (req, res) => {
 exports.getNotasFaltasByAluno = async (req, res) => {
   const { id_aluno } = req.params
   try {
-    const [rows] = await pool.query('SELECT * FROM Notas_Faltas WHERE id_aluno = ?', [id_aluno])
+    const [rows] = await pool.query('SELECT * FROM notas_faltas WHERE id_aluno = ?', [id_aluno])
     if (rows.length > 0) {
       res.json(rows)
     } else {
