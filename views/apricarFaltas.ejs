@@ -38,67 +38,69 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/home">Home</a>
             </li>
-            <% if (user.id_perfil === 2 || user.id_perfil === 3 || user.id_perfil === 4) { %> 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Notas e Faltas
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <% if (user.id_perfil === 2) { %><!-- quando e Professor --> 
-                  <li><a class="dropdown-item" href="/apricarNotas">Apricar Notas</a></li>
-                  <li><a class="dropdown-item" href="/apricarFaltas">Apricar Faltas</a></li>
-                <% } %>
-                <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
-                <li><a class="dropdown-item" href="/veriNotas">Notas</a></li>
-                <li><a class="dropdown-item" href="/veriFaltas">Faltas</a></li>
-                <% } %>
-                <% if (user.id_perfil === 4) { %><!-- quando e Responsaveis --> 
-                  <li><a class="dropdown-item" href="/veriResponsavel">Verificar Notas e faltas</a></li>
-                <% } %>
-              </ul>
-            </li>
-            <% } %>
-            <% if (user.id_perfil === 1 || user.id_perfil === 5) { %> 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Cadastramentos
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="/turma">Turma</a></li>
-                <li><a class="dropdown-item" href="/disciplina">Disciplinas</a></li>
-                <li><a class="dropdown-item" href="/aluno">Alunos</a></li>
-                <li><a class="dropdown-item" href="/responsavel">Responsaveis</a></li>
-                <li><a class="dropdown-item" href="/organizacao">Organizacao</a></li>
-                <li><a class="dropdown-item" href="/professor">Professores</a></li>
-              </ul>
-            </li>
-            <% } %>
-            <li class="nav-item">
-              <a class="nav-link" href="/calendario">Calendario</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/dadosCadastrais">Dados Cadastrais</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/logout">Logout</a>
-            </li>
+            <% if (user.id_perfil===2 || user.id_perfil===3 || user.id_perfil===4) { %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Notas e Faltas
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <% if (user.id_perfil===2) { %><!-- quando e Professor -->
+                    <li><a class="dropdown-item" href="/apricarNotas">Apricar Notas</a></li>
+                    <li><a class="dropdown-item" href="/apricarFaltas">Apricar Faltas</a></li>
+                    <% } %>
+                      <% if (user.id_perfil===3) { %><!-- quando e Aluno -->
+                        <li><a class="dropdown-item" href="/veriNotas">Notas</a></li>
+                        <li><a class="dropdown-item" href="/veriFaltas">Faltas</a></li>
+                        <% } %>
+                          <% if (user.id_perfil===4) { %><!-- quando e Responsaveis -->
+                            <li><a class="dropdown-item" href="/veriResponsavel">Verificar Notas e faltas</a></li>
+                            <% } %>
+                </ul>
+              </li>
+              <% } %>
+                <% if (user.id_perfil===1 || user.id_perfil===5) { %>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      Cadastramentos
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                      <li><a class="dropdown-item" href="/turma">Turma</a></li>
+                      <li><a class="dropdown-item" href="/disciplina">Disciplinas</a></li>
+                      <li><a class="dropdown-item" href="/aluno">Alunos</a></li>
+                      <li><a class="dropdown-item" href="/responsavel">Responsaveis</a></li>
+                      <li><a class="dropdown-item" href="/organizacao">Organizacao</a></li>
+                      <li><a class="dropdown-item" href="/professor">Professores</a></li>
+                    </ul>
+                  </li>
+                  <% } %>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/calendario">Calendario</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/dadosCadastrais">Dados Cadastrais</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/logout">Logout</a>
+                    </li>
           </ul>
         </div>
-        
-        <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
+
+        <% if (user.id_perfil===3) { %><!-- quando e Aluno -->
           <div id="user-info" data-id-aluno="<%= user.id_aluno %>" data-nome-usuario="<%= user.nome_usuario %>"
             class="d-flex align-items-end">
-            <p class="opacity-0">ID: <%= user.id_aluno %> Nome: <%= user.nome_usuario %></p>
+            <p class="opacity-0">ID: <%= user.id_aluno %> Nome: <%= user.nome_usuario %>
+            </p>
           </div>
-        <% } %>
-        <% if (user.id_perfil === 4) { %><!-- quando e Responsaveis --> 
-          <div id="user-info2" data-id-responsavel="<%= user.id_responsavel %>" data-nome-usuario-resp="<%= user.nome_usuario %>"
-            class="d-flex align-items-end">
-          <p class="opacity-0">ID: <%= user.id_responsavel %> Nome: <%= user.nome_usuario %></p>
-          </div>
-        <% } %>
+          <% } %>
+            <% if (user.id_perfil===4) { %><!-- quando e Responsaveis -->
+              <div id="user-info2" data-id-responsavel="<%= user.id_responsavel %>"
+                data-nome-usuario-resp="<%= user.nome_usuario %>" class="d-flex align-items-end">
+                <p class="opacity-0">ID: <%= user.id_responsavel %> Nome: <%= user.nome_usuario %>
+                </p>
+              </div>
+              <% } %>
 
       </div>
       <a href="/home" class="mx-auto d-block">
@@ -109,31 +111,54 @@
 
 
   <!-- 以下、ベースのHTMLファイルのコンテンツを続ける -->
-<div class="container mt-5">
-  <h1>Aplicar Faltas</h1>
-  <select id="turmaSelect" class="form-control mb-3">
-    <option value="" disabled selected>Escolha a Turma</option>
-  </select>
-  <select id="disciplinaSelect" class="form-control mb-3" disabled>
-    <option value="" disabled selected>Escolha a Disciplina</option>
-  </select>
-  <select id="yearSelect" class="form-control mb-3">
-    <option value="" disabled selected>Escolha o Ano</option>
-  </select>
-  <select id="semestreSelect" class="form-control mb-3">
-    <option value="" disabled selected>Escolha o semestre</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-  </select>
+  <div class="container mt-5">
+    <h1>欠席管理</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>名前</th>
+          <% // 日付を動的にヘッダーに表示 const uniqueDates=[...new Set(students.map(s=> s.data_falta).filter(Boolean))];
+            %>
+            <% uniqueDates.forEach(date=> { %>
+              <th>
+                <%= date %>
+              </th>
+              <% }) %>
+                <th>
+                  <span class="add-date-btn" onclick="addDate()">＋</span>
+                </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% // 生徒ごとの行を生成 const groupedByStudent=students.reduce((acc, s)=> {
+          acc[s.id_aluno] = acc[s.id_aluno] || { nome: s.nome, faltas: [] };
+          acc[s.id_aluno].faltas.push(s);
+          return acc;
+          }, {});
 
-  <!-- 欠席日入力欄 --><!-- 
-  <label for="dataFaltaInput">Data da Falta:</label>
-  <input type="date" id="dataFaltaInput" class="form-control mb-3" /> -->
-
-  <button id="searchButton" class="btn btn-primary mb-3">Procurar</button>
-  <div id="resultContainer"></div>
-  <button id="applyFaltasButton" class="btn btn-danger" style="display: none;">Aplicar Faltas</button>
-</div>
+          Object.values(groupedByStudent).forEach(student => {
+          %>
+          <tr>
+            <td>
+              <%= student.nome %>
+            </td>
+            <% uniqueDates.forEach(date=> { %>
+              <% const falta=student.faltas.find(f=> f.data_falta === date);
+                if (falta) {
+                if (falta.justificado === 1) { %>
+                <td>○</td>
+                <% } else { %>
+                  <td>×</td>
+                  <% } } else { %>
+                    <td>-</td>
+                    <% } %>
+                      <% }) %>
+                        <td>-</td>
+          </tr>
+          <% }); %>
+      </tbody>
+    </table>
+  </div>
 
 
 
@@ -151,6 +176,24 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
   <script src="/js/profJs/apricarFaltas.js">
+  </script>
+  <script>
+    // 新しい日付を追加する
+    async function addDate() {
+      const today = new Date().toISOString().split('T')[0]; // 今日の日付
+      const response = await fetch('/faltas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data_falta: today })
+      });
+
+      if (response.ok) {
+        alert('新しい日付が追加されました');
+        location.reload(); // ページをリロードして反映
+      } else {
+        alert('エラーが発生しました');
+      }
+    }
   </script>
 </body>
 
