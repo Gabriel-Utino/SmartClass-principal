@@ -195,7 +195,7 @@
               <!-- Número de Registro (RA) para Aluno -->
               <div class="mb-3" id="raField" style="display:none;">
                 <label for="ra_aluno" class="form-label">Número de Registro</label>
-                <input type="text" class="form-control" id="ra_aluno" name="ra_aluno">
+                <input type="text" class="form-control" id="ra_aluno" name="ra_aluno" step="1" min="0">
               </div>
               <!-- Data de Matrícula -->
               <div class="mb-3" id="dataMatriculaField" style="display:none;">
@@ -220,19 +220,19 @@
             <input type="text" class="form-control" id="editUsuarioNome" placeholder="Nome" required>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="editUsuarioCPF" placeholder="CPF" required>
+            <input type="text" class="form-control" id="editUsuarioCPF" placeholder="CPF" step="1" min="0" required>
           </div>
           <div class="form-group">
             <input type="email" class="form-control" id="editUsuarioEmail" placeholder="Email" required>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="editUsuarioTelefone" placeholder="Telefone" required>
+            <input type="text" class="form-control" id="editUsuarioTelefone" placeholder="Telefone" step="1" min="0" required>
           </div>
           <div class="form-group">
             <input type="text" class="form-control" id="editUsuarioEndereco" placeholder="Endereço" required>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="editUsuarioID_Perfil" placeholder="ID_Perfil" required>
+            <input type="text" class="form-control" id="editUsuarioID_Perfil" placeholder="ID_Perfil" step="1" min="1" max="6" required>
           </div>
           <button type="submit" class="btn btn-primary">Atualizar</button>
           <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancelar</button>
