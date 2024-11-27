@@ -22,13 +22,15 @@ const turmaDisciplinaRoutes = require('../routes/turmaDisciplinaRoutes');
 const cadastrarUsuarioRoutes = require('../routes/cadastrarUsuarioRoutes');
 const muralRoutes = require('../routes/muralRoutes');
 
+const faltasRoutes = require('../routes/faltasRoutes');
+
 dotenv.config()
 
 
 
-http.createServer(app).listen(80, () => {
+/* http.createServer(app).listen(80, () => {
   console.log('HTTP サーバーがポート 80 で起動しました');
-});
+}); */
 
 // ミドルウェア設定
 app.use(express.urlencoded({ extended: true }))
@@ -61,9 +63,9 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/', authRoutes);
 app.use('/', notasFaltasRoutes); // apriNotasで使用
 app.use('/notas_faltasApri', notasFaltasRoutes);
+app.use('/notas_faltas', notasFaltasRoutes);
 app.use('/disciplinas', disciplinasRoutes);
 app.use('/users', userRoutes);
-app.use('/notas_faltas', notasFaltasRoutes);
 app.use('/alunos', alunosRoutes);
 app.use('/turmas', turmaRoutes);
 app.use('/aplicarNotas', aplicarNotasRoutes);
@@ -73,6 +75,7 @@ app.use('/resps_aluno', responsavelAlunoRoutes);
 app.use('/responsaveis', responsavelRoutes);
 app.use('/usuarios', cadastrarUsuarioRoutes);
 app.use('/publicacoes', muralRoutes);
+app.use('/faltas', faltasRoutes);
 
 
 // ダッシュボードルート

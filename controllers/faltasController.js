@@ -1,4 +1,4 @@
-const db = require('../models/db'); // データベース接続をインポート
+const db = require('../db/index.js'); // データベース接続をインポート
 
 // 欠席データを取得
 exports.getFaltas = async (req, res) => {
