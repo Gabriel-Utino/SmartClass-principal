@@ -194,6 +194,12 @@ app.get('/professor', (req, res) => {
   }
   res.render('professor', { user: req.session.user }) // ダッシュボードを表示
 })
+app.get('/faltasDetalhes', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('faltasDetalhes', { user: req.session.user }) // ダッシュボードを表示
+})
 
 
 // デフォルトのルート（indexページ）を設定

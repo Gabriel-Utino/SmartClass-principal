@@ -19,7 +19,33 @@ exports.getNotas = async (req, res) => {
 exports.getNotasByid_notas_faltas = async (req, res) => {
   const id_notas_faltas  = req.params.id_notas_faltas 
   try {
-    const [rows] = await db.query(`SELECT * FROM notas_faltas WHERE id_notas_faltas  = ?`, [id_notas_faltas])
+    const [rows] = await db.query(`
+      SELECT nf.*, d.nome_disciplina
+      FROM notas_faltas nf 
+      JOIN disciplina d ON d.id_disciplina = nf.id_disciplina
+      WHERE id_notas_faltas  = ?;
+      `, [id_notas_faltas])
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'Nota not found' });
+    }
+    res.json(rows)
+  } catch (error) {
+    res.status(500).json({ error: 'データの取得中にエラーが発生しました。' })
+  }
+}
+// 特定の生徒の全ての成績を取得
+exports.getFaltasDetalhesById_alunoId_disciplina = async (req, res) => {
+  const id_aluno  = req.params.id_aluno 
+  const id_disciplina  = req.params.id_disciplina 
+  try {
+    const [rows] = await db.query(`
+      SELECT nf.*, d.nome_disciplina, fd.data_falta
+      FROM notas_faltas nf 
+      JOIN disciplina d ON d.id_disciplina = nf.id_disciplina
+      JOIN faltas_detalhes fd ON fd.id_notas_faltas = nf.id_notas_faltas
+      WHERE nf.id_aluno  = ?
+      AND nf.id_disciplina = ?;
+      `, [id_aluno, id_disciplina])
     if (rows.length === 0) {
       return res.status(404).json({ error: 'Nota not found' });
     }
@@ -158,3 +184,53 @@ exports.getNotasFaltasDetails = async (req, res) => {
   }
 };
 
+exports.getAlunoDetails = async (req, res) => {
+  const { id_notas_faltas } = req.query;
+
+  if (!id_notas_faltas) {
+    return res.status(400).send('ID do notas_faltas não fornecido');
+  }
+
+  try {
+    // 生徒の基本情報を取得
+    const alunoQuery = `
+      SELECT nf.*, a.nome_aluno, a.foto
+      FROM notas_faltas nf
+      JOIN aluno a ON nf.id_aluno = a.id_aluno
+      WHERE nf.id_notas_faltas = ?`;
+
+    const alunoResults = await new Promise((resolve, reject) => {
+      db.query(alunoQuery, [id_notas_faltas], (err, results) => {
+        if (err) reject(err);
+        else resolve(results);
+      });
+    });
+
+    if (alunoResults.length === 0) {
+      return res.status(404).send('Aluno não encontrado');
+    }
+
+    // 欠席詳細を取得
+    const faltasDetalhesQuery = `
+      SELECT data_falta, justificado
+      FROM faltas_detalhes
+      WHERE id_notas_faltas = ?`;
+
+    const faltasResults = await new Promise((resolve, reject) => {
+      db.query(faltasDetalhesQuery, [id_notas_faltas], (err, results) => {
+        if (err) reject(err);
+        else resolve(results);
+      });
+    });
+
+    // レンダリング
+    res.render('detalhesAluno', {
+      aluno: alunoResults[0],
+      faltasDetalhes: faltasResults
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Erro ao buscar dados do aluno');
+  }
+};

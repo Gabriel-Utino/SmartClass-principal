@@ -130,7 +130,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
           faltasCell.style.cursor = 'pointer';
           faltasCell.addEventListener('click', () => {
             // Redirecionar para a página de detalhes
-            window.location.href = `/faltasDetalhes?id_aluno=${item.id_aluno}&id_disciplina=${item.id_disciplina}&year=${item.ano_academico}&semestre=${semestre}`;
+            window.location.href = `/faltasDetalhes?id_aluno=${item.id_aluno}&id_disciplina=${item.id_disciplina}&year=${item.ano_academico}&semestre=${semestre}&idNotasFaltas=${disciplinaId}`;
           });
           row.appendChild(faltasCell);
 

@@ -2,13 +2,11 @@
 const express = require('express');
 const router = express.Router();
 const notasFaltasController = require('../controllers/notasFaltasController');
-/* const { getNotasFaltas } = require('../controllers/notasFaltasController'); */
-const faltasController = require('../controllers/faltasController');
-/* const db = require('../db') // データベース接続設定 */
 
 // 成績を取得するルート
 router.get('/notas/:alunoId', notasFaltasController.getNotas);
 router.get('/notasByid_notas_faltas/:id_notas_faltas', notasFaltasController.getNotasByid_notas_faltas);
+router.get('/notasByid_notas_faltas/:id_aluno/:id_disciplina', notasFaltasController.getFaltasDetalhesById_alunoId_disciplina);
 // 成績を特定の学年・学期で取得するルート
 router.get('/notas/:alunoId/:ano/:semestre', notasFaltasController.getNotasByAnoESemestre);
 // 成績を更新するルート（例えば教員向けの機能）
@@ -21,12 +19,12 @@ router.delete('/notas/:notaId', notasFaltasController.deleteNota);
 // /notas_faltasApri エンドポイントのルート設定
 router.get('/notas_faltasApri', notasFaltasController.getNotasFaltasApri);
 
-
-/* router.get('/notas_faltas/:notaId', notasFaltasController.getNotasFaltas); */
 // /notas_faltasApriエンドポイントにGETリクエストを設定
 router.get('/faltas_detalhes', notasFaltasController.getNotasFaltasDetails);
 
 
+// 生徒の詳細ページ
+router.get('/detalhesAluno', notasFaltasController.getAlunoDetails);
 
 
 module.exports = router;

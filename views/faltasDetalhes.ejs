@@ -38,67 +38,69 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/home">Home</a>
             </li>
-            <% if (user.id_perfil === 2 || user.id_perfil === 3 || user.id_perfil === 4) { %> 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Notas e Faltas
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <% if (user.id_perfil === 2) { %><!-- quando e Professor --> 
-                  <li><a class="dropdown-item" href="/apricarNotas">Apricar Notas</a></li>
-                  <li><a class="dropdown-item" href="/apricarFaltas">Apricar Faltas</a></li>
-                <% } %>
-                <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
-                <li><a class="dropdown-item" href="/veriNotas">Notas</a></li>
-                <li><a class="dropdown-item" href="/veriFaltas">Faltas</a></li>
-                <% } %>
-                <% if (user.id_perfil === 4) { %><!-- quando e Responsaveis --> 
-                  <li><a class="dropdown-item" href="/veriResponsavel">Verificar Notas e faltas</a></li>
-                <% } %>
-              </ul>
-            </li>
-            <% } %>
-            <% if (user.id_perfil === 1 || user.id_perfil === 5) { %> 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Cadastramentos
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="/turma">Turma</a></li>
-                <li><a class="dropdown-item" href="/disciplina">Disciplinas</a></li>
-                <li><a class="dropdown-item" href="/aluno">Alunos</a></li>
-                <li><a class="dropdown-item" href="/responsavel">Responsaveis</a></li>
-                <li><a class="dropdown-item" href="/organizacao">Organizacao</a></li>
-                <li><a class="dropdown-item" href="/professor">Professores</a></li>
-              </ul>
-            </li>
-            <% } %>
-            <li class="nav-item">
-              <a class="nav-link" href="/calendario">Calendario</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/dadosCadastrais">Dados Cadastrais</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/logout">Logout</a>
-            </li>
+            <% if (user.id_perfil===2 || user.id_perfil===3 || user.id_perfil===4) { %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Notas e Faltas
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <% if (user.id_perfil===2) { %><!-- quando e Professor -->
+                    <li><a class="dropdown-item" href="/apricarNotas">Apricar Notas</a></li>
+                    <li><a class="dropdown-item" href="/apricarFaltas">Apricar Faltas</a></li>
+                    <% } %>
+                      <% if (user.id_perfil===3) { %><!-- quando e Aluno -->
+                        <li><a class="dropdown-item" href="/veriNotas">Notas</a></li>
+                        <li><a class="dropdown-item" href="/veriFaltas">Faltas</a></li>
+                        <% } %>
+                          <% if (user.id_perfil===4) { %><!-- quando e Responsaveis -->
+                            <li><a class="dropdown-item" href="/veriResponsavel">Verificar Notas e faltas</a></li>
+                            <% } %>
+                </ul>
+              </li>
+              <% } %>
+                <% if (user.id_perfil===1 || user.id_perfil===5) { %>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      Cadastramentos
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                      <li><a class="dropdown-item" href="/turma">Turma</a></li>
+                      <li><a class="dropdown-item" href="/disciplina">Disciplinas</a></li>
+                      <li><a class="dropdown-item" href="/aluno">Alunos</a></li>
+                      <li><a class="dropdown-item" href="/responsavel">Responsaveis</a></li>
+                      <li><a class="dropdown-item" href="/organizacao">Organizacao</a></li>
+                      <li><a class="dropdown-item" href="/professor">Professores</a></li>
+                    </ul>
+                  </li>
+                  <% } %>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/calendario">Calendario</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/dadosCadastrais">Dados Cadastrais</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/logout">Logout</a>
+                    </li>
           </ul>
         </div>
-        
-        <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
+
+        <% if (user.id_perfil===3) { %><!-- quando e Aluno -->
           <div id="user-info" data-id-aluno="<%= user.id_aluno %>" data-nome-usuario="<%= user.nome_usuario %>"
             class="d-flex align-items-end">
-            <p class="opacity-0">ID: <%= user.id_aluno %> Nome: <%= user.nome_usuario %></p>
+            <p class="opacity-0">ID: <%= user.id_aluno %> Nome: <%= user.nome_usuario %>
+            </p>
           </div>
-        <% } %>
-        <% if (user.id_perfil === 4) { %><!-- quando e Responsaveis --> 
-          <div id="user-info2" data-id-responsavel="<%= user.id_responsavel %>" data-nome-usuario-resp="<%= user.nome_usuario %>"
-            class="d-flex align-items-end">
-          <p class="opacity-0">ID: <%= user.id_responsavel %> Nome: <%= user.nome_usuario %></p>
-          </div>
-        <% } %>
+          <% } %>
+            <% if (user.id_perfil===4) { %><!-- quando e Responsaveis -->
+              <div id="user-info2" data-id-responsavel="<%= user.id_responsavel %>"
+                data-nome-usuario-resp="<%= user.nome_usuario %>" class="d-flex align-items-end">
+                <p class="opacity-0">ID: <%= user.id_responsavel %> Nome: <%= user.nome_usuario %>
+                </p>
+              </div>
+              <% } %>
 
       </div>
       <a href="/home" class="mx-auto d-block">
@@ -110,7 +112,40 @@
 
 
   <!-- O conteúdo do arquivo HTML -->
-   
+  <div class="container mt-5">
+    <div id="data-card-container" class="card mx-auto" style="max-width: 600px; display: none;">
+      <div class="card-header bg-primary text-white text-center">
+        <h3 id="card-nomeAluno">Nome do Aluno</h3>
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <strong>Data de Matrícula:</strong> <span id="card-matriculaAluno">-</span>
+          </li>
+          <li class="list-group-item">
+            <strong>Disciplina:</strong> <span id="card-disciplina">-</span>
+          </li>
+          <li class="list-group-item">
+            <strong>N1:</strong> <span id="card-n1Aluno">-</span>
+          </li>
+          <li class="list-group-item">
+            <strong>AP:</strong> <span id="card-apAluno">-</span>
+          </li>
+          <li class="list-group-item">
+            <strong>AI:</strong> <span id="card-aiAluno">-</span>
+          </li>
+          <li class="list-group-item">
+            <strong>Ano:</strong> <span id="card-anoAluno">-</span>
+          </li>
+          <li class="list-group-item">
+            <strong>Semestre:</strong> <span id="card-semestreAluno">-</span>
+          </li>
+        </ul>
+        <ul id="notaList"></ul>
+      </div>
+    </div>
+  </div>
+
 
 
 
@@ -126,7 +161,9 @@
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
-   <!--  <script src="/js/"></script> --> <!-- Escreva o link para Javascript aqui -->
+  <!--  <script src="/js/"></script> --> <!-- Escreva o link para Javascript aqui -->
+  <script src="/js/profJs/faltasDetalhes.js">
+  </script>
 </body>
 
 </html>
