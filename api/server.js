@@ -196,8 +196,14 @@ app.get('/professor', (req, res) => {
 })
 
 
-
-
+// デフォルトのルート（indexページ）を設定
+app.get('/', (req, res) => {
+  if (req.session.user) {
+    res.redirect('/home'); // ユーザーがログイン済みならダッシュボードへ
+  } else {
+    res.redirect('/login'); // ログインしていない場合はログインページへ
+  }
+});
 
 // 404エラーハンドリング
 app.use((req, res, next) => {

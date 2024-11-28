@@ -114,11 +114,14 @@ exports.getNotasFaltasApri = async (req, res) => {
   try {
     const [results] = await db.query(
       `
-        SELECT nf.*, u.nome_usuario AS nome_aluno, u.foto
+        SELECT nf.id_notas_faltas, nf.id_disciplina, nf.id_aluno, nf.N1, nf.AI, nf.AP, SUM(fd.justificado) AS faltas, 
+          nf.ano_academico, nf.semestre, u.nome_usuario AS nome_aluno, u.foto, fd.id_faltas_detalhes
         FROM notas_faltas nf
         JOIN aluno a ON nf.id_aluno = a.id_aluno
         JOIN usuario u ON a.id_usuario = u.id_usuario
-        WHERE a.id_turma = ? AND nf.id_disciplina = ? AND nf.ano_academico = ? AND nf.semestre = ?;
+        JOIN faltas_detalhes fd ON fd.id_notas_faltas = nf.id_notas_faltas
+        WHERE a.id_turma = ? AND nf.id_disciplina = ? AND nf.ano_academico = ? AND nf.semestre = ?
+        GROUP BY u.nome_usuario;
     `,
       [turmaId, disciplinaId, year, semestre]
     )
@@ -133,23 +136,25 @@ exports.getNotasFaltasApri = async (req, res) => {
 
 // notas_faltasを取得する関数
 exports.getNotasFaltasDetails = async (req, res) => {
-  const { turmaId, disciplinaId, year, semestre } = req.query;
+  const { alunoId, disciplinaId, year, semestre } = req.query
+
   try {
     const [results] = await db.query(
       `
-        SELECT usuario.nome_usuario, usuario.foto, notas_faltas.N1, notas_faltas.AP, notas_faltas.AI
-        FROM usuario
-        INNER JOIN aluno ON Usuario.id_usuario = aluno.id_usuario
-        INNER JOIN notas_faltas ON aluno.id_aluno = notas_faltas.id_aluno
-        WHERE aluno.id_turma = ? AND notas_faltas.id_disciplina  = ? 
-          AND notas_faltas.ano_academico = ? AND notas_faltas.semestre = ?
-      `,
-      [turmaId, disciplinaId, year, semestre]
-    );
-    res.json(results);
+        SELECT nf.id_disciplina, nf.id_aluno, nf.ano_academico, nf.semestre, u.nome_usuario AS nome_aluno, fd.data_falta
+        FROM notas_faltas nf
+        JOIN aluno a ON nf.id_aluno = a.id_aluno
+        JOIN usuario u ON a.id_usuario = u.id_usuario
+        JOIN faltas_detalhes fd ON fd.id_notas_faltas = nf.id_notas_faltas
+        WHERE a.id_aluno = ? AND nf.id_disciplina = ? AND nf.ano_academico = ? AND nf.semestre = ? AND fd.justificado = ?;
+    `,
+      [alunoId, disciplinaId, year, semestre]
+    )
+
+    res.json(results)
   } catch (error) {
-    console.error('Error fetching notas_faltas:', error);
-    res.status(500).json({ error: 'Database query error' });
+    console.error('Error fetching notas_faltas:', error)
+    res.status(500).json({ message: 'Error retrieving notas_faltas' })
   }
 };
 
