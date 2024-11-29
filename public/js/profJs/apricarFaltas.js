@@ -125,7 +125,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
 
           // Faltas com link para detalhes
           const faltasCell = document.createElement('td');
-          faltasCell.textContent = item.faltas;
+          faltasCell.textContent = item.faltas !== null ? item.faltas : 0;
           faltasCell.classList.add('clickable');
           faltasCell.style.cursor = 'pointer';
           faltasCell.addEventListener('click', () => {
@@ -187,19 +187,21 @@ async function applyFaltas() {
     const response = await fetch(`/notas_faltasApri/faltas`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ids: selectedIds }),
+      body: JSON.stringify({ ids: selectedIds }), // サーバーに選択された ID を送信
     });
 
     if (response.ok) {
-      console.log('Faltas applied successfully');
+      console.log('Faltas added successfully');
       await fetchFaltasData(); // 最新のデータを取得して画面を更新
     } else {
-      console.error('Failed to apply faltas');
+      console.error('Failed to add faltas');
     }
   } catch (error) {
-    console.error('Error applying faltas:', error);
+    console.error('Error adding faltas:', error);
   }
 }
+
+
 
 // 画面にデータを再表示するための関数
 async function fetchFaltasData() {

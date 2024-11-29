@@ -22,6 +22,11 @@ router.get('/notas_faltasApri', notasFaltasController.getNotasFaltasApri);
 // /notas_faltasApriエンドポイントにGETリクエストを設定
 router.get('/faltas_detalhes', notasFaltasController.getNotasFaltasDetails);
 
+// 欠席日の削除ルート
+router.delete('/delete/:id_faltas_detalhes', notasFaltasController.deleteFaltasDetalhes);
+
+// 選択されたIDをもとに faltas_detalhes に欠席を追加
+router.put('/faltas', notasFaltasController.addFaltasDetalhes);
 
 // 生徒の詳細ページ
 router.get('/detalhesAluno', notasFaltasController.getAlunoDetails);

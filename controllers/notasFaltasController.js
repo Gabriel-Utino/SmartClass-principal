@@ -39,7 +39,7 @@ exports.getFaltasDetalhesById_alunoId_disciplina = async (req, res) => {
   const id_disciplina  = req.params.id_disciplina 
   try {
     const [rows] = await db.query(`
-      SELECT nf.*, d.nome_disciplina, fd.data_falta
+      SELECT nf.*, d.nome_disciplina, fd.data_falta, fd.id_faltas_detalhes
       FROM notas_faltas nf 
       JOIN disciplina d ON d.id_disciplina = nf.id_disciplina
       JOIN faltas_detalhes fd ON fd.id_notas_faltas = nf.id_notas_faltas
@@ -145,9 +145,9 @@ exports.getNotasFaltasApri = async (req, res) => {
         FROM notas_faltas nf
         JOIN aluno a ON nf.id_aluno = a.id_aluno
         JOIN usuario u ON a.id_usuario = u.id_usuario
-        JOIN faltas_detalhes fd ON fd.id_notas_faltas = nf.id_notas_faltas
+        LEFT JOIN faltas_detalhes fd ON fd.id_notas_faltas = nf.id_notas_faltas
         WHERE a.id_turma = ? AND nf.id_disciplina = ? AND nf.ano_academico = ? AND nf.semestre = ?
-        GROUP BY u.nome_usuario;
+        GROUP BY u.nome_usuario, u.nome_usuario;
     `,
       [turmaId, disciplinaId, year, semestre]
     )
@@ -232,5 +232,45 @@ exports.getAlunoDetails = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send('Erro ao buscar dados do aluno');
+  }
+};
+
+exports.deleteFaltasDetalhes = async (req, res) => {
+  const id_faltas_detalhes = req.params.id_faltas_detalhes;
+
+  try {
+    const [result] = await db.query('DELETE FROM faltas_detalhes WHERE id_faltas_detalhes = ?', [id_faltas_detalhes]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'データが見つかりませんでした。' });
+    }
+
+    res.json({ message: '削除が成功しました。' });
+  } catch (error) {
+    res.status(500).json({ error: '削除中にエラーが発生しました。' });
+  }
+};
+// Faltas Detalhes に欠席を記録
+exports.addFaltasDetalhes = async (req, res) => {
+  const { ids } = req.body; // 選択された notas_faltas の ID
+  const dataFalta = new Date().toISOString().split('T')[0]; // 今日の日付 (YYYY-MM-DD)
+
+  if (!ids || ids.length === 0) {
+    return res.status(400).json({ error: 'No IDs provided' });
+  }
+
+  try {
+    // IDsをループしてそれぞれの欠席を記録
+    const values = ids.map(id => [id, dataFalta, 1]); // 配列形式で値を準備
+    const query = `
+      INSERT INTO faltas_detalhes (id_notas_faltas, data_falta, justificado)
+      VALUES ?
+    `;
+
+    await db.query(query, [values]); // バッチインサート
+    res.status(200).json({ message: 'Faltas adicionadas com sucesso' });
+  } catch (error) {
+    console.error('Error adding faltas detalhes:', error);
+    res.status(500).json({ error: 'Erro ao adicionar faltas detalhes' });
   }
 };
