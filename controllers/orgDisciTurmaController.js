@@ -34,7 +34,7 @@ exports.getAlunosByTurma = async (turmaId) => {
     const [alunos] = await db.query(`
       SELECT a.id_aluno
       FROM aluno a
-      JOIN turma ta ON ta.id_aluno = a.id_aluno
+      JOIN turma ta ON ta.id_turma = a.id_turma
       WHERE ta.id_turma = ?
     `, [turmaId]);
     return alunos;
