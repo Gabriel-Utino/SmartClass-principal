@@ -44,7 +44,15 @@ exports.getAlunoById = async (req, res) => {
 exports.getNotasFaltasByAluno = async (req, res) => {
   const { id_aluno } = req.params
   try {
-    const [rows] = await pool.query('SELECT * FROM notas_faltas WHERE id_aluno = ?', [id_aluno])
+    const [rows] = await pool.query(`
+      SELECT nf.id_notas_faltas, nf.id_disciplina, nf.id_aluno, 
+      nf.N1, nf.AI, nf.AP, SUM(fd.justificado) AS faltas, 
+      nf.ano_academico, nf.semestre
+      FROM notas_faltas nf
+      LEFT JOIN faltas_detalhes fd ON fd.id_notas_faltas = nf.id_notas_faltas
+      WHERE id_aluno = ?
+      GROUP BY nf.id_notas_faltas;
+      `, [id_aluno])
     if (rows.length > 0) {
       res.json(rows)
     } else {

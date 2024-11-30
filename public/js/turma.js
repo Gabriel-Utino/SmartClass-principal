@@ -30,7 +30,6 @@ function getTurma() {
       return response.json();
     })
     .then(data => {
-      console.log('Turma fetched:', data);
       displayTurma(data)
     })
     .catch(error => console.error('Erro:', error))

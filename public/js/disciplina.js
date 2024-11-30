@@ -3,7 +3,6 @@ const apiUrlDisciplina = '/disciplinas'
 
 // リストを表示
 function displayDisciplina(disciplinas) {
-  console.log('Displaying disciplinas:', disciplinas) // ここで確認
   const disciplinaList = document.getElementById('disciplinaList')
   disciplinaList.innerHTML = ''
   disciplinas.forEach(disciplina => {
@@ -33,7 +32,6 @@ function getDisciplina() {
       return response.json()
     })
     .then(data => {
-      console.log('Disciplina fetched:', data) // ここで取得したデータを確認
       displayDisciplina(data) // データを表示する
     })
     .catch(error => {
@@ -82,7 +80,6 @@ document.getElementById('addDisciplinaForm').addEventListener('submit', function
 
 // 更新
 function updateDisciplina(id) {
-  console.log('Edit button clicked for ID:', id) // ここで確認
   fetch(`${apiUrlDisciplina}/${id}`)
     .then(response => {
       if (!response.ok) {

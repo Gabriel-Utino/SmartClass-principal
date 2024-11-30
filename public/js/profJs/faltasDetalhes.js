@@ -6,9 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const alunoId = urlParams.get('id_aluno');
   const id_disciplina = urlParams.get('id_disciplina');
+  const id_perfil = urlParams.get('id_perfil');
   const idNotasFaltas = urlParams.get('idNotasFaltas');
-  const year = urlParams.get('year');
-  const semestre = urlParams.get('semestre');
 
   // Aluno情報を取得
   fetchAlunoInfo(alunoId);
@@ -17,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchNotaInfo(idNotasFaltas);
 
   // Notas情報を取得
-  fetchNotaDetalhesInfo(alunoId, id_disciplina);
+  fetchNotaDetalhesInfo(alunoId, id_disciplina, id_perfil);
 
   // フォームの送信イベント
   /* document.getElementById('aluno-list').addEventListener('submit', (event) => {
@@ -41,30 +40,33 @@ function fetchAlunoInfo(alunoId) {
     .catch(error => console.error('Error fetching Aluno:', error));
 }
 
-function fetchNotaInfo(id_notas_faltas) {
-  fetch(`/notasByid_notas_faltas/${id_notas_faltas}`)
-    .then(response => response.json())
-    .then(data => {
-      if (data && data.length > 0) {
-        const notaInfo = data[0];
-        // データカードにNotas情報を挿入
-        document.getElementById('card-disciplina').textContent = notaInfo.nome_disciplina || '0';
-        document.getElementById('card-n1Aluno').textContent = notaInfo.N1 || '-';
-        document.getElementById('card-apAluno').textContent = notaInfo.AP || '-';
-        document.getElementById('card-aiAluno').textContent = notaInfo.AI || '-';
-        document.getElementById('card-anoAluno').textContent = notaInfo.ano_academico || '-';
-        document.getElementById('card-semestreAluno').textContent = notaInfo.semestre || '-';
+async function fetchNotaInfo(id_notas_faltas) {
+  try {
+    const response = await fetch(`/notasByid_notas_faltas/${id_notas_faltas}`);
+    const data = await response.json();
 
-        // カードを表示
-        document.getElementById('data-card-container').style.display = 'block';
-      } else {
-        console.error('No Nota data found.');
-      }
-    })
-    .catch(error => console.error('Error fetching Nota:', error));
+    if (data && data.length > 0) {
+      const notaInfo = data[0];
+      // データカードにNotas情報を挿入
+      document.getElementById('card-disciplina').textContent = notaInfo.nome_disciplina || '0';
+      document.getElementById('card-n1Aluno').textContent = notaInfo.N1 || '-';
+      document.getElementById('card-apAluno').textContent = notaInfo.AP || '-';
+      document.getElementById('card-aiAluno').textContent = notaInfo.AI || '-';
+      document.getElementById('card-anoAluno').textContent = notaInfo.ano_academico || '-';
+      document.getElementById('card-semestreAluno').textContent = notaInfo.semestre || '-';
+
+      // カードを表示
+      document.getElementById('data-card-container').style.display = 'block';
+    } else {
+      console.error('No Nota data found.');
+    }
+  } catch (error) {
+    console.error('Error fetching Nota:', error);
+  }
 }
 
-function fetchNotaDetalhesInfo(id_aluno, id_disciplina) {
+
+function fetchNotaDetalhesInfo(id_aluno, id_disciplina, id_perfil) {
   fetch(`/notasByid_notas_faltas/${id_aluno}/${id_disciplina}`)
     .then(response => response.json())
     .then(data => {
@@ -77,16 +79,22 @@ function fetchNotaDetalhesInfo(id_aluno, id_disciplina) {
 
           // 欠席日のテキスト
           const text = document.createTextNode(`Data: ${formatDate(notaInfo.data_falta)}`);
-
-          // 削除ボタン
-          const deleteButton = document.createElement('button');
-          deleteButton.textContent = '削除';
-          deleteButton.className = 'btn btn-danger btn-lg shadow-sm '; // Bootstrapのスタイルを追加
-          deleteButton.innerHTML = '<i class="bi bi-trash"></i> 削除'; // アイコンを追加
-          deleteButton.addEventListener('click', () => deleteFalta(notaInfo.id_faltas_detalhes));
-
           listItem.appendChild(text);
-          listItem.appendChild(deleteButton);
+
+
+          // 削除ボタン（特定の id_perfil のみ表示）
+          if ([1, 2, 5].includes(id_perfil)) {
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'excluir';
+            deleteButton.className = 'btn btn-danger btn-lg shadow-sm'; // Bootstrapのスタイルを追加
+            deleteButton.innerHTML = '<i class="bi bi-trash"></i> excluir'; // アイコンを追加
+            deleteButton.addEventListener('click', () =>
+              deleteFalta(notaInfo.id_faltas_detalhes, notaInfo.id_notas_faltas)
+            );
+
+            listItem.appendChild(deleteButton);
+          }
+
           listaContainer.appendChild(listItem);
         });
       } else {
@@ -101,18 +109,20 @@ function fetchNotaDetalhesInfo(id_aluno, id_disciplina) {
 
 
 // 削除ボタンがクリックされたときに呼び出す関数
-function deleteFalta(id_faltas_detalhes) {
-  fetch(`/delete/${id_faltas_detalhes}`, { method: 'DELETE' })
-    .then(response => response.json())
-    .then(result => {
-      if (result.message) {
-        console.log(result.message);
-        fetchNotaInfo(id_notas_faltas); // リストを再取得して更新
-      } else {
-        console.error(result.error);
-      }
-    })
-    .catch(error => console.error('Error deleting falta:', error));
+async function deleteFalta(id_faltas_detalhes, idNotasFaltas) {
+  try {
+    const response = await fetch(`/delete/${id_faltas_detalhes}`, { method: 'DELETE' });
+    const result = await response.json();
+
+    if (result.message) {
+      console.log(result.message);
+      await fetchNotaInfo(idNotasFaltas); // リストを再取得して更新
+    } else {
+      console.error(result.error);
+    }
+  } catch (error) {
+    console.error('Error deleting falta:', error);
+  }
 }
 
 
