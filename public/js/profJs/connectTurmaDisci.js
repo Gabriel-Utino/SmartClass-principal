@@ -5,6 +5,20 @@ const apiUrlDisciplina = '/disciplinas'
 function displayTurmaDisciplina(turmaDisciplina) {
   const turmaDisciplinaList = document.getElementById('turmaDisciplinaList')
   turmaDisciplinaList.innerHTML = ''
+
+  // 'turmaName'でソート
+  turmaDisciplina.sort((a, b) => {
+    // Promiseを使って名前を取得するため、名前が分かる前に並べ替えができない
+    // 名前を取得した後に並べ替える必要がある
+    return new Promise((resolve, reject) => {
+      Promise.all([getTurmaName(a.id_turma), getTurmaName(b.id_turma)])
+        .then(([nameA, nameB]) => {
+          resolve(nameA.localeCompare(nameB))  // 名前でアルファベット順に並べ替え
+        })
+        .catch(error => reject(error))
+    })
+  })
+
   turmaDisciplina.forEach(turmaDisciplina => {
     // TurmaとDisciplinaの名前を取得
     Promise.all([getTurmaName(turmaDisciplina.id_turma), getDisciplinaName(turmaDisciplina.id_disciplina)])

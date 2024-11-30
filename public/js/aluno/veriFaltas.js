@@ -52,7 +52,6 @@ function displayNota(nota) {
 }
 
 function getNotasByAluno() {
-
   // HTMLからuser情報を取得
   const user = getUserFromPage();
   // ログインした生徒のIDを取得する処理が必要 loginUserID
@@ -62,7 +61,6 @@ function getNotasByAluno() {
     console.error('User ID is missing.');
     return;
   }
-
 
   fetch(`${apiUrlAluno}/${id_aluno}`)
     .then(response => response.json())
