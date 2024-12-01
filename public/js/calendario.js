@@ -22,12 +22,15 @@ function openModal(date) {
   if (eventDay) {
     document.getElementById('eventText').innerText = eventDay.title;
     deleteEventModal.style.display = 'block';
+    // 削除ボタンにイベントIDを設定
+    document.getElementById('deleteButton').dataset.eventId = eventDay.id_evento;
   } else {
     newEvent.style.display = 'block';
   }
 
   backDrop.style.display = 'block';
 }
+
 
 async function load() {
   const date = new Date();
@@ -37,13 +40,13 @@ async function load() {
     const response = await fetch('/calendario/listar');
     const data = await response.json();
     events = data.map(event => ({
-      date: new Date(event.data_evento).toLocaleDateString('pt-BR'), // "DD/MM/YYYY"形式
+      date: `${new Date(event.data_evento).getDate()}/${new Date(event.data_evento).getMonth() + 1}/${new Date(event.data_evento).getFullYear()}`,
       title: event.nome_evento,
+      id_evento: event.id_evento,
     }));
   } catch (error) {
     console.error('Erro ao carregar eventos:', error);
   }
-  console.log(events) //確認済　しっかりとEventoを表示できている
 
   // 月とナビゲーションの処理
   if (nav !== 0) {
@@ -86,7 +89,6 @@ async function load() {
       if (i - paddinDays === day && nav === 0) {
         dayS.id = 'currentDay';
       }
-      console.log(eventDay)
       if (eventDay) {
         const eventDiv = document.createElement('div');
         eventDiv.classList.add('event');
@@ -110,42 +112,89 @@ function closeModal() {
   backDrop.style.display = 'none';
   deleteEventModal.style.display = 'none';
 
-  eventTitleInput.value = '';
+  eventTitleInput.value = ''; // 入力フィールドをクリア
   clicked = null;
-  isEditing = false; // Reset the editing flag
+  isEditing = false;
   load();
 }
 
-function saveEvent() {
+async function saveEvent() {
   if (eventTitleInput.value) {
     eventTitleInput.classList.remove('error');
 
-    if (isEditing) {
-      // Se estiver editando, atualize o evento existente
-      const eventIndex = events.findIndex((event) => event.date === clicked);
-      if (eventIndex !== -1) {
-        events[eventIndex].title = eventTitleInput.value;
-      }
-    } else {
-      // Se não estiver editando, crie um novo evento
-      events.push({
-        date: clicked,
-        title: eventTitleInput.value,
-      });
+
+    // clickedをフォーマット
+    const formattedDate = formatDate(clicked);
+
+    // 有効な日付かチェック
+    if (isNaN(Date.parse(formattedDate))) {
+      console.error('Invalid formatted date:', formattedDate);
+      alert('A data está incorreta');
+      return;
     }
 
-    localStorage.setItem('events', JSON.stringify(events));
-    closeModal();
+    const newEvent = {
+      date: formattedDate,
+      title: eventTitleInput.value,
+    };
+
+    try {
+      const response = await fetch('/calendario/criar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newEvent),
+      });
+
+      if (!response.ok) {
+        throw new Error('イベントの保存に失敗しました');
+      }
+
+      const createdEvent = await response.json();
+      events.push(createdEvent); // ローカルに追加
+      closeModal();
+      load(); // カレンダーをリロード
+    } catch (error) {
+      console.error(error);
+      alert('イベントの保存中にエラーが発生しました');
+    }
   } else {
     eventTitleInput.classList.add('error');
   }
 }
 
-function deleteEvent() {
-  events = events.filter((event) => event.date !== clicked);
-  localStorage.setItem('events', JSON.stringify(events));
-  closeModal();
+async function deleteEvent(eventId) {
+  try {
+    // DELETEリクエストを送信
+    const response = await fetch(`/calendario/deletar/${eventId}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error('Falha ao excluir evento');
+    }
+
+    const result = await response.json();
+
+    // サーバーの応答が成功した場合、イベントリストを更新
+    const eventIndex = events.findIndex(event => event.id_evento === eventId);
+    if (eventIndex !== -1) {
+      events.splice(eventIndex, 1); // 配列から削除
+      closeModal();
+      load(); // カレンダーをリロード
+    } else {
+      // 削除済みのイベントがローカルデータに存在しない場合
+      console.warn('イベントはすでに削除されているか見つかりません');
+      closeModal();
+      load(); // カレンダーをリロード
+    }
+  } catch (error) {
+    console.error(error);
+    alert('Ocorreu um erro ao excluir o evento');
+  }
 }
+
 
 function editEvent() {
   const eventDay = events.find((event) => event.date === clicked);
@@ -173,12 +222,25 @@ function buttons() {
 
   document.getElementById('cancelButton').addEventListener('click', () => closeModal());
 
-  document.getElementById('deleteButton').addEventListener('click', () => deleteEvent());
+  document.getElementById('deleteButton').addEventListener('click', () => {
+    const eventId = document.getElementById('deleteButton').dataset.eventId;
+    if (eventId) {
+      deleteEvent(eventId); // 正しいイベントIDを渡す
+    } else {
+      console.error('ID do evento a ser excluído não encontrado');
+    }
+  });
 
   document.getElementById('closeButton').addEventListener('click', () => closeModal());
 
-  document.getElementById('editButton').addEventListener('click', () => editEvent()); // Botão de Editar
+  /* document.getElementById('editButton').addEventListener('click', () => editEvent());  */// Botão de Editar
 }
+
+
 
 buttons();
 load();
+function formatDate(clicked) {
+  const [day, month, year] = clicked.split('/'); // 日/月/年を分割
+  return `${year}-${month}-${day}`; // 年-月-日の形に変換
+}

@@ -21,6 +21,8 @@ const responsavelRoutes = require('../routes/responsavelRoutes');
 const turmaDisciplinaRoutes = require('../routes/turmaDisciplinaRoutes');
 const cadastrarUsuarioRoutes = require('../routes/cadastrarUsuarioRoutes');
 const muralRoutes = require('../routes/muralRoutes');
+// calendario
+const calendarioRoutes = require('../routes/calendarioRoutes');
 
 dotenv.config()
 
@@ -70,6 +72,8 @@ app.use('/resps_aluno', responsavelAlunoRoutes);
 app.use('/responsaveis', responsavelRoutes);
 app.use('/usuarios', cadastrarUsuarioRoutes);
 app.use('/publicacoes', muralRoutes);
+// route do calendario
+app.use('/calendario', calendarioRoutes); // Registra as rotas de calendário
 
 
 // ダッシュボードルート

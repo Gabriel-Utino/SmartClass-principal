@@ -31,7 +31,7 @@ html{
     display: flex;
     margin-top: 50px;
     justify-content: center;
-    background-color: var(--body-color);
+    background-color: #d6d6d6;
   }
   button {
     width: 75px;
@@ -62,10 +62,12 @@ html{
     width: 100%;
     display: flex;
     color: var(--color-weekdays) ;
+    justify-content: space-between; /* アイテムを端から端まで広げる */
+    text-align: center; /* 各曜日を中央揃えにする */
   }
   #weekdays div {
-    width: 100px;
-    padding: 10px;
+    flex: 1;
+    padding: 10px 0;
   }
   #calendar {
     width: 100%;

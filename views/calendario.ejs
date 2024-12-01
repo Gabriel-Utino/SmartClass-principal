@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8" />
@@ -8,24 +10,13 @@
   <!-- Links de CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-  <link rel="stylesheet" href="../../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/bootstrap.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
     rel="stylesheet">
-  <!-- <link href="./css/calendario.css" rel="stylesheet">
-  <link href="./css/calendarioDarkMode.css" rel="stylesheet"> -->
+  <link href="./css/calendario.css" rel="stylesheet">
+  <link href="./css/calendarioDarkMode.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/bootstrap.css">
   <style>
-    iframe {
-      max-width: 100%;
-      max-height: 100%;
-    }
-
-    @media (max-width: 768px) {
-      iframe {
-        width: 100%;
-        height: 400px;
-      }
-    }
-
     .icon-container {
       text-align: center;
       margin: 20px;
@@ -36,18 +27,23 @@
       height: 100px;
       margin: 10px;
     }
-
-    .img-home1 {
+    .img-home1{
       width: 30px;
-      height: 30px;
-      border-radius: 50%;
+      height:30px;
+      border-radius:50%;
     }
+  #backButton, #nextButton {
+    padding: 10px 20px; /* 上下10px, 左右20pxの余白 */
+    font-size: 16px; /* フォントサイズを大きく */
+    min-width: 150px; /* ボタンの最小幅を指定 */
+  }
   </style>
+
 </head>
 
 <body>
 
-  <!-- ナビゲーションバーのコードを貼り付け -->
+  <!-- Código de barras de navegação -->
   <nav class="navbar navbar-dark bg-dark fixed-top" style="background-color: transparent">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
@@ -137,23 +133,56 @@
   </nav>
 
 
+  
 
+  <!-- Container do Calendário -->
+  <div id="container" style="padding-top: 70px;"> <!-- Adiciona padding para evitar o overlap com o Navbar -->
+    <div id="header">
+      <div id="monthDisplay"></div>
 
-
-  <div class="container d-flex justify-content-center align-items-center">
-    <div class="row">
-      <div class="col">
-        <iframe
-          src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FSao_Paulo&bgcolor=%23ffffff&src=Y18xMzk1ZGNkZDkxZGUzODI4MjM0OWEwZWIyMTJlYTViMTRkMDdlMzM4YTk0Zjk4MTc4YjViZWFlMWE0N2MzZDkzQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&src=Y19jbGFzc3Jvb20wOWFlMjE4MkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20zYjJiYzliY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21kOWE5ZDhiMkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb201NGEzOWI1NUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21hZTc1ZjY4ZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=cHQtYnIuYnJhemlsaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20zNWI1MmU3ZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb201MGQ4ZDRmMkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21jYTU4NWVjM0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%238E24AA&color=%23c26401&color=%230047a8&color=%23137333&color=%230047a8&color=%23137333&color=%230B8043&color=%23202124&color=%230047a8&color=%23007b83&color=%2333B679"
-          style="border: 0" width="800" height="600" frameborder="0" scrolling="no">
+      <div>
+        <button id="backButton" class="btn btn-primary btn-lg">Voltar</button>
+        <button id="nextButton" class="btn btn-primary btn-lg">Próximo</button>
       </div>
     </div>
+
+    <div id="weekdays">
+      <div>Domingo</div>
+      <div>Segunda-feira</div>
+      <div>Terça-feira</div>
+      <div>Quarta-feira</div>
+      <div>Quinta-feira</div>
+      <div>Sexta-feira</div>
+      <div>Sábado</div>
+    </div>
+
+    <div id="calendar"></div>
   </div>
 
+  <!-- Modal para novo evento -->
+  <div id="newEventModal">
+    <h2>Novo Evento</h2>
+    <input id="eventTitleInput" placeholder="Event Title" />
+    <button id="saveButton">Salvar</button>
+    <button id="cancelButton">Cancelar</button>
+  </div>
 
+  <!-- Modal para excluir evento -->
+  <div id="deleteEventModal">
+    <h2>Evento</h2>
+    <div id="eventText"></div><br><!-- 
+    <button id="editButton">Editar</button> -->
+    <button id="deleteButton">Deletar</button>
+    <button id="closeButton">Fechar</button>
+  </div>
 
+  <div id="modalBackDrop"></div>
 
-
+  <!-- Dark Mode Toggle -->
+  <div class="toggle">
+    <input id="switch" type="checkbox" name="theme">
+    <label for="switch">Toggle</label>
+  </div>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
@@ -162,12 +191,10 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-  <!-- <script src="./scripts/calendarioDarkMode.js"></script>
-  <script src="/js/calendario.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="./js/calendarioDarkMode.js"></script>
+  <script src="./js/calendario.js"></script>
 
 </body>
 
 </html>
-

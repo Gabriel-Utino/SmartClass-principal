@@ -11,7 +11,7 @@ router.get('/logout', authController.logout);
 
 
 // todos
-router.get('/calendario', (req, res) => {
+router.get('/calendario', ensureAuthenticated, (req, res) => {
     res.render('calendario', { user: req.session.user }) // views/apricarFaltas.ejs
 });
 
