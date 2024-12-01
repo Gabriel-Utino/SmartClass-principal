@@ -12,67 +12,61 @@ exports.getAllTurmas = async (req, res) => {
   }
 };
 
-// 特定のTurmaをIDで取得
-exports.getTurmaById = (req, res) => {
-  const turmaID = parseInt(req.params.id_turma);
-  db.query('SELECT * FROM Turma WHERE id_turma = ?', [turmaID], (err, results) => {
-    if (err) {
-      console.error('Turma取得エラー: ' + err);
-      res.status(500).json({ message: 'データベースからTurmaを取得できませんでした' });
-    } else if (results.length === 0) {
-      res.status(404).json({ message: '該当するTurmaが見つかりませんでした' });
+exports.getTurmaById = async (req, res) => {
+  const id_turma = parseInt(req.params.id_turma);
+
+  try {
+    const [rows] = await db.query(`SELECT * FROM turma WHERE id_turma = ?;`, [id_turma]);
+    if (rows.length > 0) {
+      res.json(rows[0]);
     } else {
-      res.json(results[0]);
+      res.status(404).json({ message: 'Não foi possível obter o Turma do banco de dados' });
     }
-  });
+  } catch (error) {
+    console.error('Erro de aquisição Turma:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
 };
 
 // Turmaを追加
-exports.addTurma = (req, res) => {
+exports.addTurma = async (req, res) => {
   const { nome_turma, ano_letivo } = req.body;
-  db.query(
-    'INSERT INTO Turma (nome_turma, ano_letivo) VALUES (?, ?)',
-    [nome_turma, ano_letivo],
-    (err, result) => {
-      if (err) {
-        console.error('Turma追加エラー: ' + err);
-        res.status(500).json({ message: 'データベースにTurmaを追加できませんでした' });
-      } else {
-        res.status(201).json({ id_turma: result.insertId, nome_turma, ano_letivo });
-      }
-    }
-  );
+
+  try {
+    const result = await db.query('INSERT INTO turma (nome_turma, ano_letivo) VALUES (?, ?)', [nome_turma, ano_letivo]);
+    res.status(201).json({ id_turma: result.insertId, nome_turma, ano_letivo });
+  } catch (err) {
+    console.error('Turma追加エラー: ' + err);
+    res.status(500).json({ message: 'データベースにTurmaを追加できませんでした' });
+  }
 };
 
 // Turmaを更新
-exports.updateTurma = (req, res) => {
+exports.updateTurma = async (req, res) => {
   const id_turma = parseInt(req.params.id_turma);
   const { nome_turma, ano_letivo } = req.body;
-  db.query(
-    'UPDATE Turma SET nome_turma = ?, ano_letivo = ?, WHERE id_turma = ?',
-    [nome_turma, ano_letivo, id_turma],
-    (err, result) => {
-      if (err) {
+  try {
+    await db.query(
+    'UPDATE turma SET nome_turma = ?, ano_letivo = ? WHERE id_turma = ?',
+    [nome_turma, ano_letivo, id_turma]);
+    res.json({ message: 'Turma updated successfully' });
+  } catch (err) {
         console.error('Turma更新エラー: ' + err);
         res.status(500).json({ message: 'データベースでTurmaを更新できませんでした' });
-      } else {
-        res.json({ message: 'Turmaが更新されました' });
-      }
-    }
-  );
+  }
 };
 
 // Turmaを削除
-exports.deleteTurma = (req, res) => {
+exports.deleteTurma = async (req, res) => {
   const id_turma = parseInt(req.params.id_turma);
-  db.query('DELETE FROM Turma WHERE id_turma = ?', [id_turma], (err) => {
-    if (err) {
-      console.error('Turma削除エラー: ' + err);
-      res.status(500).json({ message: 'データベースからTurmaを削除できませんでした' });
-    } else {
-      res.json({ message: 'Turmaが削除されました' });
-    }
-  });
+
+  try {
+    await db.query('DELETE FROM turma WHERE id_turma = ?', [id_turma]);
+    res.json({ message: 'Turmaが削除されました' });
+  } catch (err) {
+    console.error('Turma削除エラー: ' + err);
+    res.status(500).json({ message: 'データベースからTurmaを削除できませんでした' });
+  }
 };
 
 
@@ -87,7 +81,6 @@ exports.getTurmaDisciplinas = async (req, res) => {
           WHERE td.id_turma = ?
       `, [turmaId]);
 
-      console.log('Disciplinas found:', disciplina); // データの確認
       res.json(disciplina);
   } catch (error) {
       console.error('Error retrieving disciplinas for turma:', error);

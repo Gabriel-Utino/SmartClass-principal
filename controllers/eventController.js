@@ -1,3 +1,4 @@
+// Controller/eventController.js
 const pool = require('../db');
 
 exports.createEvent = async (req, res) => {

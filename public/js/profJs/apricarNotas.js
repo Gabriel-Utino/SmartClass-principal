@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Turmas を取得しセレクトボックスを更新
 function fetchTurmas() {
-  fetch('http://localhost:5000/turmas')
+  fetch(`/turmas`)
     .then(response => response.json())
     .then(data => {
       const turmaSelect = document.getElementById('turmaSelect')
@@ -42,7 +42,7 @@ document.getElementById('turmaSelect').addEventListener('change', event => {
 })
 
 function fetchDisciplinasByTurma(turmaId) {
-  fetch(`http://localhost:5000/turma_disciplinas/${turmaId}/disciplinas`)
+  fetch(`/turma_disciplinas/${turmaId}/disciplinas`)
     .then(response => response.json())
     .then(data => {
       const disciplinaSelect = document.getElementById('disciplinaSelect')
@@ -75,7 +75,7 @@ document.getElementById('searchButton').addEventListener('click', () => {
 // notas_faltasを取得しリストを表示
 function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
   fetch(
-    `http://localhost:5000/notas_faltasApri?turmaId=${turmaId}&disciplinaId=${disciplinaId}&year=${year}&semestre=${semestre}`
+    `/notas_faltasApri?turmaId=${turmaId}&disciplinaId=${disciplinaId}&year=${year}&semestre=${semestre}`
   )
     .then(response => response.json())
     .then(data => {
@@ -101,7 +101,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
           // 写真セル
           const photoCell = document.createElement('td')
           const photoImg = document.createElement('img')
-          photoImg.src = item.foto ? `../../upload/${item.foto}` : '../../upload/semfoto.png'
+          photoImg.src = item.foto ? `../../upload/${item.foto}` : './icons/semfoto.png'
           photoImg.alt = 'Sem Foto'
           photoImg.classList.add('img-alunoMini')
           photoCell.appendChild(photoImg)
@@ -133,7 +133,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
           editButton.textContent = 'Editar'
           editButton.classList.add('btn', 'btn-primary')
           editButton.addEventListener('click', () => {
-            window.location.href = `editarNota.html?alunoId=${item.id_aluno}&disciplinaId=${disciplinaId}&idNotasFaltas=${item.id_notas_faltas}`
+            window.location.href = `/editarNotas?alunoId=${item.id_aluno}&disciplinaId=${disciplinaId}&idNotasFaltas=${item.id_notas_faltas}`
           })
           actionCell.appendChild(editButton)
           row.appendChild(actionCell)
@@ -143,7 +143,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
         table.appendChild(tbody)
         resultContainer.appendChild(table)
       } else {
-        resultContainer.textContent = '該当するデータが見つかりませんでした'
+        resultContainer.textContent = '該当するデータが見つかりませんでした/Nenhum dado correspondente foi encontrado'
       }
     })
     .catch(error => console.error('Error fetching notas_faltas:', error))

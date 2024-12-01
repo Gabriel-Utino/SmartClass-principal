@@ -1,6 +1,6 @@
 // controllers/authController.js
 require('dotenv').config();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const pool = require('../db');
 const crypto = require('crypto');
 const sgMail = require('@sendgrid/mail');
@@ -40,7 +40,10 @@ exports.login = async (req, res) => {
       id_aluno: user.id_aluno,
       ra_aluno: user.ra_aluno, // Alunoの情報を追加
       data_matricula: user.data_matricula,
-      id_turma: user.id_turma
+      id_turma: user.id_turma,
+      id_responsavel: user.id_responsavel,
+      id_professor: user.id_professor,
+      foto: user.foto
     };
 
     console.log('Usuário logado/ユーザーがログインしました:', req.session.user); // デバッグ用ログ
@@ -119,7 +122,7 @@ exports.postForgotPassword = (req, res, next) => {
       await User.saveResetToken(user.id_usuario, token, expiration);
 
       // リセットリンクをメールで送信
-      const resetURL = `http://localhost:5000/reset-password/${token}`;
+      const resetURL = `http://www.smartclass-uscs.com/reset-password/${token}`;
       const msg = {
         to: email_usuario,
         from: process.env.SENDGRID_SENDER, // SendGridで認証済みの送信元メールアドレス

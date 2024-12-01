@@ -1,10 +1,24 @@
-const apiUrl = 'http://localhost:3000/turma_disciplinas'
-const apiUrlTurma = 'http://localhost:3000/turmas'
-const apiUrlDisciplina = 'http://localhost:3000/disciplinas'
+const apiUrl = '/turma_disciplinas2'
+const apiUrlTurma = '/turmas'
+const apiUrlDisciplina = '/disciplinas'
 
 function displayTurmaDisciplina(turmaDisciplina) {
   const turmaDisciplinaList = document.getElementById('turmaDisciplinaList')
   turmaDisciplinaList.innerHTML = ''
+/* 
+  // 'turmaName'でソート
+  turmaDisciplina.sort((a, b) => {
+    // Promiseを使って名前を取得するため、名前が分かる前に並べ替えができない
+    // 名前を取得した後に並べ替える必要がある
+    return new Promise((resolve, reject) => {
+      Promise.all([getTurmaName(a.id_turma), getTurmaName(b.id_turma)])
+        .then(([nameA, nameB]) => {
+          resolve(nameA.localeCompare(nameB))  // 名前でアルファベット順に並べ替え
+        })
+        .catch(error => reject(error))
+    })
+  }) */
+
   turmaDisciplina.forEach(turmaDisciplina => {
     // TurmaとDisciplinaの名前を取得
     Promise.all([getTurmaName(turmaDisciplina.id_turma), getDisciplinaName(turmaDisciplina.id_disciplina)])
@@ -14,7 +28,7 @@ function displayTurmaDisciplina(turmaDisciplina) {
               <td>${turmaName}</td>
               <td>${disciplinaName}</td>
               <td>
-                <button onclick="deleteTurmaDisciplina(${turmaDisciplina.id_turma_disc})">Excluir</button>
+                <button onclick="deleteTurmaDisciplina(${turmaDisciplina.id_turma}, ${turmaDisciplina.id_disciplina})">Excluir</button>
               </td>
           `
         turmaDisciplinaList.appendChild(turmaDisciplinaElement)
@@ -25,7 +39,7 @@ function displayTurmaDisciplina(turmaDisciplina) {
 
 // 取得
 function getTurmaDisciplinas() {
-  fetch(apiUrl)
+  fetch(apiUrl, { cache: 'no-store' })
     .then(response => response.json())
     .then(data => displayTurmaDisciplina(data))
     .catch(error => console.error('Erro:', error))
@@ -43,52 +57,71 @@ function getTurmaName(id_turma) {
 function getDisciplinaName(id_disciplina) {
   return fetch(`${apiUrlDisciplina}/${id_disciplina}`)
     .then(response => response.json())
-    .then(data => data.disciplina)
+    .then(data => data.nome_disciplina)
     .catch(error => console.error('Erro:', error))
 }
 
-// 追加
-document.getElementById('addTurmaDisciplinaForm').addEventListener('submit', function (event) {
-  event.preventDefault()
+// TurmaDisciplinaの追加
+document.getElementById('addTurmaDisciplinaForm').addEventListener('submit', async function (event) {
+  event.preventDefault();
 
-  // 選択されたTurmaのIDを取得
-  const turmaId = document.getElementById('turmaId').value
-  const id_turma = parseInt(turmaId)
+  // TurmaのIDを取得
+  const turmaId = document.getElementById('turmaId').value;
+  const id_turma = parseInt(turmaId);
 
   // 選択されたDisciplinaのIDをすべて取得
-  const disciplinaSelect = document.getElementById('disciplinaId')
-  const selectedDisciplinas = Array.from(disciplinaSelect.selectedOptions).map(option => parseInt(option.value))
-
-  // 選択されたTurmaとDisciplinaの組み合わせを作成
-  const turmaDisciplinas = selectedDisciplinas.map(id_disciplina => ({ id_turma, id_disciplina }))
-
-  // すべての組み合わせをサーバーに送信
-  Promise.all(turmaDisciplinas.map(turmaDisciplina => (
-    fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(turmaDisciplina)
-    })
-  )))
-  .then(responses => Promise.all(responses.map(response => response.json())))
-  .then(data => {
-    getTurmaDisciplinas()
-    document.getElementById('addTurmaDisciplinaForm').reset()
-  })
-  .catch(error => console.error('Erro:', error))
-})
+  const disciplinaSelect = document.getElementById('disciplinaId');
+  const selectedDisciplinas = Array.from(disciplinaSelect.selectedOptions).map(option => parseInt(option.value));
 
 
-// 削除
-function deleteTurmaDisciplina(id_turma_disc) {
-  fetch(`${apiUrl}/${id_turma_disc}`, {
-    method: 'DELETE'
-  })
-    .then(response => response.json())
-    .then(data => getTurmaDisciplinas())
-    .catch(error => console.error('Erro:', error))
+  console.log("test" + id_turma + " at :" + selectedDisciplinas)
+  // TurmaとDisciplinaの組み合わせを作成
+  const turmaDisciplinas = selectedDisciplinas.map(id_disciplina => ({ id_turma, id_disciplina }));
+
+
+  
+
+  try {
+    // 各TurmaDisciplinaをサーバーに送信
+    const responses = await Promise.all(turmaDisciplinas.map(async turmaDisciplina => {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(turmaDisciplina)
+      });
+      return response.json();
+    }));
+
+    console.log(responses);
+
+    console.log("Added:", responses);  
+    // データ取得してフォームをリセット
+    await getTurmaDisciplinas();
+    document.getElementById('addTurmaDisciplinaForm').reset();
+  } catch (error) {
+    console.error('Erro:', error);
+  }
+});
+
+
+
+// TurmaDisciplinaを削除
+async function deleteTurmaDisciplina(id_turma, id_disciplina) {
+  try {
+    const response = await fetch(`${apiUrl}/${id_turma}/${id_disciplina}`, {
+      method: 'DELETE'
+    });
+    const data = await response.json();
+    
+    console.log("Deleted:", data); 
+    
+    // TurmaDisciplinasデータの更新
+    await getTurmaDisciplinas();
+  } catch (error) {
+    console.error('Erro:', error);
+  }
 }
 
 getTurmaDisciplinas()
@@ -125,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
     disciplinas.forEach(disciplina => {
       const option = document.createElement('option')
       option.value = disciplina.id_disciplina
-      option.textContent = disciplina.disciplina
+      option.textContent = disciplina.nome_disciplina
       disciplinaSelect.appendChild(option)
     })
   })

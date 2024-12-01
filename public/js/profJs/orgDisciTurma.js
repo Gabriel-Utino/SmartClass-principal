@@ -1,3 +1,5 @@
+// public/js/profjs/orgDisciTurma.js
+
 document.addEventListener('DOMContentLoaded', () => {
   const turmaSelect = document.getElementById('turmaSelect')
   const disciplinaSelect = document.getElementById('disciplinaSelect')
@@ -5,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const semestreInput = document.getElementById('semestre')
   const assignDisciplinasButton = document.getElementById('assignDisciplinas')
 
-  const apiUrlTurma = 'http://localhost:3000/turmas'
-  const apiUrlAssign = 'http://localhost:3000/assign-disciplinas'
+  const apiUrlTurma = '/turmas'
+  const apiUrlAssign = '/turmas/assign-disciplinas'
 
   // サーバーからTurmaのデータを取得する
   fetch(apiUrlTurma)
@@ -37,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
           data.forEach(disciplina => {
             const option = document.createElement('option')
             option.value = disciplina.id_disciplina
-            option.textContent = disciplina.disciplina
+            option.textContent = disciplina.nome_disciplina
             disciplinaSelect.appendChild(option)
           })
           disciplinaSelect.disabled = false
@@ -65,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({
           id_turma: selectedTurmaId,
           id_disciplinas: selectedDisciplinas,
-          academic_year: academicYear,
+          ano_academico: academicYear,
           semestre: semestre
         })
       })
@@ -81,3 +83,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 })
+

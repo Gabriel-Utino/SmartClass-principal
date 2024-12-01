@@ -1,7 +1,7 @@
 // public/js/aluno/veriFaltas.js
-const apiUrlNotasFaltas = 'http://localhost:5000/notas_faltas'
-const apiUrlDisciplina = 'http://localhost:5000/disciplinas'
-const apiUrlAluno = 'http://localhost:5000/alunos'
+const apiUrlNotasFaltas = '/notas_faltas'
+const apiUrlDisciplina = '/disciplinas'
+const apiUrlAluno = '/alunos'
 
 // userの情報をHTMLから取得
 function getUserFromPage() {
@@ -30,30 +30,44 @@ function populateAnoSelect(data_matricula) {
 }
 
 function displayNota(nota) {
-  const notaList = document.getElementById('notaList')
-  notaList.innerHTML = ''
+  const notaList = document.getElementById('notaList');
+  notaList.innerHTML = '';
+
   nota.forEach(nota => {
     // Escolaの情報を取得
     fetch(`${apiUrlDisciplina}/${nota.id_disciplina}`)
       .then(response => response.json())
       .then(disciplina => {
-        const notaElement = document.createElement('tr')
+        const notaElement = document.createElement('tr');
+
+        // クリック可能な "faltas" セルを作成
+        const faltasCell = document.createElement('td');
+        faltasCell.textContent = nota.faltas !== null ? nota.faltas : 0;
+        faltasCell.classList.add('clickable'); // スタイルを付けたい場合
+        faltasCell.style.cursor = 'pointer';
+        faltasCell.addEventListener('click', () => {
+          // ページ遷移
+          window.location.href = `/faltasDetalhes?id_aluno=${nota.id_aluno}&id_disciplina=${nota.id_disciplina}&idNotasFaltas=${nota.id_notas_faltas}`;
+        });
+
         notaElement.innerHTML = `
+          <td>${disciplina.nome_disciplina}</td>
+          <td>${nota.ano_academico}</td>
+          <td>${nota.semestre}</td>
+        `;
+        
+        // faltasセルを追加
+        notaElement.appendChild(faltasCell);
 
-              <td>${disciplina.nome_disciplina}</td>
-              <td>${nota.faltas !== null ? nota.faltas : 0}</td>
-              <td>${nota.ano_academico}</td>
-
-              <td>${nota.semestre}</td>
-          `
-        notaList.appendChild(notaElement)
+        // テーブルに行を追加
+        notaList.appendChild(notaElement);
       })
-      .catch(error => console.error('Erro:', error))
-  })
+      .catch(error => console.error('Erro:', error));
+  });
 }
 
-function getNotasByAluno() {
 
+function getNotasByAluno() {
   // HTMLからuser情報を取得
   const user = getUserFromPage();
   // ログインした生徒のIDを取得する処理が必要 loginUserID
@@ -63,7 +77,6 @@ function getNotasByAluno() {
     console.error('User ID is missing.');
     return;
   }
-
 
   fetch(`${apiUrlAluno}/${id_aluno}`)
     .then(response => response.json())

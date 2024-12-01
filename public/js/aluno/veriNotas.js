@@ -1,6 +1,7 @@
-const apiUrlNotasFaltas = 'http://localhost:5000/notas_faltas'
-const apiUrlDisciplina = 'http://localhost:5000/disciplinas'
-const apiUrlAluno = 'http://localhost:5000/alunos'
+
+const apiUrlNotasFaltas = '/notas_faltas'
+const apiUrlDisciplina = '/disciplinas'
+const apiUrlAluno = '/alunos'
 
 // userの情報をHTMLから取得
 function getUserFromPage() {

@@ -1,6 +1,6 @@
-const apiUrl = 'http://localhost:3000/turma_disciplinas'
-const apiUrlTurma = 'http://localhost:3000/turmas'
-const apiUrlDisciplina = 'http://localhost:3000/disciplinas'
+const apiUrl = '/turma_disciplinas'
+const apiUrlTurma = '/turmas'
+const apiUrlDisciplina = '/disciplinas'
 
 function displayTurmaDisciplina(turmaDisciplina) {
   const turmaDisciplinaList = document.getElementById('turmaDisciplinaList')
