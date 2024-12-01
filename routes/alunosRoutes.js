@@ -12,5 +12,7 @@ router.get('/:id_aluno', alunoController.getAlunoById);
 // 特定の生徒の成績情報を取得する
 router.get('/:id_aluno/notas_faltas', alunoController.getNotasFaltasByAluno);
 
+router.get('/search', alunoController.searchAlunosByCPFOrEmail);
+
 
 module.exports = router;

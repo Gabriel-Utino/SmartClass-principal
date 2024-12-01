@@ -14,6 +14,7 @@ function displayTurma(turma) {
           <td>
             <button onclick="updateTurma(${turma.id_turma})">Editar</button>
             <button onclick="deleteTurma(${turma.id_turma})">Excluir</button>
+            <button onclick="publicAlunosTurma(${turma.id_turma})">Alunos</button>
           </td>
       `
     turmaList.appendChild(turmaElement)
@@ -122,34 +123,6 @@ function cancelEdit() {
   document.getElementById('updateTurmaForm').reset()
 }
 
-// サーバーからEscolaの情報を取得してセレクトボックスに追加する関数
-/* function populateProf() {
-  fetch(apiUrlProfessor)
-    .then(response => response.json())
-    .then(data => {
-      const selectElement = document.getElementById('turmaAno')
-      data.forEach(prof => {
-        const option = document.createElement('option')
-        option.value = prof.id_prof
-        option.textContent = prof.nome_prof
-        selectElement.appendChild(option)
-      })
-    })
-    .catch(error => console.error('Error fetching schools:', error))
-
-  fetch(apiUrlProfessor)
-    .then(response => response.json())
-    .then(data => {
-      const selectElement = document.getElementById('editTurmaAno')
-      data.forEach(prof => {
-        const option = document.createElement('option')
-        option.value = prof.id_prof
-        option.textContent = prof.nome_prof
-        selectElement.appendChild(option)
-      })
-    })
-    .catch(error => console.error('Error fetching schools:', error))
-} */
-
-// ページが読み込まれたらEscolaの情報を取得してセレクトボックスを更新する
-/* document.addEventListener('DOMContentLoaded', populateProf) */
+function publicAlunosTurma() {
+  
+}
