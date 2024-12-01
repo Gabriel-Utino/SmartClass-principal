@@ -12,8 +12,6 @@ const authRoutes = require('./routes/authRoutes')
 const alunosRoutes = require('./routes/alunosRoutes');
 const turmaRoutes = require('./routes/turmaRoutes');
 const aplicarNotasRoutes = require('./routes/aplicarNotasRoutes');
-// calendario
-const calendarioRoutes = require('./routes/calendarioRoutes');
 
 dotenv.config()
 
