@@ -29,10 +29,23 @@ function openModal(date) {
   backDrop.style.display = 'block';
 }
 
-function load() {
+async function load() {
   const date = new Date();
 
-  // mudar título do mês:
+  // APIからイベントデータを取得
+  try {
+    const response = await fetch('/calendario/listar');
+    const data = await response.json();
+    events = data.map(event => ({
+      date: new Date(event.data_evento).toLocaleDateString('pt-BR'), // "DD/MM/YYYY"形式
+      title: event.nome_evento,
+    }));
+  } catch (error) {
+    console.error('Erro ao carregar eventos:', error);
+  }
+  console.log(events) //確認済　しっかりとEventoを表示できている
+
+  // 月とナビゲーションの処理
   if (nav !== 0) {
     date.setMonth(new Date().getMonth() + nav);
   }
@@ -53,28 +66,27 @@ function load() {
 
   const paddinDays = weekdays.indexOf(dateString.split(', ')[0]);
 
-  // mostrar mês e ano:
+  // 月と年を表示
   document.getElementById('monthDisplay').innerText = `${date.toLocaleDateString('pt-br', { month: 'long' })}, ${year}`;
 
   calendar.innerHTML = '';
 
-  // criando uma div com os dias:
+  // 各日をカレンダーに描画
   for (let i = 1; i <= paddinDays + daysMonth; i++) {
     const dayS = document.createElement('div');
     dayS.classList.add('day');
 
-    const dayString = `${month + 1}/${i - paddinDays}/${year}`;
+    const dayString = `${i - paddinDays}/${month + 1}/${year}`;
 
-    // condicional para criar os dias de um mês:
     if (i > paddinDays) {
       dayS.innerText = i - paddinDays;
 
-      const eventDay = events.find((event) => event.date === dayString);
-
+      // イベントデータがある場合は表示
+      const eventDay = events.find(event => event.date === dayString);
       if (i - paddinDays === day && nav === 0) {
         dayS.id = 'currentDay';
       }
-
+      console.log(eventDay)
       if (eventDay) {
         const eventDiv = document.createElement('div');
         eventDiv.classList.add('event');
@@ -90,6 +102,7 @@ function load() {
     calendar.appendChild(dayS);
   }
 }
+
 
 function closeModal() {
   eventTitleInput.classList.remove('error');
