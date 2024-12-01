@@ -4,7 +4,7 @@ const connection = require('../config/database');
 // Função para listar todas as publicações
 exports.getAllPublicacoes = async (req, res) => {
   try {
-    const [results] = await connection.query('SELECT * FROM publicacao;');
+    const [results] = await connection.query('SELECT * FROM publicacao ORDER BY data_pub ASC;');
     res.json(results);
   } catch (err) {
     console.error('Ocorreu um erro ao buscar publicações:', err);

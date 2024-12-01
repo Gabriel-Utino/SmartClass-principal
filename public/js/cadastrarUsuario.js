@@ -1,5 +1,18 @@
 const apiUrl = '/usuarios'
 
+function getUserFromPage() {
+  const user = document.getElementById('user-info');
+  const id_perfil = user.getAttribute('data-id-perfil');
+  const id_responsavel = user.getAttribute('data-id');
+  const nome_usuario = user.getAttribute('data-nome-usuario');
+
+  return {
+    id_responsavel: parseInt(id_responsavel, 10),
+    id_perfil: parseInt(id_perfil, 10),
+    nome_usuario: nome_usuario
+  };
+}
+
 document.getElementById('cadastroUsuarioForm').addEventListener('submit', function (event) {
     event.preventDefault();
   

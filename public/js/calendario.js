@@ -13,8 +13,20 @@ const weekdays = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'q
 
 let isEditing = false; // flag to indicate if we are editing an event
 
-// funções
+function getUserFromPage() {
+  const user = document.getElementById('user-info');
+  const id_perfil = user.getAttribute('data-id-perfil');
+  const id_responsavel = user.getAttribute('data-id');
+  const nome_usuario = user.getAttribute('data-nome-usuario');
 
+  return {
+    id_responsavel: parseInt(id_responsavel, 10),
+    id_perfil: parseInt(id_perfil, 10),
+    nome_usuario: nome_usuario
+  };
+}
+
+// funções
 function openModal(date) {
   clicked = date;
   const eventDay = events.find((event) => event.date === clicked);
@@ -208,33 +220,46 @@ function editEvent() {
 
 // botões
 function buttons() {
+  const user = getUserFromPage() 
+  const deleteButton = document.getElementById('deleteButton');
+  const saveButton = document.getElementById('saveButton');
+
+  // Deletar ボタンの制御（既に実装済み）
+  if ([1, 2, 5].includes(user.id_perfil)) {
+    deleteButton.style.display = 'block';
+    deleteButton.addEventListener('click', () => {
+      const eventId = deleteButton.dataset.eventId;
+      if (eventId) {
+        deleteEvent(eventId); // 正しいイベントIDを渡す
+      } else {
+        console.error('ID do evento a ser excluído não encontrado');
+      }
+    });
+  } else {
+    deleteButton.style.display = 'none';
+  }
+
+  // Salvar ボタンの制御
+  if ([1, 2, 5].includes(user.id_perfil)) {
+    saveButton.style.display = 'block';
+    saveButton.addEventListener('click', () => saveEvent());
+  } else {
+    saveButton.style.display = 'none'; // 権限がない場合は非表示
+  }
+
   document.getElementById('backButton').addEventListener('click', () => {
     nav--;
     load();
   });
-
   document.getElementById('nextButton').addEventListener('click', () => {
     nav++;
     load();
   });
 
-  document.getElementById('saveButton').addEventListener('click', () => saveEvent());
-
   document.getElementById('cancelButton').addEventListener('click', () => closeModal());
-
-  document.getElementById('deleteButton').addEventListener('click', () => {
-    const eventId = document.getElementById('deleteButton').dataset.eventId;
-    if (eventId) {
-      deleteEvent(eventId); // 正しいイベントIDを渡す
-    } else {
-      console.error('ID do evento a ser excluído não encontrado');
-    }
-  });
-
   document.getElementById('closeButton').addEventListener('click', () => closeModal());
-
-  /* document.getElementById('editButton').addEventListener('click', () => editEvent());  */// Botão de Editar
 }
+/* document.getElementById('editButton').addEventListener('click', () => editEvent());  */// Botão de Editar
 
 
 
