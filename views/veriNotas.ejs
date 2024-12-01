@@ -16,6 +16,24 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
     rel="stylesheet">
 
+  <style>
+    .icon-container {
+      text-align: center;
+      margin: 20px;
+    }
+
+    .icon-container img {
+      width: 100px;
+      height: 100px;
+      margin: 10px;
+    }
+
+    .img-home1 {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+  </style>
 
 
 
@@ -72,10 +90,8 @@
               <ul class="dropdown-menu dropdown-menu-dark">
                 <li><a class="dropdown-item" href="/turma">Turma</a></li>
                 <li><a class="dropdown-item" href="/disciplina">Disciplinas</a></li>
-                <li><a class="dropdown-item" href="/aluno">Alunos</a></li>
-                <li><a class="dropdown-item" href="/responsavel">Responsaveis</a></li>
+                <li><a class="dropdown-item" href="/cadastrarUsuario">Usuarios</a></li>
                 <li><a class="dropdown-item" href="/organizacao">Organizacao</a></li>
-                <li><a class="dropdown-item" href="/professor">Professores</a></li>
               </ul>
             </li>
             <% } %>
@@ -108,8 +124,12 @@
       <a href="/home" class="mx-auto d-block">
         <img src="/icons/smartclass.png" alt="smartclassIcon" class="img-home">
       </a>
+      <a href="/mural" class="float-right d-block">
+        <img src="/icons/notificacao.png" alt="smartclassIcon" class="img-home1">
+      </a>
     </div>
   </nav>
+
 
 
 

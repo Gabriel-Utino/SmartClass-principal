@@ -5,7 +5,7 @@ const apiUrlDisciplina = '/disciplinas'
 function displayTurmaDisciplina(turmaDisciplina) {
   const turmaDisciplinaList = document.getElementById('turmaDisciplinaList')
   turmaDisciplinaList.innerHTML = ''
-
+/* 
   // 'turmaName'でソート
   turmaDisciplina.sort((a, b) => {
     // Promiseを使って名前を取得するため、名前が分かる前に並べ替えができない
@@ -17,7 +17,7 @@ function displayTurmaDisciplina(turmaDisciplina) {
         })
         .catch(error => reject(error))
     })
-  })
+  }) */
 
   turmaDisciplina.forEach(turmaDisciplina => {
     // TurmaとDisciplinaの名前を取得

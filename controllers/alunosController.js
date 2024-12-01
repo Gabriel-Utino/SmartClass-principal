@@ -63,3 +63,20 @@ exports.getNotasFaltasByAluno = async (req, res) => {
     res.status(500).json({ message: 'Server error' })
   }
 }
+
+// CPFまたはEmailで生徒を検索
+exports.searchAlunosByCPFOrEmail = async (req, res) => {
+  const { query } = req.query;
+  try {
+    const [alunos] = await db.query(`
+      SELECT usuario.*, aluno.* 
+      FROM aluno 
+      JOIN usuario ON usuario.id_usuario = aluno.id_usuario
+      WHERE usuario.cpf_usuario LIKE ? OR usuario.email_usuario LIKE ? OR usuario.telefone_usuario = ?;
+    `, [`%${query}%`, `%${query}%`, `%${query}%`]);
+    res.json(alunos);
+  } catch (error) {
+    console.error('Error searching alunos:', error);
+    res.status(500).json({ message: 'Error searching alunos' });
+  }
+};
