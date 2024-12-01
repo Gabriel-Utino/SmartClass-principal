@@ -1,3 +1,5 @@
+// public/js/profjs/orgDisciTurma.js
+
 document.addEventListener('DOMContentLoaded', () => {
   const turmaSelect = document.getElementById('turmaSelect')
   const disciplinaSelect = document.getElementById('disciplinaSelect')
@@ -56,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const academicYear = academicYearInput.value
     const semestre = semestreInput.value
 
-    console.log("test :" + selectedDisciplinas)
     if (selectedTurmaId && selectedDisciplinas.length > 0 && academicYear && semestre) {
       fetch(apiUrlAssign, {
         method: 'POST',
@@ -82,3 +83,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 })
+

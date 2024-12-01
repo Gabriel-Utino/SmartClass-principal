@@ -191,10 +191,22 @@ app.get('/professor', (req, res) => {
   }
   res.render('professor', { user: req.session.user }) // ダッシュボードを表示
 })
+app.get('/faltasDetalhes', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('faltasDetalhes', { user: req.session.user }) // ダッシュボードを表示
+})
 
 
-
-
+// デフォルトのルート（indexページ）を設定
+app.get('/', (req, res) => {
+  if (req.session.user) {
+    res.redirect('/home'); // ユーザーがログイン済みならダッシュボードへ
+  } else {
+    res.redirect('/login'); // ログインしていない場合はログインページへ
+  }
+});
 
 // 404エラーハンドリング
 app.use((req, res, next) => {

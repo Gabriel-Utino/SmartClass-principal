@@ -49,9 +49,9 @@ document.getElementById('cadastroUsuarioForm').addEventListener('submit', functi
             <td>${usuario.nome_usuario}</td>
             <td>${usuario.cpf_usuario}</td>
             <td>${usuario.email_usuario}</td>
-            <td>${usuario.telefone_usuario}</td>
+            <td><a href="https://wa.me/${usuario.telefone_usuario}" target="_blank">${usuario.telefone_usuario}</a></td>
             <td>${usuario.endereco_usuario}</td>
-              <td>${usuario.id_perfil}</td>
+            <td>${usuario.id_perfil}</td>
             <td>
               <button class="btn btn-warning btn-sm" onclick="editarUsuario(${usuario.id_usuario})">Editar</button>
               <button class="btn btn-danger btn-sm" onclick="deletarUsuario(${usuario.id_usuario})">Deletar</button>

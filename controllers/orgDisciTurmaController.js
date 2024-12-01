@@ -27,70 +27,45 @@ exports.getTurmaDisciplinas = async (req, res) => {
     res.status(500).json({ message: 'Error retrieving disciplinas' });
   }
 };
-/* 
-// Notas_faltasエントリを作成
-exports.assignDisciplinas = (req, res) => {
-  const { id_turma, id_disciplinas, ano_academico, semestre } = req.body;
-  db.query('SELECT id_aluno FROM Aluno WHERE id_turma = ?', [id_turma], (err, alunos) => {
-    if (err) {
-      console.error('Error fetching Alunos:', err);
-      res.status(500).json({ message: 'Failed to retrieve Alunos' });
-      return;
-    }
 
-
-    id_disciplinas.forEach(id_disciplina => {
-      alunos.forEach(aluno => {
-        db.query(
-          'INSERT INTO Notas_faltas (id_disciplina, id_aluno, ano_academico, semestre) VALUES (?, ?, ?, ?)',
-          [id_disciplina, aluno.id_aluno, ano_academico, semestre],
-          err => {
-            if (err) {
-              console.error('Error creating Notas_faltas entry:', err);
-            }
-          }
-        );
-      });
-    });
-
-    res.json({ message: 'Disciplinas assigned successfully' });
-  });
+// Turmaに所属するすべてのAlunoを取得
+exports.getAlunosByTurma = async (turmaId) => {
+  try {
+    const [alunos] = await db.query(`
+      SELECT a.id_aluno
+      FROM aluno a
+      JOIN turma ta ON ta.id_turma = a.id_turma
+      WHERE ta.id_turma = ?
+    `, [turmaId]);
+    return alunos;
+  } catch (error) {
+    console.error('Error retrieving alunos for turma:', error);
+    throw error;
+  }
 };
 
- */
+// DisciplinaをTurmaに割り当てる処理
 exports.assignDisciplinas = async (req, res) => {
   const { id_turma, id_disciplinas, ano_academico, semestre } = req.body;
 
   try {
-    // AlunoのIDを取得する
-    const alunos = await db.query('SELECT id_aluno FROM aluno WHERE id_turma = ?', [id_turma]);
-    
-    // Alunosが見つからない場合はエラーメッセージを返す
-    if (!alunos.length) {
-      return res.status(404).json({ message: 'No students found for the given turma.' });
-    }
+    // Turmaに所属するAlunosを取得
+    const alunos = await exports.getAlunosByTurma(id_turma);
 
-    // 各disciplineについて、学生ごとにNotas_faltasエントリを作成
-    for (const id_disciplina of id_disciplinas) {
-      for (const aluno of alunos) {
-        try {/* 
-          await db.query(
-            'INSERT INTO Notas_faltas (id_disciplina, id_aluno, ano_academico, semestre) VALUES (?, ?, ?, ?)',
-            [id_disciplina, aluno, ano_academico, semestre]
-          ); */
-          console.log(aluno)
-          console.log("alunos :" + aluno)
-        } catch (err) {
-          console.error('Error creating Notas_faltas entry:', err);
-        }
+    // それぞれのAlunoに対してNotas_Faltasを登録
+    for (const aluno of alunos) {
+      for (const disciplinaId of id_disciplinas) {
+        // notas_faltasテーブルにレコードを挿入
+        await db.query(`
+          INSERT INTO notas_faltas (id_aluno, id_disciplina, ano_academico, semestre)
+          VALUES (?, ?, ?, ?)
+        `, [aluno.id_aluno, disciplinaId, ano_academico, semestre]);
       }
     }
 
-    // 成功した場合のレスポンス
-    res.json({ message: 'Disciplinas assigned successfully' });
-
-  } catch (err) {
-    console.error('Error fetching Alunos or inserting Notas_faltas:', err);
-    res.status(500).json({ message: 'Failed to assign disciplinas' });
+    res.json({ message: 'Disciplinas assigned to all alunos successfully.' });
+  } catch (error) {
+    console.error('Error assigning disciplinas:', error);
+    res.status(500).json({ message: 'Error assigning disciplinas' });
   }
 };

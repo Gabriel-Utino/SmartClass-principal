@@ -1,5 +1,4 @@
 // public/js/profjs/apricarFlatas.js
-const apiUrl = 'http://localhost:5000'
 // 初期化
 document.addEventListener('DOMContentLoaded', () => {
   fetchTurmas()
@@ -82,7 +81,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
     .then(data => {
       const resultContainer = document.getElementById('resultContainer');
       resultContainer.innerHTML = '';
-      
+
       if (data.length > 0) {
         const table = document.createElement('table');
         table.className = 'table';
@@ -94,7 +93,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
           th.textContent = text;
           headerRow.appendChild(th);
         });
-        
+
         thead.appendChild(headerRow);
         table.appendChild(thead);
 
@@ -102,6 +101,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
         data.forEach(item => {
           const row = document.createElement('tr');
 
+          // Seleção com checkbox
           const selectCell = document.createElement('td');
           const checkbox = document.createElement('input');
           checkbox.type = 'checkbox';
@@ -109,6 +109,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
           selectCell.appendChild(checkbox);
           row.appendChild(selectCell);
 
+          // Foto do Aluno
           const photoCell = document.createElement('td');
           const photoImg = document.createElement('img');
           photoImg.src = item.foto ? `../../upload/${item.foto}` : './icons/semfoto.png';
@@ -117,17 +118,25 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
           photoCell.appendChild(photoImg);
           row.appendChild(photoCell);
 
+          // Nome do Aluno
           const nameCell = document.createElement('td');
           nameCell.textContent = item.nome_aluno;
           row.appendChild(nameCell);
 
+          // Faltas com link para detalhes
           const faltasCell = document.createElement('td');
-          faltasCell.textContent = item.faltas;
+          faltasCell.textContent = item.faltas !== null ? item.faltas : 0;
+          faltasCell.classList.add('clickable');
+          faltasCell.style.cursor = 'pointer';
+          faltasCell.addEventListener('click', () => {
+            // Redirecionar para a página de detalhes
+            window.location.href = `/faltasDetalhes?id_aluno=${item.id_aluno}&id_disciplina=${item.id_disciplina}&idNotasFaltas=${disciplinaId}`;
+          });
           row.appendChild(faltasCell);
 
           tbody.appendChild(row);
         });
-        
+
         table.appendChild(tbody);
         resultContainer.appendChild(table);
         document.getElementById('applyFaltasButton').style.display = 'block';
@@ -178,19 +187,21 @@ async function applyFaltas() {
     const response = await fetch(`/notas_faltasApri/faltas`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ids: selectedIds }),
+      body: JSON.stringify({ ids: selectedIds }), // サーバーに選択された ID を送信
     });
 
     if (response.ok) {
-      console.log('Faltas applied successfully');
+      console.log('Faltas added successfully');
       await fetchFaltasData(); // 最新のデータを取得して画面を更新
     } else {
-      console.error('Failed to apply faltas');
+      console.error('Failed to add faltas');
     }
   } catch (error) {
-    console.error('Error applying faltas:', error);
+    console.error('Error adding faltas:', error);
   }
 }
+
+
 
 // 画面にデータを再表示するための関数
 async function fetchFaltasData() {

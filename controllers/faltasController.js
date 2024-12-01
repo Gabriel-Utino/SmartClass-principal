@@ -1,5 +1,5 @@
 // controllers/faltasController.js
-const db = require('../db'); // 必要に応じてデータベース接続をインポート
+/* const db = require('../db'); // 必要に応じてデータベース接続をインポート
 
 exports.applyFaltas = (req, res) => {
   const { ids } = req.body;
@@ -17,3 +17,4 @@ exports.applyFaltas = (req, res) => {
     }
   );
 };
+ */

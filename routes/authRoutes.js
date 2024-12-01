@@ -10,10 +10,6 @@ router.post('/login', authController.login);
 router.get('/logout', authController.logout);
 
 
-// **ユーザー登録ルートを秘書と管理者に限定**
-router.get('/register',  (req, res) => res.render('register', { message: req.flash('error') }));
-router.post('/register', authController.register);
-
 // todos
 router.get('/calendario', (req, res) => {
     res.render('calendario', { user: req.session.user }) // views/apricarFaltas.ejs
@@ -100,6 +96,9 @@ router.get('/mural', ensureAuthenticated, (req, res) => {
   res.render('mural', { user: req.session.user }) // views/mural.ejs
 })
 
+router.get('/faltasDetalhes', ensureAuthenticated, (req, res) => {
+  res.render('faltasDetalhes', { user: req.session.user }) // views/mural.ejs
+})
 
 
 
