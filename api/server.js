@@ -189,6 +189,12 @@ app.get('/organizacao', (req, res) => {
   }
   res.render('organizacao', { user: req.session.user }) // ダッシュボードを表示
 })
+app.get('/alunosTurma', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('alunosTurma', { user: req.session.user }) // ダッシュボードを表示
+})
 app.get('/professor', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/login') // ユーザーがログインしていない場合

@@ -64,19 +64,35 @@ exports.getNotasFaltasByAluno = async (req, res) => {
   }
 }
 
-// CPFまたはEmailで生徒を検索
-exports.searchAlunosByCPFOrEmail = async (req, res) => {
-  const { query } = req.query;
+// CPFまたはEmail,RAで生徒を検索
+exports.searchAlunosByCPFOrEmailOrRa = async (req, res) => {
+  const { query } = req.params;
   try {
-    const [alunos] = await db.query(`
-      SELECT usuario.*, aluno.* 
+    const [alunos] = await pool.query(`
+      SELECT usuario.*, aluno.*, turma.nome_turma
       FROM aluno 
       JOIN usuario ON usuario.id_usuario = aluno.id_usuario
-      WHERE usuario.cpf_usuario LIKE ? OR usuario.email_usuario LIKE ? OR usuario.telefone_usuario = ?;
+      LEFT JOIN turma ON turma.id_turma = aluno.id_turma
+      WHERE usuario.cpf_usuario LIKE ? 
+      OR usuario.email_usuario LIKE ? 
+      OR aluno.ra_aluno LIKE ?;
     `, [`%${query}%`, `%${query}%`, `%${query}%`]);
     res.json(alunos);
   } catch (error) {
     console.error('Error searching alunos:', error);
     res.status(500).json({ message: 'Error searching alunos' });
+  }
+};
+
+exports.updateAlunoTurma = async (req, res) => {
+  const { turmaId } = req.body;
+  const { id_aluno } = req.params;
+
+  try {
+    await pool.query('UPDATE aluno SET id_turma = ? WHERE id_aluno = ?', [turmaId, id_aluno]);
+    res.json({ message: 'Turma alterada com sucesso' });
+  } catch (error) {
+    console.error('Erro ao alterar turma:', error);
+    res.status(500).json({ message: 'Erro ao alterar turma' });
   }
 };

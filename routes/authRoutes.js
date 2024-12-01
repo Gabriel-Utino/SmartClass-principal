@@ -58,6 +58,9 @@ router.get('/disciplina', ensureAuthenticated, authorizeRoles(5, 1), (req, res) 
 router.get('/organizacao', ensureAuthenticated, authorizeRoles(5, 1), (req, res) => {
   res.render('organizacao', { user: req.session.user }) // views/organizacao.ejs
 })
+router.get('/alunosTurma', ensureAuthenticated, authorizeRoles(5, 1), (req, res) => {
+  res.render('alunosTurma', { user: req.session.user }) // views/alunosTurma.ejs
+})
 
 // Professores
 router.get('/apricarFaltas', ensureAuthenticated, authorizeRoles(2), (req, res) => {
