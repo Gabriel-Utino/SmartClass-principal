@@ -14,7 +14,6 @@ function displayTurma(turma) {
           <td>
             <button onclick="updateTurma(${turma.id_turma})">Editar</button>
             <button onclick="deleteTurma(${turma.id_turma})">Excluir</button>
-            <button onclick="publicAlunosTurma(${turma.id_turma})">Alunos</button>
           </td>
       `
     turmaList.appendChild(turmaElement)
