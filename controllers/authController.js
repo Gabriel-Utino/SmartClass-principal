@@ -5,6 +5,7 @@ const pool = require('../db');
 const crypto = require('crypto');
 const sgMail = require('@sendgrid/mail');
 const User = require('../models/User'); // ユーザーモデルを読み込み
+const baseURL = process.env.BASE_URL || 'http://localhost:5000'; 
 
 // SendGridのAPIキー設定
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -45,8 +46,6 @@ exports.login = async (req, res) => {
       id_professor: user.id_professor,
       foto: user.foto
     };
-
-    console.log('Usuário logado/ユーザーがログインしました:', req.session.user); // デバッグ用ログ
 
     res.redirect('/home');
   } catch (err) {
@@ -122,7 +121,7 @@ exports.postForgotPassword = (req, res, next) => {
       await User.saveResetToken(user.id_usuario, token, expiration);
 
       // リセットリンクをメールで送信
-      const resetURL = `http://www.smartclass-uscs.com/reset-password/${token}`;
+      const resetURL = `${baseURL}/reset-password/${token}`;
       const msg = {
         to: email_usuario,
         from: process.env.SENDGRID_SENDER, // SendGridで認証済みの送信元メールアドレス
