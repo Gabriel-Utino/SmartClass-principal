@@ -11,7 +11,7 @@ exports.getNotas = async (req, res) => {
     }
     res.json(rows)
   } catch (error) {
-    res.status(500).json({ error: 'データの取得中にエラーが発生しました。' })
+    res.status(500).json({ error: 'Ocorreu um erro ao recuperar dados.' })
   }
 }
 
@@ -30,7 +30,7 @@ exports.getNotasByid_notas_faltas = async (req, res) => {
     }
     res.json(rows)
   } catch (error) {
-    res.status(500).json({ error: 'データの取得中にエラーが発生しました。' })
+    res.status(500).json({ error: 'Ocorreu um erro ao recuperar dados.' })
   }
 }
 // 特定の生徒の全ての成績を取得
@@ -51,7 +51,7 @@ exports.getFaltasDetalhesById_alunoId_disciplina = async (req, res) => {
     }
     res.json(rows)
   } catch (error) {
-    res.status(500).json({ error: 'データの取得中にエラーが発生しました。' })
+    res.status(500).json({ error: 'Ocorreu um erro ao recuperar dados.' })
   }
 }
 
@@ -65,7 +65,7 @@ exports.getNotasByAnoESemestre = async (req, res) => {
     )
     res.json(rows)
   } catch (error) {
-    res.status(500).json({ error: 'データの取得中にエラーが発生しました。' })
+    res.status(500).json({ error: 'Ocorreu um erro ao recuperar dados.' })
   }
 }
 
@@ -99,9 +99,9 @@ exports.addNota = async (req, res) => {
       'INSERT INTO notas_faltas (id_aluno, nota, faltas, ano_academico, semestre) VALUES (?, ?, ?, ?, ?)',
       [id_aluno, nota, faltas, ano_academico, semestre]
     )
-    res.status(201).json({ message: '成績が追加されました。', id_notas_faltas: result.insertId })
+    res.status(201).json({ message: 'Notas adicionadas.', id_notas_faltas: result.insertId })
   } catch (error) {
-    res.status(500).json({ error: 'データの追加中にエラーが発生しました。' })
+    res.status(500).json({ error: 'Ocorreu um erro ao adicionar dados.' })
   }
 }
 
@@ -111,12 +111,12 @@ exports.deleteNota = async (req, res) => {
   try {
     const [result] = await db.query('DELETE FROM notas_faltas WHERE id = ?', [id_notas_faltas])
     if (result.affectedRows === 0) {
-      res.status(404).json({ error: '成績が見つかりません。' })
+      res.status(404).json({ error: 'Nenhuma nota encontrada.' })
     } else {
-      res.json({ message: '成績が削除されました。' })
+      res.json({ message: 'As notas foram excluídas.' })
     }
   } catch (error) {
-    res.status(500).json({ error: 'データの削除中にエラーが発生しました。' })
+    res.status(500).json({ error: 'Ocorreu um erro ao excluir dados.' })
   }
 }
 
@@ -242,12 +242,12 @@ exports.deleteFaltasDetalhes = async (req, res) => {
     const [result] = await db.query('DELETE FROM faltas_detalhes WHERE id_faltas_detalhes = ?', [id_faltas_detalhes]);
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ error: 'データが見つかりませんでした。' });
+      return res.status(404).json({ error: 'Nenhum dado encontrado.' });
     }
 
-    res.json({ message: '削除が成功しました。' });
+    res.json({ message: 'A exclusão foi bem-sucedida.' });
   } catch (error) {
-    res.status(500).json({ error: '削除中にエラーが発生しました。' });
+    res.status(500).json({ error: 'Ocorreu um erro durante a exclusão.' });
   }
 };
 // Faltas Detalhes に欠席を記録

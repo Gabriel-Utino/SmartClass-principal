@@ -18,7 +18,7 @@ exports.getUserProfile = async (req, res) => {
         }
     } catch (err) {
         console.error(err);
-        res.status(500).send('Erro do servidor/サーバーエラー');
+        res.status(500).send('Erro do servidor');
     }
 };
 /* 

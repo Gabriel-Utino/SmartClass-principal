@@ -13,7 +13,7 @@ exports.fetchNotasFaltas = (req, res) => {
   db.query(query, [turmaId, disciplinaId, year, semestre], (err, results) => {
     if (err) {
       console.error('Error fetching notas_faltas: ' + err);
-      res.status(500).json({ message: '成績データの取得中にエラーが発生しました' });
+      res.status(500).json({ message: 'Ocorreu um erro ao recuperar os dados das notas' });
     } else {
       res.json(results);
     }

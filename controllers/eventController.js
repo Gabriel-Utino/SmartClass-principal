@@ -6,9 +6,9 @@ exports.createEvent = async (req, res) => {
 
     try {
         await pool.query('INSERT INTO events (title, date) VALUES (?, ?)', [title, date]);
-        res.send('イベントが作成されました');
+        res.send('evento criado');
     } catch (err) {
         console.error(err);
-        res.status(500).send('イベント作成中にエラーが発生しました');
+        res.status(500).send('Ocorreu um erro ao criar o evento');
     }
 };

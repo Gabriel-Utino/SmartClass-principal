@@ -221,7 +221,7 @@ app.get('/', (req, res) => {
 // 404エラーハンドリング
 app.use((req, res, next) => {
   res.status(404).render('404', { 
-    message: 'ページが見つかりません',
+    message: 'Página não encontrada',
     user: req.session.user || null 
   }); // セッション情報がない場合に備えnullを渡す
 });
@@ -230,7 +230,7 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).render('500', { 
-    message: 'サーバーエラーが発生しました', 
+    message: 'Ocorreu um erro no servidor', 
     user: req.session.user || null 
   });
 });

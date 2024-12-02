@@ -55,7 +55,7 @@ function fetchDisciplinasByTurma(turmaId) {
       })
       disciplinaSelect.disabled = false
     })
-    .catch(error => console.error('エラー‐Error Disciplinas:', error))
+    .catch(error => console.error('Error Disciplinas:', error))
 }
 
 // 検索ボタンのクリックイベント
@@ -143,7 +143,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
         table.appendChild(tbody)
         resultContainer.appendChild(table)
       } else {
-        resultContainer.textContent = '該当するデータが見つかりませんでした/Nenhum dado correspondente foi encontrado'
+        resultContainer.textContent = 'Nenhum dado correspondente foi encontrado'
       }
     })
     .catch(error => console.error('Error fetching notas_faltas:', error))

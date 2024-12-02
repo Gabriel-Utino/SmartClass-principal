@@ -36,8 +36,8 @@ exports.addTurma = async (req, res) => {
     const result = await db.query('INSERT INTO turma (nome_turma, ano_letivo) VALUES (?, ?)', [nome_turma, ano_letivo]);
     res.status(201).json({ id_turma: result.insertId, nome_turma, ano_letivo });
   } catch (err) {
-    console.error('Turma追加エラー: ' + err);
-    res.status(500).json({ message: 'データベースにTurmaを追加できませんでした' });
+    console.error('Erro de adição de Turma: ' + err);
+    res.status(500).json({ message: 'Falha ao adicionar Turma ao banco de dados' });
   }
 };
 
@@ -51,8 +51,8 @@ exports.updateTurma = async (req, res) => {
     [nome_turma, ano_letivo, id_turma]);
     res.json({ message: 'Turma updated successfully' });
   } catch (err) {
-        console.error('Turma更新エラー: ' + err);
-        res.status(500).json({ message: 'データベースでTurmaを更新できませんでした' });
+        console.error('Erro de atualização do Turma: ' + err);
+        res.status(500).json({ message: 'Falha ao atualizar Turma no banco de dados' });
   }
 };
 
@@ -62,10 +62,10 @@ exports.deleteTurma = async (req, res) => {
 
   try {
     await db.query('DELETE FROM turma WHERE id_turma = ?', [id_turma]);
-    res.json({ message: 'Turmaが削除されました' });
+    res.json({ message: 'Turma foi removida' });
   } catch (err) {
-    console.error('Turma削除エラー: ' + err);
-    res.status(500).json({ message: 'データベースからTurmaを削除できませんでした' });
+    console.error('Erro de exclusão de Turma: ' + err);
+    res.status(500).json({ message: 'Falha ao remover Turma do banco de dados' });
   }
 };
 
