@@ -10,6 +10,19 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="/css/styles.css">
+  <style>
+  .btn-custom {
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+    font-weight: bold;
+    transition: transform 0.3s, background-color 0.3s;
+  }
+  .btn-custom:hover {
+    background-color: #333;
+    transform: scale(1.05);
+  }
+  </style>
 </head>
 
 <body>
@@ -33,7 +46,9 @@
 
           <p id="forgot-password"><a href="/forgot-password">Esqueceu sua senha?</a></p> 
 
-          <button type="submit" class="btn btn-dark" id="login-button">Login</button>
+          <div class="d-flex justify-content-center mt-4">
+            <button type="submit" class="btn btn-dark" >Login</button>
+          </div>
           <img id="loading-spinner" src="https://media.giphy.com/media/17mNCcKU1mJlrbXodo/giphy.gif" alt="Carregando...">
           <div id="error-message-container">
         </form>

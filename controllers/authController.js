@@ -18,14 +18,14 @@ exports.login = async (req, res) => {
     const user = await User.findByEmail(email_usuario);
 
     if (!user) {
-      req.flash('error', 'E-mail ou senha estão incorretos -->Usuário');
+      req.flash('error', 'E-mail ou senha estão incorretos');
       return res.redirect('/login');
     }
 
     const match = await bcrypt.compare(senha, user.senha);
 
     if (!match) {
-      req.flash('error', 'E-mail ou senha estão incorretos -->senha');
+      req.flash('error', 'E-mail ou senha estão incorretos');
       return res.redirect('/login');
     }
 
@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
     res.redirect('/home');
   } catch (err) {
     console.error(err);
-    res.status(500).send('Erro do servidor/サーバーエラー');
+    res.status(500).send('Erro do servidor');
   }
 };
 
@@ -84,7 +84,7 @@ exports.register = async (req, res) => {
     res.redirect('/login');
   } catch (err) {
     console.error(err);
-    req.flash('error', 'Ocorreu um erro durante o registro/登録中にエラーが発生しました');
+    req.flash('error', 'Ocorreu um erro durante o registro');
     res.redirect('/register');
   }
 };
@@ -104,7 +104,7 @@ exports.postForgotPassword = (req, res, next) => {
   crypto.randomBytes(32, async (err, buffer) => {
     if (err) {
       console.log(err);
-      req.flash('error', 'Ocorreu um erro ao redefinir sua senha/パスワードリセット中にエラーが発生しました');
+      req.flash('error', 'Ocorreu um erro ao redefinir sua senha');
       return res.redirect('/forgot-password');
     }
     const token = buffer.toString('hex');
@@ -113,7 +113,7 @@ exports.postForgotPassword = (req, res, next) => {
       // ユーザーを検索してリセットトークンと有効期限を保存
       const user = await User.findByEmail(email_usuario);
       if (!user) {
-        req.flash('error', 'Nenhum usuário encontrado com esse endereço de e-mail/そのメールアドレスのユーザーは見つかりません');
+        req.flash('error', 'Nenhum usuário encontrado com esse endereço de e-mail');
         return res.redirect('/forgot-password');
       }
 
@@ -152,13 +152,13 @@ exports.getResetPassword = async (req, res, next) => {
   try {
     const user = await User.findByResetToken(token);
     if (!user) {
-      req.flash('error', 'リセットトークンが無効か、有効期限が切れています。');
+      req.flash('error', 'O token de redefinição é inválido ou expirou.');
       return res.redirect('/forgot-password');
     }
     res.render('reset-password', { userId: user.id_usuario, token: token, message: req.flash('error') });
   } catch (err) {
     console.log(err);
-    req.flash('error', 'パスワードリセットページの取得中にエラーが発生しました');
+    req.flash('error', 'Ocorreu um erro ao recuperar a página de redefinição de senha');
     res.redirect('/forgot-password');
   }
 };
@@ -170,18 +170,18 @@ exports.postResetPassword = async (req, res, next) => {
   try {
     const user = await User.findByResetToken(token);
     if (!user || user.id_usuario !== parseInt(userId, 10)) {
-      req.flash('error', 'リセットトークンが無効か、有効期限が切れています。');
+      req.flash('error', 'O token de redefinição é inválido ou expirou.');
       return res.redirect('/forgot-password');
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
     await User.updatePassword(userId, hashedPassword);
 
-    req.flash('info', 'パスワードがリセットされました。再度ログインしてください。');
+    req.flash('info', 'Sua senha foi redefinida. Faça login novamente.');
     res.redirect('/login');
   } catch (err) {
     console.log(err);
-    req.flash('error', 'パスワードリセット中にエラーが発生しました');
+    req.flash('error', 'Ocorreu um erro ao redefinir sua senha');
     res.redirect('/forgot-password');
   }
 };
