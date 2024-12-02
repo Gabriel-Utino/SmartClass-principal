@@ -28,6 +28,9 @@ router.get('/editarNotas', ensureAuthenticated, authorizeRoles(2), (req, res) =>
 router.get('/cadastrarUsuario', ensureAuthenticated, authorizeRoles(1, 5), (req, res) => {
   res.render('cadastrarUsuario', { user: req.session.user }); // views/editarNotas.ejsをレンダリング
 });
+router.get('/cadastrarUsuario2', ensureAuthenticated, authorizeRoles(1, 5), (req, res) => {
+  res.render('cadastrarUsuario2', { user: req.session.user }); // views/editarNotas.ejsをレンダリング
+});
 
 
 

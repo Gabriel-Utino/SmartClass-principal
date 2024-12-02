@@ -119,7 +119,7 @@ function fetchFaltasDetalhes(turmaId, disciplinaId, year, semestre) {
 
           const photoCell = document.createElement('td');
           const photoImg = document.createElement('img');
-          photoImg.src = item.foto ? `../../upload/${item.foto}` : './icons/semfoto.png';
+          photoImg.src = item.foto ? `../../upload/${item.foto}` : './icons/nandemoya.png';
           photoImg.alt = 'Sem Foto';
           photoImg.classList.add('img-alunoMini');
           photoCell.appendChild(photoImg);

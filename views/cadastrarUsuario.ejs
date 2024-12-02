@@ -56,65 +56,67 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/home">Home</a>
             </li>
-            <% if (user.id_perfil === 2 || user.id_perfil === 3 || user.id_perfil === 4) { %> 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Notas e Faltas
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <% if (user.id_perfil === 2) { %><!-- quando e Professor --> 
-                  <li><a class="dropdown-item" href="/apricarNotas">Apricar Notas</a></li>
-                  <li><a class="dropdown-item" href="/apricarFaltas">Apricar Faltas</a></li>
-                <% } %>
-                <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
-                <li><a class="dropdown-item" href="/veriNotas">Notas</a></li>
-                <li><a class="dropdown-item" href="/veriFaltas">Faltas</a></li>
-                <% } %>
-                <% if (user.id_perfil === 4) { %><!-- quando e Responsaveis --> 
-                  <li><a class="dropdown-item" href="/veriResponsavel">Verificar Notas e faltas</a></li>
-                <% } %>
-              </ul>
-            </li>
-            <% } %>
-            <% if (user.id_perfil === 1 || user.id_perfil === 5) { %> 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Cadastramentos
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="/turma">Turma</a></li>
-                <li><a class="dropdown-item" href="/disciplina">Disciplinas</a></li>
-                <li><a class="dropdown-item" href="/cadastrarUsuario">Usuarios</a></li>
-                <li><a class="dropdown-item" href="/organizacao">Organizacao</a></li>
-              </ul>
-            </li>
-            <% } %>
-            <li class="nav-item">
-              <a class="nav-link" href="/calendario">Calendario</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/dadosCadastrais">Dados Cadastrais</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/logout">Logout</a>
-            </li>
+            <% if (user.id_perfil===2 || user.id_perfil===3 || user.id_perfil===4) { %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Notas e Faltas
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <% if (user.id_perfil===2) { %><!-- quando e Professor -->
+                    <li><a class="dropdown-item" href="/apricarNotas">Apricar Notas</a></li>
+                    <li><a class="dropdown-item" href="/apricarFaltas">Apricar Faltas</a></li>
+                    <% } %>
+                      <% if (user.id_perfil===3) { %><!-- quando e Aluno -->
+                        <li><a class="dropdown-item" href="/veriNotas">Notas</a></li>
+                        <li><a class="dropdown-item" href="/veriFaltas">Faltas</a></li>
+                        <% } %>
+                          <% if (user.id_perfil===4) { %><!-- quando e Responsaveis -->
+                            <li><a class="dropdown-item" href="/veriResponsavel">Verificar Notas e faltas</a></li>
+                            <% } %>
+                </ul>
+              </li>
+              <% } %>
+                <% if (user.id_perfil===1 || user.id_perfil===5) { %>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      Cadastramentos
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                      <li><a class="dropdown-item" href="/turma">Turma</a></li>
+                      <li><a class="dropdown-item" href="/disciplina">Disciplinas</a></li>
+                      <li><a class="dropdown-item" href="/cadastrarUsuario">Usuarios</a></li>
+                      <li><a class="dropdown-item" href="/organizacao">Organizacao</a></li>
+                    </ul>
+                  </li>
+                  <% } %>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/calendario">Calendario</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/dadosCadastrais">Dados Cadastrais</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/logout">Logout</a>
+                    </li>
           </ul>
         </div>
-        
-        <% if (user.id_perfil === 3) { %><!-- quando e Aluno --> 
+
+        <% if (user.id_perfil===3) { %><!-- quando e Aluno -->
           <div id="user-info" data-id-aluno="<%= user.id_aluno %>" data-nome-usuario="<%= user.nome_usuario %>"
             class="d-flex align-items-end">
-            <p class="opacity-0">ID: <%= user.id_aluno %> Nome: <%= user.nome_usuario %></p>
+            <p class="opacity-0">ID: <%= user.id_aluno %> Nome: <%= user.nome_usuario %>
+            </p>
           </div>
-        <% } %>
-        <% if (user.id_perfil === 4) { %><!-- quando e Responsaveis --> 
-          <div id="user-info2" data-id-responsavel="<%= user.id_responsavel %>" data-nome-usuario-resp="<%= user.nome_usuario %>"
-            class="d-flex align-items-end">
-          <p class="opacity-0">ID: <%= user.id_responsavel %> Nome: <%= user.nome_usuario %></p>
-          </div>
-        <% } %>
+          <% } %>
+            <% if (user.id_perfil===4) { %><!-- quando e Responsaveis -->
+              <div id="user-info2" data-id-responsavel="<%= user.id_responsavel %>"
+                data-nome-usuario-resp="<%= user.nome_usuario %>" class="d-flex align-items-end">
+                <p class="opacity-0">ID: <%= user.id_responsavel %> Nome: <%= user.nome_usuario %>
+                </p>
+              </div>
+              <% } %>
 
       </div>
       <a href="/home" class="mx-auto d-block">
@@ -129,40 +131,46 @@
 
 
 
-
-  <div class="container">
+  <div class="container my-5">
+    <!-- Cadastro de Usuário -->
     <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <div class="card">
-          <div class="card-header">
-            <h1>Cadastro de Usuário</h1>
+      <!-- Formulário de Cadastro -->
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Cadastro de Usuário</h4>
           </div>
           <div class="card-body">
             <form id="cadastroUsuarioForm">
-              <!-- Nome do Usuário -->
+              <!-- Nome -->
               <div class="mb-3">
                 <label for="nome_usuario" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="nome_usuario" name="nome_usuario" required>
+                <input type="text" class="form-control" id="nome_usuario" name="nome_usuario"
+                  placeholder="Digite o nome" required>
               </div>
-              <!-- CPF do Usuário -->
+              <!-- CPF -->
               <div class="mb-3">
                 <label for="cpf_usuario" class="form-label">CPF</label>
-                <input type="text" class="form-control" id="cpf_usuario" name="cpf_usuario" required>
+                <input type="text" class="form-control" id="cpf_usuario" name="cpf_usuario" placeholder="Digite o CPF"
+                  required>
               </div>
-              <!-- Endereço do Usuário -->
+              <!-- Endereço -->
               <div class="mb-3">
                 <label for="endereco_usuario" class="form-label">Endereço</label>
-                <input type="text" class="form-control" id="endereco_usuario" name="endereco_usuario">
+                <input type="text" class="form-control" id="endereco_usuario" name="endereco_usuario"
+                  placeholder="Digite o endereço">
               </div>
-              <!-- Telefone do Usuário -->
+              <!-- Telefone -->
               <div class="mb-3">
                 <label for="telefone_usuario" class="form-label">Telefone</label>
-                <input type="text" class="form-control" id="telefone_usuario" name="telefone_usuario">
+                <input type="text" class="form-control" id="telefone_usuario" name="telefone_usuario"
+                  placeholder="Digite o telefone">
               </div>
-              <!-- Email do Usuário -->
+              <!-- Email -->
               <div class="mb-3">
                 <label for="email_usuario" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email_usuario" name="email_usuario" required>
+                <input type="email" class="form-control" id="email_usuario" name="email_usuario"
+                  placeholder="Digite o email" required>
               </div>
               <!-- Data de Nascimento -->
               <div class="mb-3">
@@ -172,112 +180,137 @@
               <!-- Senha -->
               <div class="mb-3">
                 <label for="senha" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="senha" name="senha" required>
+                <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite a senha"
+                  required>
               </div>
-              <!-- Perfil do Usuário -->
+              <!-- Perfil -->
               <div class="mb-3">
                 <label for="id_perfil" class="form-label">Perfil</label>
                 <select class="form-select" id="id_perfil" name="id_perfil" required>
                   <option value="">Selecione o Perfil</option>
-                  <option value="1">1-Admin</option>
-                  <option value="2">2-Professor</option>
-                  <option value="3">3-Aluno</option>
-                  <option value="4">4-Responsável</option>
-                  <option value="5">5-Secretaria</option>
-                  <option value="6">6-Coordenação Pedagógica</option>
+                  <option value="1">Admin</option>
+                  <option value="2">Professor</option>
+                  <option value="3">Aluno</option>
+                  <option value="4">Responsável</option>
                 </select>
               </div>
-              <!-- Número de Registro (RA) para Aluno -->
-              <div class="mb-3" id="raField" style="display:none;">
-                <label for="ra_aluno" class="form-label">Número de Registro</label>
-                <input type="text" class="form-control" id="ra_aluno" name="ra_aluno" step="1" min="0">
+              <!-- Número de Registro (RA) -->
+              <div id="raField" class="mb-3" style="display: none;">
+                <label for="ra_aluno" class="form-label">Número de Registro (RA)</label>
+                <input type="text" id="ra_aluno" class="form-control" placeholder="Digite o RA">
               </div>
               <!-- Data de Matrícula -->
-              <div class="mb-3" id="dataMatriculaField" style="display:none;">
+              <div id="dataMatriculaField" class="mb-3" style="display: none;">
                 <label for="data_matricula" class="form-label">Data de Matrícula</label>
-                <input type="date" class="form-control" id="data_matricula" name="data_matricula">
+                <input type="date" id="data_matricula" class="form-control">
               </div>
-              <!-- Botão de Cadastro -->
-              <button type="submit" class="btn btn-primary">Cadastrar</button>
+              <!-- Botão -->
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+              </div>
             </form>
           </div>
         </div>
       </div>
+
       <!-- Formulário de Edição -->
       <div class="col-md-6">
-
-        <form id="updateUsuarioForm">
-          <h2>Editar Usuário</h2>
-          <div class="form-group">
-            <input type="text" class="form-control" id="editUsuarioId" placeholder="ID do Usuário" required disabled>
+        <div class="card shadow-sm">
+          <div class="card-header bg-secondary text-white">
+            <h4 class="mb-0">Editar Usuário</h4>
           </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="editUsuarioNome" placeholder="Nome" required>
+          <div class="card-body">
+            <form id="updateUsuarioForm">
+              <div class="mb-3">
+                <input type="text" class="form-control" id="editUsuarioId" placeholder="ID do Usuário" disabled>
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control" id="editUsuarioNome" placeholder="Nome" required>
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control" id="editUsuarioCPF" placeholder="CPF" required>
+              </div>
+              <div class="mb-3">
+                <input type="email" class="form-control" id="editUsuarioEmail" placeholder="Email" required>
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control" id="editUsuarioTelefone" placeholder="Telefone" required>
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control" id="editUsuarioEndereco" placeholder="Endereço" required>
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control" id="editUsuarioID_Perfil" placeholder="ID_Perfil" required>
+              </div>
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-success">Atualizar</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="cancelEdit()">Cancelar</button>
+              </div>
+            </form>
           </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="editUsuarioCPF" placeholder="CPF" step="1" min="0" required>
-          </div>
-          <div class="form-group">
-            <input type="email" class="form-control" id="editUsuarioEmail" placeholder="Email" required>
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="editUsuarioTelefone" placeholder="Telefone" step="1" min="0"
-              required>
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="editUsuarioEndereco" placeholder="Endereço" required>
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="editUsuarioID_Perfil" placeholder="ID_Perfil" step="1" min="1"
-              max="6" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Atualizar</button>
-          <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancelar</button>
-        </form>
+        </div>
       </div>
-
     </div>
 
-    <h1 class="mt-5">Usuários</h1>
-    <div class="containerTable" style="overflow-y: auto; max-height: 400px;">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>Email</th>
-            <th>Telefone</th>
-            <th>Endereço</th>
-            <th>ID_Perfil</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="usuariosTableBody" class="overflow-auto">
-          <!-- Linhas serão inseridas aqui via JavaScript -->
-        </tbody>
-      </table>
+    <!-- Lista de Usuários -->
+    <div class="mt-5">
+      <h4>Usuários Cadastrados</h4>
+      <div class="table-responsive">
+        <table class="table table-striped align-middle">
+          <thead class="table-primary">
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>CPF</th>
+              <th>Email</th>
+              <th>Telefone</th>
+              <th>Endereço</th>
+              <th>Perfil</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="usuariosTableBody">
+            <!-- Linhas geradas dinamicamente -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
 
 
 
-  <script>
-    // Mostrar ou ocultar campos específicos com base no perfil selecionado
-    document.getElementById('id_perfil').addEventListener('change', function () {
-      const raField = document.getElementById('raField');
-      const dataMatriculaField = document.getElementById('dataMatriculaField');
 
-      if (this.value === '3') { // Se o perfil selecionado for "Aluno"
-        raField.style.display = 'block';
-        dataMatriculaField.style.display = 'block';
+  <script>
+    document.getElementById('id_perfil').addEventListener('change', function () {
+      const perfil = this.value;
+      console.log("test" + perfil)
+
+      // 'Aluno'の場合に入力欄を表示
+      if (perfil == 3) { // '3'はAlunoのIDです
+        console.log("if文のなか")
+        document.getElementById('raField').style.display = 'block';
+        document.getElementById('dataMatriculaField').style.display = 'block';
       } else {
-        raField.style.display = 'none';
-        dataMatriculaField.style.display = 'none';
+        document.getElementById('raField').style.display = 'none';
+        document.getElementById('dataMatriculaField').style.display = 'none';
       }
     });
+    // ページロード時にも現在の選択に基づいて表示を更新
+    window.onload = function () {
+      const perfil = document.getElementById('id_perfil').value;
 
+      if (perfil === '3') {
+        document.getElementById('raField').style.display = 'block';
+        document.getElementById('dataMatriculaField').style.display = 'block';
+      } else {
+        document.getElementById('raField').style.display = 'none';
+        document.getElementById('dataMatriculaField').style.display = 'none';
+      }
+    };
+    document.getElementById('id_perfil').addEventListener('change', function () {
+      console.log('id_perfil changed:', this.value);
+    });
 
   </script>
 

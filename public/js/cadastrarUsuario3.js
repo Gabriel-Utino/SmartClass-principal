@@ -135,14 +135,9 @@ function editarUsuario(id_usuario) {
           })
           .catch(error => console.error('Erro ao atualizar usuário:', error));
       };
-
-      // Scroll para o topo da página
-      window.scrollTo({ top: 0, behavior: 'smooth' }); // Move suavemente para o topo
     })
     .catch(error => console.error('Erro ao buscar usuário:', error));
 }
-
-
 
 // Função para cancelar a edição
 function cancelEdit() {

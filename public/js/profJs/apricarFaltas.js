@@ -112,7 +112,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
           // Foto do Aluno
           const photoCell = document.createElement('td');
           const photoImg = document.createElement('img');
-          photoImg.src = item.foto ? `../../upload/${item.foto}` : './icons/semfoto.png';
+          photoImg.src = item.foto ? `../../upload/${item.foto}` : './icons/nandemoya.png';
           photoImg.alt = 'Sem Foto';
           photoImg.classList.add('img-alunoMini');
           photoCell.appendChild(photoImg);
