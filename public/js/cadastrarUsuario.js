@@ -16,25 +16,25 @@ function getUserFromPage() {
 document.getElementById('cadastroUsuarioForm').addEventListener('submit', function (event) {
     event.preventDefault();
   
-    const formData = {
-      nome_usuario: document.getElementById('nome_usuario').value,
-      cpf_usuario: document.getElementById('cpf_usuario').value,
-      endereco_usuario: document.getElementById('endereco_usuario').value,
-      telefone_usuario: document.getElementById('telefone_usuario').value,
-      email_usuario: document.getElementById('email_usuario').value,
-      nascimento_usuario: document.getElementById('nascimento_usuario').value,
-      senha: document.getElementById('senha').value,
-      id_perfil: document.getElementById('id_perfil').value,
-      ra_aluno: document.getElementById('ra_aluno').value,
-      data_matricula: document.getElementById('data_matricula').value
-    };
+    const formData = new FormData();
+    formData.append('nome_usuario', document.getElementById('nome_usuario').value);
+    formData.append('cpf_usuario', document.getElementById('cpf_usuario').value);
+    formData.append('endereco_usuario', document.getElementById('endereco_usuario').value);
+    formData.append('telefone_usuario', document.getElementById('telefone_usuario').value);
+    formData.append('email_usuario', document.getElementById('email_usuario').value);
+    formData.append('nascimento_usuario', document.getElementById('nascimento_usuario').value);
+    formData.append('senha', document.getElementById('senha').value);
+    formData.append('id_perfil', document.getElementById('id_perfil').value);
+  
+    // 画像ファイルを追加
+    const fotoFile = document.getElementById('foto').files[0];
+    if (fotoFile) {
+      formData.append('foto', fotoFile);
+    }
   
     fetch('/usuarios', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
+      body: formData
     })
     .then(response => response.json())
     .then(data => {
@@ -56,9 +56,12 @@ document.getElementById('cadastroUsuarioForm').addEventListener('submit', functi
   
         usuarios.forEach(usuario => {
           const row = document.createElement('tr');
+          console.log(usuario.foto)
   
           row.innerHTML = `
-            <td>${usuario.id_usuario}</td>
+            <td>
+              <img src="${usuario.foto ? `${usuario.foto}` : './icons/nandemoya.png'}" alt="Foto do Usuário" width="50">
+            </td>
             <td>${usuario.nome_usuario}</td>
             <td>${usuario.cpf_usuario}</td>
             <td>${usuario.email_usuario}</td>

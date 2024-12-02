@@ -1,6 +1,9 @@
 // controllers/cadastrarUsuarioController.js
 const connection = require('../config/database'); 
 const bcrypt = require('bcryptjs');
+const multer = require('multer');
+// Multerの設定
+const upload = multer({ storage: multer.memoryStorage() });
 
 // Função para obter todos os usuários
 exports.getAllUsuarios = async (req, res) => {
@@ -48,9 +51,15 @@ exports.createUsuario = async (req, res) => {
   try {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(senha, saltRounds);
+
+    let fotoData = null;
+    if (req.file) {
+      fotoData = req.file.buffer; // Multerで取得したバイナリデータ
+    }
+
     const [result] = await connection.query(
-      'INSERT INTO usuario (nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, nascimento_usuario, senha, id_perfil) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, nascimento_usuario, hashedPassword, id_perfil]
+      'INSERT INTO usuario (nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, nascimento_usuario, senha, id_perfil, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, nascimento_usuario, hashedPassword, id_perfil, fotoData]
     );
 
     const id_usuario = result.insertId;

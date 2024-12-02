@@ -142,6 +142,11 @@
           </div>
           <div class="card-body">
             <form id="cadastroUsuarioForm">
+              <!-- Foto - フォームの写真入力 -->
+              <div class="mb-3">
+                <label for="foto" class="form-label">Foto</label>
+                <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
+              </div>
               <!-- Nome -->
               <div class="mb-3">
                 <label for="nome_usuario" class="form-label">Nome</label>
@@ -259,7 +264,7 @@
         <table class="table table-striped align-middle">
           <thead class="table-primary">
             <tr>
-              <th>ID</th>
+              <th>Foto</th>
               <th>Nome</th>
               <th>CPF</th>
               <th>Email</th>
