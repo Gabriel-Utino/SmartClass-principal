@@ -26,7 +26,9 @@ SmartClassは、学校向けの効率的な成績および出欠管理システ�
 
 
 2. **成績管理画面**  
-   ![成績管理Notas入力](https://github.com/user-attachments/assets/c15b5a6d-0742-4165-a72f-ab7d3c531897)
+   ![成績管理Notas-管理](https://github.com/user-attachments/assets/c15b5a6d-0742-4165-a72f-ab7d3c531897)
+   ![成績管理Notas入力](https://github.com/user-attachments/assets/cdbd6928-043e-4197-b41e-479e69968f7e)
+
 
 
 3. **出欠管理画面**  
