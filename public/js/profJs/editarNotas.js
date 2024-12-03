@@ -37,11 +37,10 @@ function fetchNotaInfo(id_notas_faltas) {
     .then(data => {
       if (data && data.length > 0) {
         const notaInfo = data[0];
-        console.log("Dados :", notaInfo);
         document.getElementById('faltasAluno').value = notaInfo.faltas;
-        document.getElementById('n1Input').value = notaInfo.N1;
-        document.getElementById('apInput').value = notaInfo.AP;
-        document.getElementById('aiInput').value = notaInfo.AI;
+        document.getElementById('n1Input').value = parseFloat(notaInfo.N1 || 0).toFixed(1);
+        document.getElementById('apInput').value = parseFloat(notaInfo.AP || 0).toFixed(1);
+        document.getElementById('aiInput').value = parseFloat(notaInfo.AI || 0).toFixed(1);
         document.getElementById('anoAluno').value = notaInfo.ano_academico;
         document.getElementById('semestreAluno').value = notaInfo.semestre;
       } else {
