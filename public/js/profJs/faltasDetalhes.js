@@ -74,6 +74,7 @@ function fetchNotaDetalhesInfo(id_aluno, id_disciplina, id_perfil) {
       const listaContainer = document.getElementById('notaList'); // リスト表示用のコンテナを指定
       listaContainer.innerHTML = ''; // 既存のリストをクリア
 
+
       if (data && data.length > 0) {
         data.forEach(notaInfo => {
           const listItem = document.createElement('li');
@@ -89,13 +90,25 @@ function fetchNotaDetalhesInfo(id_aluno, id_disciplina, id_perfil) {
             deleteButton.textContent = 'excluir';
             deleteButton.className = 'btn btn-danger btn-lg shadow-sm'; // Bootstrapのスタイルを追加
             deleteButton.innerHTML = '<i class="bi bi-trash"></i> excluir'; // アイコンを追加
+
+
             deleteButton.addEventListener('click', () => {
-              const eventDay = events.find(event => event.date === clicked);
+              console.log(data); // 修正後の`events`を確認
+              const clicked = notaInfo.data_falta // クリックされたデータの日付
+              console.log("clicked:" + clicked); // 修正後の`events`を確認
+              const eventDay = data.find(event => {
+                console.log("event.data_falta:" + event.data_falta)
+                return event.data_falta == clicked
+              });
+              console.log(eventDay)
               if (eventDay && confirm('Tem certeza de que deseja excluir este evento?')) {
-                deleteEvent(eventDay.id_evento);
+                console.log(eventDay.id_faltas_detalhes, eventDay.id_notas_faltas)
+                deleteFalta(eventDay.id_faltas_detalhes, eventDay.id_notas_faltas);
               }
             });
 
+
+            
             listItem.appendChild(deleteButton);
           }
 
