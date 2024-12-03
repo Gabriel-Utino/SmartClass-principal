@@ -1,5 +1,4 @@
 // public/js/profjs/orgDisciTurma.js
-
 document.addEventListener('DOMContentLoaded', () => {
   const turmaSelect = document.getElementById('turmaSelect')
   const disciplinaSelect = document.getElementById('disciplinaSelect')

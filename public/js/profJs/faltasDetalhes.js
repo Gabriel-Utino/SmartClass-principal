@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const alunoId = urlParams.get('id_aluno');
   const id_disciplina = urlParams.get('id_disciplina');
-  const id_perfil = urlParams.get('id_perfil');
+  const data = document.getElementById('user-info');
+  const idPerfil = data.dataset.idPerfil; 
   const idNotasFaltas = urlParams.get('idNotasFaltas');
 
   // Aluno情報を取得
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchNotaInfo(idNotasFaltas);
 
   // Notas情報を取得
-  fetchNotaDetalhesInfo(alunoId, id_disciplina, id_perfil);
+  fetchNotaDetalhesInfo(alunoId, id_disciplina, parseInt(idPerfil));
 
   // フォームの送信イベント
   /* document.getElementById('aluno-list').addEventListener('submit', (event) => {
