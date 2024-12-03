@@ -98,7 +98,7 @@ SmartClassは、学校向けの効率的な成績および出欠管理システ�
    http://localhost:5000
 
 🔧 使用技術
-   バックエンド: Node.js, Express
-   フロントエンド: EJS, Bootstrap
-   データベース: MySQL
-   デプロイ: Render
+   - バックエンド: Node.js, Express
+   - フロントエンド: EJS, Bootstrap
+   - データベース: MySQL
+   - デプロイ: Render
