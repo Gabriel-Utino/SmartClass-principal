@@ -22,11 +22,12 @@ SmartClassは、学校向けの効率的な成績および出欠管理システ�
 以下にアプリの主要画面を紹介します:
 
 1. **ログイン画面**  
-   (![ログイン画面 2024-12-03 141012](https://github.com/user-attachments/assets/33d1e07b-1962-4b1e-a1bf-3ccd5528356e)
-)
+   ![ログイン画面 2024-12-03 141012](https://github.com/user-attachments/assets/33d1e07b-1962-4b1e-a1bf-3ccd5528356e)
+
 
 2. **成績管理画面**  
-   ![成績管理画面](path-to-grades-screenshot.png)
+   ![成績管理Notas入力](https://github.com/user-attachments/assets/c15b5a6d-0742-4165-a72f-ab7d3c531897)
+
 
 3. **出欠管理画面**  
    ![出欠管理画面](path-to-attendance-screenshot.png)
