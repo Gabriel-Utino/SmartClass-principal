@@ -85,6 +85,9 @@ SmartClassは、学校向けの効率的な成績および出欠管理システ�
    BASE_URL=http://localhost:5000
    NODE_ENV=development
    PORT=5000
+   TWILIO_PASS=TWILIO_PASS
+   SENDGRID_API_KEY=SENDPASSWORD
+   SENDGRID_SENDER=EMAIL
    ```
 
 5. サーバーの起動
