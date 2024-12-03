@@ -97,6 +97,8 @@ SmartClassは、学校向けの効率的な成績および出欠管理システ�
    - ブラウザで以下のURLを開き、アプリケーションを確認します:
    http://localhost:5000
 
+---
+
 ## 🔧 使用技術
    - バックエンド: Node.js, Express
    - フロントエンド: EJS, Bootstrap
