@@ -189,12 +189,6 @@ app.get('/organizacao', (req, res) => {
   }
   res.render('organizacao', { user: req.session.user }) // ダッシュボードを表示
 })
-app.get('/orgDisciTurma', (req, res) => {
-  if (!req.session.user) {
-    return res.redirect('/login') // ユーザーがログインしていない場合
-  }
-  res.render('orgDisciTurma', { user: req.session.user }) // ダッシュボードを表示
-})
 app.get('/alunosTurma', (req, res) => {
   if (!req.session.user) {
     return res.redirect('/login') // ユーザーがログインしていない場合
@@ -212,6 +206,18 @@ app.get('/faltasDetalhes', (req, res) => {
     return res.redirect('/login') // ユーザーがログインしていない場合
   }
   res.render('faltasDetalhes', { user: req.session.user }) // ダッシュボードを表示
+})
+app.get('/orgDisciTurma', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('orgDisciTurma', { user: req.session.user }) // ダッシュボードを表示
+})
+app.get('/orgDisciTurma2', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/login') // ユーザーがログインしていない場合
+  }
+  res.render('orgDisciTurma2', { user: req.session.user }) // ダッシュボードを表示
 })
 
 

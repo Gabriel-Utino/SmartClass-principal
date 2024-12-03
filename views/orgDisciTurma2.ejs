@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Organização</title>
+  <title>Adicionar tabelas de notas</title>
   <!-- 追加：外部のスタイルシート -->
   <!-- <link rel="stylesheet" href="styles/professores.css" /> -->
   <!-- <link rel="stylesheet" href="styles/style.css" /> -->
@@ -125,49 +125,31 @@
   </nav>
 
 
-
-
-
-
-
-
   <!-- 以下、ベースのHTMLファイルのコンテンツを続ける -->
   <div class="container">
-    <div class="row">
-      <h1 class="text-center">Organização</h1>
-    </div>
+    <h1>Selecione a turma</h1>
+    <label for="turmaSelect">Selecione a turma:</label>
+    <select id="turmaSelect">
+      <option value="">--Selecione--</option>
+    </select>
+  
+    <h2>As disciplina da turma selecionado</h2>
+    <label for="disciplinaSelect">Selecione a disciplina (todos):</label>
+    <select class="form-select" size="7" id="disciplinaSelect" multiple disabled>
+      <option value="">--Selecione a turma--</option>
+    </select>
+  
+    <h2>Escreva o ano e o semestre apricado</h2>
+    <label for="academicYear">Ano:</label>
+    <input type="number" id="academicYear" placeholder="exemplo: 2024" min="2000" max="2100">
+  
+    <label for="semestre">Semestre:</label>
+    <input type="number" id="semestre" placeholder="exemplo: 1 ou 2" min="1" max="2">
+  
+    <button id="assignDisciplinas" disabled>Aplicar</button>
+  
   </div>
-  <div class="container">
-    <div class="row justify-content-center  rounded bg-body-secondary">
-      <div class="col-5 icon-container">
-        <a href="connectTurmaDisci">
-          <img src="../../icons/disciNaTurmas.png" alt="Icon">
-          <i class="fas fa-user-edit"></i>
-        </a>
-        <p>Adicionar Disciplina na Turmas</p>
-      </div>
-      <div class="col-5 icon-container">
-        <a href="orgDisciTurma2">
-          <img src="../../icons/tabelaDeNotas.png" alt="Calendar Icon">
-        </a>
-        <p>Criar tabelas de notas</p>
-      </div>
-      <div class="col-5 icon-container">
-        <a href="aluno_resp">
-          <img src="../../icons/family.png" alt="Icon">
-          <i class="fas fa-user-edit"></i>
-        </a>
-        <p>relacionamento de Alunos e Responsaveis</p>
-      </div>
-      <div class="col-5 icon-container">
-        <a href="alunosTurma">
-          <img src="../../icons/resp.png" alt="Icon">
-          <i class="fas fa-user-edit"></i>
-        </a>
-        <p>relacionamento de Alunos e Trumas</p>
-      </div>
-    </div>
-  </div>
+
 
 
 
@@ -182,6 +164,7 @@
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
+  <script src="/js/profJs/orgDisciTurma.js">
   </script>
 </body>
 

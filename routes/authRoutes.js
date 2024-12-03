@@ -49,6 +49,9 @@ router.get('/connectTurmaDisci', ensureAuthenticated, authorizeRoles(5, 1),  (re
 router.get('/orgDisciTurma', ensureAuthenticated, authorizeRoles(5, 1),  (req, res) => {
   res.render('orgDisciTurma', { user: req.session.user });
 });
+router.get('/orgDisciTurma2', ensureAuthenticated, authorizeRoles(5, 1),  (req, res) => {
+  res.render('orgDisciTurma2', { user: req.session.user });
+});
 router.get('/aluno_resp', ensureAuthenticated, authorizeRoles(5, 1),  (req, res) => {
   res.render('aluno_resp', { user: req.session.user });
 });
