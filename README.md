@@ -97,8 +97,67 @@ SmartClassは、学校向けの効率的な成績および出欠管理システ�
    - ブラウザで以下のURLを開き、アプリケーションを確認します:
    http://localhost:5000
 
-🔧 使用技術
+---
+
+## 🔧 使用技術
    - バックエンド: Node.js, Express
    - フロントエンド: EJS, Bootstrap
    - データベース: MySQL
    - デプロイ: Render
+
+---
+
+## 📂 ディレクトリー構成
+SmartClass/
+├── api/ # API関連のコード 
+│ └── server.js # サーバーのエントリーポイント
+├── config/ # API関連のコード 
+│ └── database.js
+│ └── passport.js
+├── controllers/ # コントローラー (ビジネスロジック) 
+│ ├── alunoController.js
+│ ├── notasFaltasController.js
+│ └── ...
+├── db/ # データベース
+│ └── index.js
+├── middleware/ # ミドルウェア
+│ ├── authorize.js
+│ └── isAuthenticated.js
+├── models/ # モデル
+│ └── User.js
+├── routes/ # ルート定義
+│ ├── alunoRoutes.js
+│ ├── notasFaltasRoutes.js
+│ └── ...
+├── public/ # 静的ファイル
+│ ├── css/ # スタイルシート
+│ │ ├── alerta.png
+│ │ ├── alunos.png
+│ │ └── ...
+│ ├── icons/ # アイコン
+│ │ ├── styles.css
+│ │ └── ...
+│ ├── js/ # クライアントサイドのJavaScript
+│ │ ├── scripts.js
+│ │ └── ...
+│ └── upload/ # 画像ファイル
+├── routes/ # ルート
+│ ├── alunosRoutes.js
+│ ├── aplicarNotasRoutes.js
+│ └── ...
+├── views/ # テンプレートファイル (.ejs)
+│ ├── aluno/ # 生徒関連のビュー
+│ ├── notas/ # 成績関連のビュー
+│ └── ...
+├── .env # 環境変数
+├── package.json # プロジェクト情報と依存関係
+└── README.md # プロジェクトの説明
+
+---
+
+**補足:**
+1. `username/SmartClass.git` をご自身のリポジトリ名に置き換えてください。
+2. `.env`ファイルのパラメータも実際の環境に合わせて変更してください。
+
+
+
