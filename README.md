@@ -60,11 +60,15 @@ SmartClassは、学校向けの効率的な成績および出欠管理システ�
 ## 💻 セットアップ方法
 
 1. リポジトリをクローンします:
-   ```bash
+   ```
    git clone https://github.com/username/SmartClass.git
+   ```
 
 2. パッケージのインストール
    ```bash
+   npm install
+   ```
+
    プロジェクトのルートディレクトリに移動し、以下のコマンドを実行して依存パッケージをインストールします:
 
 3. データベースの設定
@@ -73,8 +77,23 @@ SmartClassは、学校向けの効率的な成績および出欠管理システ�
 
 4. 環境変数の設定
    プロジェクトのルートディレクトリに .env ファイルを作成し、以下のように設定してください:
+   ```bash
+   DB_HOST=localhost
+   DB_USER=root
+   DB_PASSWORD=yourpassword
+   DB_NAME=smartclass
+   BASE_URL=http://localhost:5000
+   NODE_ENV=development
+   PORT=5000
+   ```
 
 5. サーバーの起動
    以下のコマンドを実行してサーバーを起動します:
    ```bash
-   npm start
+   node api/server.js
+   ```
+
+6. アプリケーションのアクセス
+   ブラウザで以下のURLを開き、アプリケーションを確認します:
+   http://localhost:5000
+
