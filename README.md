@@ -163,13 +163,13 @@ SmartClassは、学校向けの効率的な成績および出欠管理システ�
 
 ### デモログイン情報
    以下のアカウント情報を使用してログインしてください。
-   Professor:
+   1, 教師用:
    - **Email:** Geraldo.freitas@uscsonline.com.br
    - **Password:** geraldo123
-   Aluno:
+   2, 生徒用:
    - **Email:** rodrigo_lima@uscsonline.com.br
    - **Password:** rodrigo123
-   Responsável 
+   3, 保護者用: 
    - **Email:** joaopedro@gmail.com
    - **Password:** joao123
 
