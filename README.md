@@ -2,10 +2,6 @@
 
 SmartClassは、学校向けの効率的な成績および出欠管理システムです。このシステムを通じて、教員や管理者は簡単に生徒の情報を追跡でき、生徒と保護者も情報を簡単に閲覧できます。
 
-## 🌐 デプロイ済みリンク
-アプリケーションはこちらからアクセス可能です:  
-**[https://smartclass-principal.onrender.com](https://smartclass-principal.onrender.com)**
-
 ---
 
 ## 📌 機能
@@ -157,6 +153,27 @@ SmartClassは、学校向けの効率的な成績および出欠管理システ�
    ├── package.json # プロジェクト情報と依存関係
    └── README.md # プロジェクトの説明
    ```
+
+---
+
+
+## 🌐 デプロイ済みリンク
+アプリケーションはこちらからアクセス可能です:  
+**[https://smartclass-principal.onrender.com](https://smartclass-principal.onrender.com)**
+
+### デモログイン情報
+   以下のアカウント情報を使用してログインしてください。
+   Professor:
+   - **Email:** Geraldo.freitas@uscsonline.com.br
+   - **Password:** geraldo123
+   Aluno:
+   - **Email:** rodrigo_lima@uscsonline.com.br
+   - **Password:** rodrigo123
+   Responsável 
+   - **Email:** joaopedro@gmail.com
+   - **Password:** joao123
+
+   このアカウントはデモ専用です。アクセス可能な範囲は制限されています。
 
 ---
 
